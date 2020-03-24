@@ -9,14 +9,12 @@ A  volunteer-driven API for COVID-19 stats & patient tracing in India (Unofficia
 * Raw data: https://api.covid19india.org/raw_data.json
 
 # Projects Using This API
-## Visualizations
-* [INDIA COVID-19 TRACKER](https://www.covid19india.org/)
-## API
-* [API Covid 19 India](https://github.com/amodm/api-covid19-in)
+* [INDIA COVID-19 TRACKER](https://www.covid19india.org/) (Visualization)
+* [API Covid 19 India](https://github.com/amodm/api-covid19-in) (API)
 
 ## FAQ
-1. Where does this data come from?
+* **Where does this data come from?**
 We collect the details from each State press release, official government links such as [Ministry of Health and Family Welfare](https://www.mohfw.gov.in/) and reputable news channels. Data is then validated by a group of volunteers & published.
 
-2. What is the objective behind collecting and publishing this data?
+* **What is the objective behind collecting and publishing this data?**
 Documented data helps in research of and understanding COVID-19.
