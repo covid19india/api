@@ -1,9 +1,22 @@
-# api
+# COVID19-India API
 
-https://api.covid19india.org/data.json
+A  volunteer-driven API for COVID-19 stats & patient tracing in India (Unofficial).
 
-https://api.covid19india.org/state_district_wise.json
+## API
+* National time series, statewise stats and test counts : https://api.covid19india.org/data.json
+* State-district-wise: https://api.covid19india.org/state_district_wise.json
+* Travel history: https://api.covid19india.org/travel_history.json
+* Raw data: https://api.covid19india.org/raw_data.json
 
-https://api.covid19india.org/travel_history.json
+# Projects Using This API
+## Visualizations
+* [INDIA COVID-19 TRACKER](https://www.covid19india.org/)
+## API
+* [API Covid 19 India](https://github.com/amodm/api-covid19-in)
 
-https://api.covid19india.org/raw_data.json
+## FAQ
+1. Where does this data come from?
+We collect the details from each State press release, official government links such as [Ministry of Health and Family Welfare](https://www.mohfw.gov.in/) and reputable news channels. Data is then validated by a group of volunteers & published.
+
+2. What is the objective behind collecting and publishing this data?
+Documented data helps in research of and understanding COVID-19.
