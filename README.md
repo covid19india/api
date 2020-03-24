@@ -8,7 +8,7 @@ A  volunteer-driven API for COVID-19 stats & patient tracing in India (Unofficia
 * Travel history: https://api.covid19india.org/travel_history.json
 * Raw data: https://api.covid19india.org/raw_data.json
 
-# Projects Using This API
+## Projects Using This API
 * [INDIA COVID-19 TRACKER](https://www.covid19india.org/) (Visualization)
 * [API Covid 19 India](https://github.com/amodm/api-covid19-in) (API)
 
