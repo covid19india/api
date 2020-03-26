@@ -3,7 +3,7 @@
 A  volunteer-driven API for COVID-19 stats & patient tracing in India (Unofficial).
 
 ## API
-* National time series, statewise stats and test counts : https://api.covid19india.org/data.json
+* National time series, statewise stats and test counts: https://api.covid19india.org/data.json
 * State-district-wise: https://api.covid19india.org/state_district_wise.json
 * Travel history: https://api.covid19india.org/travel_history.json
 * Raw data: https://api.covid19india.org/raw_data.json
