@@ -1,16 +1,15 @@
 const { task, fetchData, writeData } = require("./lib");
 const c = require("./lib/constants");
-
+const moment = require("moment");
 
 (async function main() {
   console.log("Running task on start...");
-  await task({
-    sheet: c.SHEET,
-    tabs: {
-      raw_data: c.SHEET_RAW_DATA
-    },
-    file: c.FILE_RAW_DATA
-  });
+  
+  var data = await fetchData({sheet:c.SHEET, tabs:{
+    raw_data: c.SHEET_RAW_DATA
+  }});
+  data.last_updated_time = moment().utcOffset(330) + "";
+  await writeData({file:c.FILE_RAW_DATA, data});
 
   await task({
     sheet: c.SHEET,
@@ -28,7 +27,7 @@ const c = require("./lib/constants");
   });
 
   // need to remove objects with empty states or empty totaltested
-  var data = await fetchData({sheet:c.SHEET, tabs:{
+  data = await fetchData({sheet:c.SHEET, tabs:{
     states_tested_data: c.SHEET_StateWise_Tested_Numbers_Data
   }});
   data.states_tested_data.forEach(function(item, index, object)  {
