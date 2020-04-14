@@ -22,6 +22,7 @@ A volunteer-driven database for COVID-19 stats & patient tracing in India
 
 - [INDIA COVID-19 TRACKER](https://www.covid19india.org/) (Visualization)
 - [INDIA COVID-19 Google Map TRACKER](https://goo.gl/maps/U32Ex1gWQxmc6Aot8)
+- [INDIA COVID-19 Telegram ChatBot] (https://github.com/Tele-Bots/CovidBot)
 
 ## Quick Links
 
