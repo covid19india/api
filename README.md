@@ -32,6 +32,7 @@ Telegram Bots
 - [CoVID19 India Patients Analyzer and Alerts](https://github.com/xsreality/covid19)
 - [CoVID19 Live Stats](https://github.com/Tele-Bots/CovidBot)
 - [covid19indiatracker_bot](https://github.com/cibinjoseph/covid19indiatracker_bot)
+- [COVID19 STATES & NEWS BOT](https://github.com/akhiltrivedi/Covid-19-Tracker-India-Telegram-Bot)
 
 
 ## Quick Links
