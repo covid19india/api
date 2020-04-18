@@ -17,6 +17,7 @@ A volunteer-driven database for COVID-19 stats & patient tracing in India.
 |                                                       | https://api.covid19india.org/states_daily_csv/recovered.csv   |
 | Deaths and Recoveries                                 | https://api.covid19india.org/deaths_recoveries.json   |
 | Essentials and resources                              | https://api.covid19india.org/resources/resources.json  |
+| Google sheets in csv                                  | https://api.covid19india.org/csv/                      |
 
 
 ## Projects Using This API
@@ -54,4 +55,4 @@ Telegram Bots
 - DO NOT change json or csv directly. They get replaced automatically
 
 ## Notes
-- Don't use the "Current Status" in raw_data.json as we are rarely able to map the status to exact patient anymore. This will soon be deprecated in a future version of the API.
+- Do not use the "Current Status" in raw_data.json as we are rarely able to map the status to exact patient anymore. This will soon be deprecated in a future version of the API.

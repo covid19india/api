@@ -11,7 +11,7 @@ on:
 jobs:
   update-json-data:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 9
 
     steps:
       - uses: actions/checkout@v1

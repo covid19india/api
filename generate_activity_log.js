@@ -89,7 +89,7 @@ if (full_text!=""){
     console.log(formated_time)
     
 
-    url = encodeURI("https://api.telegram.org/bot"+BOT_TOKEN+"/sendmessage?parse_mode=Markdown&chat_id=-1001449683810&text=_"
+    url = encodeURI("https://api.telegram.org/bot"+BOT_TOKEN+"/sendmessage?disable_web_page_preview=true&parse_mode=Markdown&chat_id=-1001449683810&text=_"
         +formated_time+"_\n\n"
         +tg_full_text
         +"\n\n*www.covid19india.org*");
