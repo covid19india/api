@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 const moment = require('moment-timezone');
 var fs = require('fs');
 
-var dir = './daily_csv/';
+var dir = './csv/';
 if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
 }

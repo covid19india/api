@@ -30,7 +30,7 @@ node sheets-to-csv.js
 
 rm ./data_prev.json
 
-git add updatelog/ daily_csv/ *.json 
+git add updatelog/ csv/ *.json 
 set +e  # Grep succeeds with nonzero exit codes to show results.
 git status | grep 'new file\|modified'
 if [ $? -eq 0 ]
