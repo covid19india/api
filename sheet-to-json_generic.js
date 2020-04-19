@@ -8,7 +8,7 @@ const moment = require("moment");
   var data = await fetchData({sheet:c.SHEET, tabs:{
     raw_data: c.SHEET_RAW_DATA
   }});
-  data.last_updated_time = moment().utcOffset(330) + "";
+  data.last_updated_time = moment() + "";
   await writeData({file:c.FILE_RAW_DATA, data});
 
   await task({
