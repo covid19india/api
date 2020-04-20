@@ -24,6 +24,7 @@ A volunteer-driven database for COVID-19 stats & patient tracing in India
 
 - [INDIA COVID-19 TRACKER](https://www.covid19india.org/) (Dashboard)
 - [INDIA COVID-19 Google Map TRACKER](https://goo.gl/maps/U32Ex1gWQxmc6Aot8)
+- [Livecovid.in TRACKER](https://livecovid.in)
 
 Telegram Channels
 - [covid19india.org Ops Channel](https://t.me/covid19indiaorg) (News and Updates from covid19india.org Team)
