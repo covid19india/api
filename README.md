@@ -12,6 +12,7 @@ A volunteer-driven, crowdsourced database for COVID-19 stats & patient tracing i
 |:green_heart:| State Level : has district-wise info  | https://api.covid19india.org/state_district_wise.json |
 |:green_heart:| State Level : has district-wise info V2 _(minor difference in structure)_ | https://api.covid19india.org/v2/state_district_wise.json |
 |:green_heart:| State Level : Daily changes | https://api.covid19india.org/states_daily.json  |
+|:green_heart:| State Level : Testing data | https://api.covid19india.org/state_test_data.json |
 |:green_heart:| Essentials and resources  | https://api.covid19india.org/resources/resources.json  |
 |:end:| Travel history (No more updated)  | https://api.covid19india.org/travel_history.json  |
 
