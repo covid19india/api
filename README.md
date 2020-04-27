@@ -46,7 +46,7 @@ Sometimes, having files in a spreadsheet format is more useful for analysts and 
 - [Tracker](https://livecovid.in/) (by [@anamritraj ](https://github.com/anamritraj/livecovid.in-webapp))
 - [India & World Tracker](http://tcovid19.herokuapp.com/) (by [@thecoducer](https://github.com/thecoducer))
 - [COVID-19 Track](http://github.com/adarshbalu/covid_track/) (by [@adarshbalu](https://github.com/adarshbalu))
-
+- [Ridiculously simple, one page java script COVID Graph demo](http://stanley88.net) (by [@surabibio](https://github.com/surabibio/CovidTracker/wiki))
 
 **Telegram Bots**
 - [CoVID19 India Patients Analyzer and Alerts](https://github.com/xsreality/covid19)
