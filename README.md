@@ -46,6 +46,7 @@ Sometimes, having files in a spreadsheet format is more useful for analysts and 
 - [Tracker](https://livecovid.in/) (by [@anamritraj ](https://github.com/anamritraj/livecovid.in-webapp))
 - [India & World Tracker](http://tcovid19.herokuapp.com/) (by [@thecoducer](https://github.com/thecoducer))
 - [COVID-19 Track](http://github.com/adarshbalu/covid_track/) (by [@adarshbalu](https://github.com/adarshbalu))
+- [COVID-19 Tracker (India)](https://acroinfer.in/) (by [@ACROALIAS](https://www.facebook.com/acro.alias/))
 
 
 **Telegram Bots**
