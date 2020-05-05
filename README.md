@@ -77,7 +77,7 @@ Sometimes, having files in a spreadsheet format is more useful for analysts and 
 - [India & World Tracker](http://tcovid19.herokuapp.com/) (by [@thecoducer](https://github.com/thecoducer))
 - [COVID-19 Track](http://github.com/adarshbalu/covid_track/) (by [@adarshbalu](https://github.com/adarshbalu))
 - [Maharashtra COVID-19 Dashboard/Tracker](http://covid.pranavsheth.com/) (by [@pranavs80](https://github.com/pranavs80))
-- [COVID-19 India & Global Tracker/Visualizer](https://coronago.cf/) (by [@kaushikbhat07](https://github.com/kaushikbhat07))
+- [COVID-19 Tracker/Visualizer](https://coronago.cf/) (by [@kaushikbhat07](https://github.com/kaushikbhat07))
 
 **Telegram Bots**
 - [CoVID19 India Patients Analyzer and Alerts](https://github.com/xsreality/covid19)
