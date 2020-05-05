@@ -84,6 +84,8 @@ Sometimes, having files in a spreadsheet format is more useful for analysts and 
 - [covid19indiatracker_bot](https://github.com/cibinjoseph/covid19indiatracker_bot)
 - [INDIA COVID-19 Google Map TRACKER](https://goo.gl/maps/U32Ex1gWQxmc6Aot8)
 
+**Chrome/Firefox Extensions**
+- [Covid-19 Tracker](https://coronatrends.live) (by [@akanshgulati ](https://github.com/akanshgulati))
 
 ## Quick Links
 
