@@ -78,6 +78,7 @@ Sometimes, having files in a spreadsheet format is more useful for analysts and 
 - [COVID-19 Track](http://github.com/adarshbalu/covid_track/) (by [@adarshbalu](https://github.com/adarshbalu))
 - [Maharashtra COVID-19 Dashboard/Tracker](http://covid.pranavsheth.com/) (by [@pranavs80](https://github.com/pranavs80))
 - [COVID-19 India Tracker](https://covidindiatracker.netlify.app/) (by [@PrinceSumberia](https://github.com/PrinceSumberia))
+- [COVID-19 Tracker/Visualizer](https://coronago.cf/) (by [@kaushikbhat07](https://github.com/kaushikbhat07))
 
 **Telegram Bots**
 
