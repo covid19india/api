@@ -117,6 +117,9 @@ API for current cases, statewise, districtwise and historical data of India COVI
 - [COVID19 Tracker/Predictor](https://track-covid-19ind.herokuapp.com/) (by [@manoj](https://github.com/ManojNallusamy))
 - [COVID-19 Tracker App](https://corona-india.live/) (by [@sandeshchoudhary](https://github.com/sandeshchoudhary))
 
+**Reddit Bots**
+
+- [COVID-19 Reddit BOT](https://github.com/parshnt/covid-19-bot) (by [@parshnt](https://github.com/parshnt))
 
 **Telegram Bots**
 
