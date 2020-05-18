@@ -34,7 +34,7 @@ jobs:
 
       - name: push
         run: |
-          bash ./pushthejson
+          bash ./main.sh
           echo "the job completed"
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
@@ -42,6 +42,7 @@ jobs:
           SHEET_ID_v1: ${{ secrets.SHEET_ID_v1 }}
           SHEET_ID_v2: ${{ secrets.SHEET_ID_v2 }}
           SHEET_ID_v3: ${{ secrets.SHEET_ID_v3 }}
+          SHEET_ID_v4: ${{ secrets.SHEET_ID_v4 }}
           RESOURCES_SHEET_ID: ${{ secrets.RESOURCES_SHEET_ID }}
           STUCK_BOT: ${{ secrets.STUCK_BOT }}
       - name: show job status

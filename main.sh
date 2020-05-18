@@ -30,31 +30,40 @@ mkdir tmp/resources
 mkdir tmp/v2
 mkdir tmp/updatelog
 
-touch raw_data1.json deaths_recoveries1.json
+# touch raw_data1.json deaths_recoveries1.json
 
 cp ./data.json ./tmp/data_prev.json
-cp ./raw_data1.json ./tmp/
-cp ./deaths_recoveries1.json ./tmp/
-cp -r updatelog/ ./tmp/
-cp -r csv/ ./tmp/
-cp -r districts_daily/ ./tmp/
+cp ./raw_data1.json ./tmp
+cp ./deaths_recoveries1.json ./tmp
+cp -r ./updatelog ./tmp
+cp -r ./csv ./tmp
+cp -r ./districts_daily ./tmp
+cp -r ./resources ./tmp
 
 git checkout "$main_branch"
 
-cp README.md tmp/
-node src/sheets-to-csv.js
+
 node src/sheet-to-json_generic.js
 # node src/raw_data-to-state_district_wise_data.js
-node src/generate_activity_log.js
+
+pip3 install --quiet -r requirements.txt
+python3 src/geocoder.py
+
+cp README.md tmp/
+node src/sheets-to-csv.js
+
 node src/states_daily_to_csv.js
 node src/district_data_generator.js
 node src/concat_data.js
 node src/split_raw_data.js
 node src/snapshot_zones.js 
 node src/generate_districts_daily.js
-
+node src/generate_locale.js
 
 node src/sanity_check.js
+
+# If everything okay, push logs
+node src/generate_activity_log.js
 
 git checkout "$gh_pages_branch"
 

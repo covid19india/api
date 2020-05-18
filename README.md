@@ -4,16 +4,17 @@ A volunteer-driven, crowdsourced database for COVID-19 stats & patient tracing i
 
 [Source Code in Github](https://github.com/covid19india/api)
 
-## Update [27 April]
+## About Raw Data
 
 Due to the growing size of the raw data, and the fact that regions like DL, MH, TG are only providing district level information, we have made a change in our data collection.
 Now, raw data is available in three parts :
 
 `api.covid19india.org/raw_data1.json` (Data till EoD Apr 19th)<br>
 `api.covid19india.org/raw_data2.json` (Data till EoD Apr 26th)<br>
-`api.covid19india.org/raw_data3.json` (Live 🚀)<br>
+`api.covid19india.org/raw_data3.json` (Data till EoD May 09th)<br>
+`api.covid19india.org/raw_data4.json` (Live 🚀)<br>
 
-Also, there are some structural difference in raw_data3.json :
+Also, there are some structural difference since raw_data3.json :
 When a new report/bulletin is released from a state regarding confirmed cases :
 
 1. If patient level information is available (from several states like KA,KL,BH etc.), that is captured.
@@ -25,13 +26,17 @@ When a new report/bulletin is released from a state regarding confirmed cases :
 All other aggregate APIs retain the same behaviour.
 CSV files for the same are also available through `api.covid19india.org/csv/latest/raw_data{n}.csv`
 
+We are working on providing a singular raw_data that can be the source of truth. However, we strongly advise you to use the aggrgate information for any analysis.
+
+
 ### JSON
 
 | Status        | Data                                                                      | URL                                                      |
 | ------------- | ------------------------------------------------------------------------- | -------------------------------------------------------- |
 | :green_heart: | Patient Level : Raw Data Partition 1 (Till Apr 19)                        | https://api.covid19india.org/raw_data1.json              |
 | :green_heart: | Patient Level : Raw Data Partition 2 (From Apr 20 to Apr 26)              | https://api.covid19india.org/raw_data2.json              |
-| :green_heart: | Patient Level : Raw Data Partition 3 (From Apr 27 to Now)                 | https://api.covid19india.org/raw_data3.json              |
+| :green_heart: | Patient Level : Raw Data Partition 3 (From Apr 27 to May 09)                 | https://api.covid19india.org/raw_data3.json              |
+| :green_heart: | Patient Level : Raw Data Partition 4 (From May 10 onwards)                 | https://api.covid19india.org/raw_data4.json              |
 | :green_heart: | National Level :Time series, State-wise stats and Test counts             | https://api.covid19india.org/data.json                   |
 | :green_heart: | State Level : has district-wise info                                      | https://api.covid19india.org/state_district_wise.json    |
 | :green_heart: | State Level : has district-wise info V2 _(minor difference in structure)_ | https://api.covid19india.org/v2/state_district_wise.json |
@@ -63,7 +68,8 @@ API for current cases, statewise, districtwise and historical data of India COVI
 
 - Data in this repository is generated from Google Sheets (https://api.covid19india.org/csv)
 - Volunteers collect data from trusted sources and update the sheet
-- Using Github Actions this repo periodically fetches relevant data from the Sheet and update static json and csv files
+- We use Github Actions to fetch the data from the sheet to the repo periodically.
+- Static json and csv files into the gh-pages repository
 
 ## Contributing
 
@@ -72,9 +78,6 @@ API for current cases, statewise, districtwise and historical data of India COVI
 - Report issues regarding [covid19india.org](https://www.covid19india.org) website in the [react-site repository](https://github.com/covid19india/covid19india-react/issues)
 - DO NOT change anything in `gh-pages` branch directly.They get replaced automatically
 
-## Notes
-
-- Do not use the "Current Status" in raw_data.json as we are rarely able to map the status to the exact patient anymore. This will soon be deprecated in a future version of the API.
 
 ## Quick Links
 
@@ -96,7 +99,7 @@ API for current cases, statewise, districtwise and historical data of India COVI
 
 **Analysis**
 
-- [State-wise key stats](https://docs.google.com/spreadsheets/d/e/2PACX-1vTkixJNsO3otK_yOz-7Ru--yNo9S3J9S6ENFIKU6rDuNwhVTAXJWuPH2mzTzBEt1vzhvzQ1Zxyy9ZAt/pubhtml) (by [@Ankan_Plotter](https://t.me/Ankan_Plotter))
+- [Data Analysis : India - District & State](https://docs.google.com/spreadsheets/d/1yS8x7IrlWLdtgM6UUPm2YN8lLRmRYJKm-4Wax-8EBuI/edit?usp=sharing) (by [@Ankan_Plotter](https://t.me/Ankan_Plotter))
 - [Stats and viz in Google Data Studio](https://tinyurl.com/covid19indiadashboard) (by [@veeyeskay](https://t.me/veeyeskay))
 
 **Other Trackers/Dashboards**
@@ -114,7 +117,14 @@ API for current cases, statewise, districtwise and historical data of India COVI
 - [COVID19 Tracker/Predictor](https://track-covid-19ind.herokuapp.com/) (by [@manoj](https://github.com/ManojNallusamy))
 - [COVID-19 Tracker App](https://corona-india.live/) (by [@sandeshchoudhary](https://github.com/sandeshchoudhary))
 - [COVID-19 Dashboard India|World](https://nkjcovid19.herokuapp.com/india) (by [@nithinkjoy-tech](https://github.com/nithinkjoy-tech))
+- [Covid19Bihar Tracker](https://covid19bihar.github.io/) (by [@arrbxr](https://github.com/arrbxr))
+- [COVID19-Tracker App, UP Highlight](https://www.covid19-tracker.in/) (by [@Deepak0404](https://github.com/Deepak0404))
+- [Covid-19 India Flutter App](https://github.com/curioustechizen/covid19india-flutter) (by [@curioustechizen](https://github.com/curioustechizen))
+- [COVID-19 INDIA LOCATION BASED TRACKER](https://covid2.in) (District Screen)
 
+**Reddit Bots**
+
+- [COVID-19 Reddit BOT](https://github.com/parshnt/covid-19-bot) (by [@parshnt](https://github.com/parshnt))
 
 **Telegram Bots**
 
@@ -128,4 +138,5 @@ API for current cases, statewise, districtwise and historical data of India COVI
 - [Covid-19 Tracker](https://coronatrends.live) (by [@akanshgulati ](https://github.com/akanshgulati))
 
 
-..................
+..................................
+

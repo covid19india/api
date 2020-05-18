@@ -4,7 +4,7 @@ const moment = require('moment-timezone');
 // console.log(rawDistData.districts[1]);
 
 const StateDistrictWiseData = rawDistData.districts.reduce((acc, row) => {
-    if (+row.confirmed == 0 && +row.recovered == 0 && +row.deceased == 0) {
+    if (row.district == 'Unknown' && +row.confirmed == 0 && +row.recovered == 0 && +row.deceased == 0) {
         return acc;
     }
     let stateName = row.state;

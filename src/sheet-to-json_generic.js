@@ -4,7 +4,21 @@ const c = require("../lib/constants");
 
 (async function main() {
   console.log("Running task on start...");
-//   uncomment below if v1 sheet has updates
+  await task({
+    sheet: "12iFd_SP6BHK5TMKindlH4uXGPTF7tTkUzY_OBc_EQpc",
+    tabs: { locales: "od6" },
+    file: "/locales.json"
+  });
+
+  await task({
+    sheet: "12iFd_SP6BHK5TMKindlH4uXGPTF7tTkUzY_OBc_EQpc",
+    tabs: { locales_progress: "ou6ga5q" },
+    file: "/locales_progress.json"
+  });
+
+  
+
+  //   uncomment below if v1 sheet has updates
   await task({
     sheet: c.SHEET_v1,
     tabs: { raw_data: c.SHEET_RAW_DATA },
@@ -21,6 +35,12 @@ const c = require("../lib/constants");
     file: c.FILE_RAW_DATA_3
   });
 
+  await task({
+    sheet: c.SHEET_v4,
+    tabs: { raw_data: c.SHEET_RAW_DATA },
+    file: c.FILE_RAW_DATA_4
+  });
+
   // uncomment below if v1 sheet has updates
   await task({
     sheet: c.SHEET_v1,
@@ -33,6 +53,8 @@ const c = require("../lib/constants");
     tabs: { deaths_recoveries: c.SHEET_DEATHS_AND_RECOVERIES },
     file: c.FILE_DEATHS_RECOVERIES_2
   });
+
+  
 
 
   await task({
@@ -80,7 +102,7 @@ const c = require("../lib/constants");
 
   await task({
     sheet: c.SHEET,
-    tabs: { 
+    tabs: {
       statewise: c.SHEET_STATEWISE_TAB,
       cases_time_series: c.SHEET_CASES_TIME_SERIES_TAB,
       tested: c.SHEET_Tested_Numbers_ICMR_Data,
