@@ -15,7 +15,7 @@ remote_name="origin"
 main_branch="master"
 gh_pages_branch="gh-pages"
 
-cd "$GITHUB_WORKSPACE"
+# cd "$GITHUB_WORKSPACE"
 
 git config user.name "$GITHUB_ACTOR"
 git config user.email "${GITHUB_ACTOR}@bots.github.com"
@@ -46,8 +46,8 @@ git checkout "$main_branch"
 node src/sheet-to-json_generic.js
 # node src/raw_data-to-state_district_wise_data.js
 
-pip3 install --quiet -r requirements.txt
-python3 src/geocoder.py
+# pip3 install --quiet -r requirements.txt
+# python3 src/geocoder.py
 
 cp README.md tmp/
 node src/sheets-to-csv.js
