@@ -138,6 +138,7 @@ API for current cases, statewise, districtwise and historical data of India COVI
 
 - [COVID-19 Reddit BOT](https://github.com/parshnt/covid-19-bot) (by [@parshnt](https://github.com/parshnt))
 
+
 **Telegram Bots**
 
 - [CoVID19 India Patients Analyzer and Alerts](https://github.com/xsreality/covid19)
@@ -145,6 +146,9 @@ API for current cases, statewise, districtwise and historical data of India COVI
 - [covid19indiatracker_bot](https://github.com/cibinjoseph/covid19indiatracker_bot)
 - [INDIA COVID-19 Google Map TRACKER](https://goo.gl/maps/U32Ex1gWQxmc6Aot8)
 - [Covid19WorldStats](https://github.com/ravindraten/Covid19WorldStats) (by [@RavindraNayak](https://github.com/ravindraten))
+
+**Discord Bots**
+- [Indian Bot | भारतीय स्वायत्तसेवा](https://discord.com/oauth2/authorize?scope=bot&client_id=583897295267954697&permissions=1342565446) (by [gouenji-shuuya](https://github.com/gouenji-shuuya))
 
 
 **Chrome/Firefox Extensions**
