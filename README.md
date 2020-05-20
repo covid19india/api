@@ -101,6 +101,10 @@ API for current cases, statewise, districtwise and historical data of India COVI
 
 - [Data Analysis : India - District & State](https://docs.google.com/spreadsheets/d/1yS8x7IrlWLdtgM6UUPm2YN8lLRmRYJKm-4Wax-8EBuI/edit?usp=sharing) (by [@Ankan_Plotter](https://t.me/Ankan_Plotter))
 - [Stats and viz in Google Data Studio](https://tinyurl.com/covid19indiadashboard) (by [@veeyeskay](https://t.me/veeyeskay))
+- [R-naught stats for India](https://www.rt-india.live/) (by [@rohit](https://t.me/rohitxsh))
+
+**Mobile App [Android]**
+- [Covid-19 Tracker For Android](http://covidapp.in) (by Prabhakar Thota [@myinnos](https://github.com/myinnos))
 
 **Other Trackers/Dashboards**
 
@@ -115,12 +119,19 @@ API for current cases, statewise, districtwise and historical data of India COVI
 - [COVID-19 Tracker/Visualizer](https://coronago.cf/) (by [@kaushikbhat07](https://github.com/kaushikbhat07))
 - [Bihar COVID-19 Dashboard/Tracker](https://coronainbihar.github.io/) (by [@anandv01](https://github.com/anandv01))
 - [COVID19 Tracker/Predictor](https://track-covid-19ind.herokuapp.com/) (by [@manoj](https://github.com/ManojNallusamy))
+- [Covid19-Tracker-App](https://harshitchauhan.github.io/Covid19-Tracker-App/) (by [@HarshitChauhan](https://github.com/HarshitChauhan))
 - [COVID-19 Tracker App](https://corona-india.live/) (by [@sandeshchoudhary](https://github.com/sandeshchoudhary))
-- [COVID-19 Dashboard India/World](https://nkjcovid19.herokuapp.com/india) (by [@nithinkjoy-tech](https://github.com/nithinkjoy-tech))
+- [Corona Virus Tracker](https://virtuosars.github.io/CovidLive) (by [@VirtuosArs](https://github.com/VirtuosArs))
+- [COVID-19 Dashboard India|World](https://nkjcovid19.herokuapp.com/india) (by [@nithinkjoy-tech](https://github.com/nithinkjoy-tech))
 - [Covid19Bihar Tracker](https://covid19bihar.github.io/) (by [@arrbxr](https://github.com/arrbxr))
 - [COVID19-Tracker App, UP Highlight](https://www.covid19-tracker.in/) (by [@Deepak0404](https://github.com/Deepak0404))
 - [Covid-19 India Flutter App](https://github.com/curioustechizen/covid19india-flutter) (by [@curioustechizen](https://github.com/curioustechizen))
 - [COVID-19 INDIA LOCATION BASED TRACKER](https://covid2.in) (District Screen)
+- [COVID-19 Tracker (Flutter App)](https://github.com/prateekKrOraon/covid19_tracker) (by [@prateekKrOraon](https://github.com/prateekKrOraon))
+
+**Twitter Bot**
+
+- [COVID-19 Twitter BOT](https://twitter.com/covidapp_in) (by Prabhakar Thota [@myinnos](https://github.com/myinnos))
 
 **Reddit Bots**
 
@@ -132,11 +143,12 @@ API for current cases, statewise, districtwise and historical data of India COVI
 - [CovidBot: CoVID19 Live Stats Chatbot](https://github.com/Tele-Bots/CovidBot) (by [@gurrrung](https://github.com/gurrrung))
 - [covid19indiatracker_bot](https://github.com/cibinjoseph/covid19indiatracker_bot)
 - [INDIA COVID-19 Google Map TRACKER](https://goo.gl/maps/U32Ex1gWQxmc6Aot8)
+- [Covid19WorldStats](https://github.com/ravindraten/Covid19WorldStats) (by [@RavindraNayak](https://github.com/ravindraten))
 
 
 **Chrome/Firefox Extensions**
 - [Covid-19 Tracker](https://coronatrends.live) (by [@akanshgulati ](https://github.com/akanshgulati))
 
 
-..................................
+...................................
 

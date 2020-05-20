@@ -7,6 +7,7 @@ const data_prev = require('../tmp/data_prev.json');
 update_log_file = './tmp/updatelog/log.json';
 var update_log = require("." + update_log_file);
 BOT_TOKEN = process.env.BOT_TOKEN;
+STUCK_BOT_TOKEN = process.env.STUCK_BOT;
 
 
 statewise_new = data.statewise.reduce((arr, row) => {
@@ -121,7 +122,7 @@ function editMessage(last_updated) {
     // console.log(india_total);
 
     words = india_total + "\n\n```\n" + words + "```";
-    console.log(words);
+    // console.log(words);
     // BOT_TOKEN = "";
     // url = encodeURI("https://api.telegram.org/bot" + BOT_TOKEN + "/sendMessage?chat_id=myid&parse_mode=Markdown&text="
     //     + words);
@@ -171,16 +172,23 @@ if (full_text != "") {
         + formated_time + "_\n\n"
         + tg_full_text
         + "\n\n*www.covid19india.org*";
+    // console.log(final_text);
 
-    console.log(final_text);
-
+    let settings = { method: "Get" };
     url = encodeURI("https://api.telegram.org/bot" + BOT_TOKEN + "/sendmessage?" +
         "disable_web_page_preview=true&parse_mode=Markdown&chat_id=-1001449683810&text=" + final_text);
-    // console.log(url);
-    let settings = { method: "Get" };
     fetch(url, settings).then(res => res.json())
-        .then(json => console.log(json));
-
+        .then(json => {
+            console.log(json);
+            // Forward a copy to data ops group 
+            message_id = json.result.message_id;
+            from_chat_id = json.result.chat.id;
+            chat_id = "-1001248471072"  // Data Ops group ID
+            url = encodeURI("https://api.telegram.org/bot" + STUCK_BOT_TOKEN + "/forwardMessage?" +
+                "chat_id=" + chat_id + "&from_chat_id=" + from_chat_id + "&message_id=" + message_id);
+            fetch(url, settings).then(res => res.json())
+                .then(json => console.log(json));
+        });
 } else {
     console.log("No updates this time!");
 }
