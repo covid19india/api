@@ -279,9 +279,11 @@ def fill_deltas_tested():
             for state, state_data in prev_data.items():
                 if 'tested' in state_data['total']:
                     if 'tested' in curr_data[state]['total']:
+                        # Subtract previous date's value to get diff
                         curr_data[state]['delta']['tested'] -= state_data[
                             'total']['tested']
                     else:
+                        # Take today's value to be same as previous date's value
                         curr_data[state]['total']['tested'] = state_data[
                             'total']['tested']
 
@@ -297,21 +299,19 @@ def add_state_meta(raw_data):
             last_data[state]['meta']['notes'] = entry['statenotes']
 
         for statistic in ['confirmed', 'deceased', 'recovered']:
-            entry_total = int(
-                entry[statistic if statistic != 'deceased' else 'deaths'])
-            entry_delta = int(
-                entry['delta' +
-                      (statistic if statistic != 'deceased' else 'deaths')])
-            if entry_total and last_data[state]['total'][
-                    statistic] != entry_total:
-                print(state, statistic, 'total', entry_total,
-                      last_data[state]['total'][statistic])
-
-            if entry_delta and last_data[state]['delta'][
-                    statistic] != entry_delta:
-                # Print mismatch between statewise and v3
-                print(state, statistic, 'delta', entry_delta,
-                      last_data[state]['delta'][statistic])
+            values = {
+                'total':
+                int(entry[statistic if statistic != 'deceased' else 'deaths']),
+                'delta':
+                int(entry['delta' + (
+                    statistic if statistic != 'deceased' else 'deaths')])
+            }
+            for stype in ['total', 'delta']:
+                if values[stype] and values[stype] != last_data[state][
+                        stype][statistic]:
+                    # Print mismatch between statewise and v3
+                    print(state, statistic, stype, values[stype],
+                          last_data[state][stype][statistic])
 
 
 def add_district_meta(raw_data):
@@ -325,22 +325,18 @@ def add_district_meta(raw_data):
                 last_data[state]['districts'][district]['meta'][
                     'notes'] = district_data['notes']
             for statistic in ['confirmed', 'deceased', 'recovered']:
-                entry_total = int(district_data[statistic])
-                entry_delta = int(district_data['delta'][statistic])
-                if entry_total and last_data[state]['districts'][district][
-                        'total'][statistic] != entry_total:
-                    print(
-                        state, district, statistic, 'total', entry_total,
-                        last_data[state]['districts'][district]['total']
-                        [statistic])
-
-                if entry_delta and last_data[state]['districts'][district][
-                        'delta'][statistic] != entry_delta:
-                    # Print mismatch between districtwise and v3
-                    print(
-                        state, district, statistic, 'delta', entry_delta,
-                        last_data[state]['districts'][district]['delta']
-                        [statistic])
+                values = {
+                    'total': int(district_data[statistic]),
+                    'delta': int(district_data['delta'][statistic])
+                }
+                for stype in ['total', 'delta']:
+                    if values[stype] and values[stype] != last_data[
+                            state]['districts'][district][stype][statistic]:
+                        # Print mismatch between districtwise and v3
+                        print(
+                            state, district, statistic, stype,
+                            values[stype], last_data[state]['districts']
+                            [district][stype][statistic])
 
 
 def parse_old_districts(reader):
@@ -368,12 +364,10 @@ def generate_timeseries(districts=False):
 
         for state, state_data in curr_data.items():
             for stype in ['total', 'delta']:
-                for statistic in [
-                        'confirmed', 'deceased', 'recovered', 'tested'
-                ]:
-                    if statistic in state_data[stype]:
+                if stype in state_data:
+                    for statistic, value in state_data[stype].items():
                         timeseries[state]['timeseries'][date][stype][
-                            statistic] = state_data[stype][statistic]
+                            statistic] = value
 
             if not districts or state == 'TT' or date <= DATE_END_OLD:
                 # Total state has no district data
@@ -382,12 +376,10 @@ def generate_timeseries(districts=False):
 
             for district, district_data in state_data['districts'].items():
                 for stype in ['total', 'delta']:
-                    for statistic in ['confirmed', 'deceased', 'recovered']:
-                        if statistic in district_data[stype]:
+                    if stype in district_data:
+                        for statistic, value in district_data[stype].items():
                             timeseries[state]['districts'][district][
-                                'timeseries'][date][stype][
-                                    statistic] = district_data[stype][
-                                        statistic]
+                                'timeseries'][date][stype][statistic] = value
 
 
 if __name__ == '__main__':
