@@ -73,7 +73,7 @@ STATE_CODES = {
     'Lakshadweep': 'LD',
     'Puducherry': 'PY',
     'Total': 'TT',
-    # To accomodate for wrong entries in old data
+    # To accomodate for improper entries in old data
     'Dadra and Nagar Haveli': 'DN',
     'Daman And Diu': 'DN',
 }
@@ -113,7 +113,7 @@ def parse(raw_data, i):
 
         state_name = entry['detectedstate']
         if not state_name:
-            # Entries have no state name are discarded
+            # Entries having no state name are discarded
             continue
 
         state = STATE_CODES[state_name]
@@ -133,7 +133,7 @@ def parse(raw_data, i):
         if entry['currentstatus'] == 'Hospitalized' or i < 3:
             inc(data[date]['TT']['delta'], 'confirmed', count)
             inc(data[date][state]['delta'], 'confirmed', count)
-            # Don't parse old district data unreliable since it's unreliable
+            # Don't parse old district data since it's unreliable
             if i > 2:
                 inc(data[date][state]['districts'][district]['delta'],
                     'confirmed', count)
@@ -159,7 +159,7 @@ def parse_outcome(outcome_data, i):
 
         state_name = entry['state']
         if not state_name:
-            # Entries have no state name are discarded
+            # Entries having no state name are discarded
             continue
 
         state = STATE_CODES[state_name]
@@ -178,13 +178,13 @@ def parse_outcome(outcome_data, i):
         if entry['patientstatus'] == 'Recovered':
             inc(data[date]['TT']['delta'], 'recovered', 1)
             inc(data[date][state]['delta'], 'recovered', 1)
-            # Don't parse old district data unreliable since it's unreliable
+            ## Don't parse old district data since it's unreliable
             #  inc(data[date][state]['districts'][district]['delta'], 'recovered',
             #      1)
         elif entry['patientstatus'] == 'Deceased':
             inc(data[date]['TT']['delta'], 'deceased', 1)
             inc(data[date][state]['delta'], 'deceased', 1)
-            # Don't parse old district data unreliable since it's unreliable
+            ## Don't parse old district data since it's unreliable
             #  inc(data[date][state]['districts'][district]['delta'], 'deceased',
             #      1)
 
@@ -205,7 +205,7 @@ def accumulate():
                             state_data['total'][statistic])
 
                 if state == 'TT' or date <= DATE_END_OLD:
-                    # Total state has not district data
+                    # Total state has no district data
                     # Old district data is already accumulated
                     continue
 
@@ -225,7 +225,7 @@ def accumulate():
                             state_data['delta'][statistic])
 
                 if state == 'TT' or date <= DATE_END_OLD:
-                    # Total state has not district data
+                    # Total state has no district data
                     # Old district data is already accumulated
                     continue
 
@@ -309,7 +309,7 @@ def add_state_meta(raw_data):
 
             if entry_delta and last_data[state]['delta'][
                     statistic] != entry_delta:
-                # Print mismatch between statewise and API
+                # Print mismatch between statewise and v3
                 print(state, statistic, 'delta', entry_delta,
                       last_data[state]['delta'][statistic])
 
@@ -336,7 +336,7 @@ def add_district_meta(raw_data):
 
                 if entry_delta and last_data[state]['districts'][district][
                         'delta'][statistic] != entry_delta:
-                    # Print mismatch between districtwise and API
+                    # Print mismatch between districtwise and v3
                     print(
                         state, district, statistic, 'delta', entry_delta,
                         last_data[state]['districts'][district]['delta']
@@ -376,8 +376,8 @@ def generate_timeseries(districts=False):
                             statistic] = state_data[stype][statistic]
 
             if not districts or state == 'TT' or date <= DATE_END_OLD:
-                # Total state has not district data
-                # Old district data is already accumulated
+                # Total state has no district data
+                # District timeseries starts only from 26th April
                 continue
 
             for district, district_data in state_data['districts'].items():
@@ -395,24 +395,23 @@ if __name__ == '__main__':
     print('{:{align}{width}}'.format('PARSER V3 START',
                                      align='^',
                                      width=PRINT_WIDTH))
-    # Get names of districts
+    # Get all expected district names
     with open(DISTRICT_LIST, 'r') as f:
         reader = csv.DictReader(f)
         parse_district_list(reader)
 
-    # Parse raw_data
+    # Parse raw_data's
     print('-' * PRINT_WIDTH)
     print('Parsing raw_data...')
     i = 1
     while True:
         f = INPUT_DIR / RAW_DATA.format(n=i)
-        if f.is_file():
-            with open(f, 'r') as f:
-                raw_data = json.load(f)
-                parse(raw_data, i)
-                i += 1
-        else:
+        if not f.is_file():
             break
+        with open(f, 'r') as f:
+            raw_data = json.load(f)
+            parse(raw_data, i)
+        i += 1
     print('Done!')
 
     # Parse additional deceased/recovered info not in raw_data 1 and 2
@@ -423,7 +422,6 @@ if __name__ == '__main__':
         with open(f, 'r') as f:
             raw_data = json.load(f)
             parse_outcome(raw_data, i)
-            i += 1
     print('Done!')
 
     # Parse gospel district data for 26th April
@@ -463,28 +461,28 @@ if __name__ == '__main__':
     print('Dumping APIs...')
     OUTPUT_MIN_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Dump prettified full data
+    # Dump prettified full data json
     with open((OUTPUT_DIR / OUTPUT_DATA_FILENAME).with_suffix('.json'),
               'w') as f:
         json.dump(data, f, indent=2, sort_keys=True)
-    # Minified full data
+    # Dump minified full data
     with open((OUTPUT_MIN_DIR / OUTPUT_DATA_FILENAME).with_suffix('.min.json'),
               'w') as f:
         json.dump(data, f, separators=(',', ':'), sort_keys=True)
 
-    # Split data and dump separate file for each date
+    # Split data and dump separate json for each date
     for date in sorted(data):
         curr_data = data[date]
         with open((OUTPUT_DIR / date).with_suffix('.json'), 'w') as f:
             json.dump(curr_data, f, indent=2, sort_keys=True)
-        # Minified full data
+        # Minified
         with open((OUTPUT_MIN_DIR / date).with_suffix('.min.json'), 'w') as f:
             json.dump(curr_data, f, separators=(',', ':'), sort_keys=True)
 
-    # Generate state timeseries json
+    # Generate timeseries
     generate_timeseries(districts=False)
 
-    # Dump state timeseries
+    # Dump timeseries json
     with open((OUTPUT_DIR / OUTPUT_TIMESERIES_FILENAME).with_suffix('.json'),
               'w') as f:
         json.dump(timeseries, f, indent=2, sort_keys=True)
