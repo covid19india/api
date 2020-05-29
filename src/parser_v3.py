@@ -97,10 +97,6 @@ data = ddict()
 timeseries = ddict()
 
 
-def convert_date(date):
-    return '-'.join(date.split('/')[::-1])
-
-
 def inc(ref, key, count):
     if not isinstance(ref[key], int):
         ref[key] = 0
@@ -109,11 +105,19 @@ def inc(ref, key, count):
 
 def parse(raw_data, i):
     for j, entry in enumerate(raw_data['raw_data']):
-        date = convert_date(entry['dateannounced'])
-
         state_name = entry['detectedstate']
         if not state_name:
             # Entries having no state name are discarded
+            continue
+
+        try:
+            fdate = datetime.strptime(entry['dateannounced'], '%d/%m/%Y')
+            date = datetime.strftime(fdate, '%Y-%m-%d')
+        except ValueError:
+            # Bad date
+            print('[{}: {}] [Bad date: {}] {}: {} {}'.format(
+                i, j + 2, entry['dateannounced'], entry['detectedstate'],
+                entry['detecteddistrict'], entry['numcases']))
             continue
 
         state = STATE_CODES[state_name]
@@ -126,10 +130,16 @@ def parse(raw_data, i):
             district = DISTRICTS_ADDITIONAL[district.lower()]
         else:
             # Print unexpected district names
-            print('[{}: {}] [{}] {}: {}'.format(i, j + 2, date, state,
-                                                district))
+            print('[{}: {}] [{}] [Unexpected district: {}] {}'.format(
+                i, j + 2, date, district, state))
 
-        count = int(entry['numcases'] or 0)
+        try:
+            count = int(entry['numcases'])
+        except ValueError:
+            print('[{}: {}] [{}] [Bad numcases: {}] {}: {}'.format(
+                i, j + 2, date, entry['numcases'], state, district))
+            continue
+
         if entry['currentstatus'] == 'Hospitalized' or i < 3:
             inc(data[date]['TT']['delta'], 'confirmed', count)
             inc(data[date][state]['delta'], 'confirmed', count)
@@ -155,14 +165,21 @@ def parse(raw_data, i):
 
 def parse_outcome(outcome_data, i):
     for j, entry in enumerate(outcome_data['deaths_recoveries']):
-        date = convert_date(entry['date'])
-
         state_name = entry['state']
         if not state_name:
             # Entries having no state name are discarded
             continue
-
         state = STATE_CODES[state_name]
+
+        try:
+            fdate = datetime.strptime(entry['date'], '%d/%m/%Y')
+            date = datetime.strftime(fdate, '%Y-%m-%d')
+        except ValueError:
+            # Bad date
+            print('[{}: {}] [Bad date: {}] {}'.format(i, j + 2, entry['date'],
+                                                      state))
+            continue
+
         district = entry['district']
         if not district:
             district = 'Unassigned'
@@ -172,8 +189,8 @@ def parse_outcome(outcome_data, i):
             district = DISTRICTS_ADDITIONAL[district.lower()]
         else:
             # Print unexpected district names
-            print('[{}: {}] [{}] {}: {}'.format(i, j + 2, date, state,
-                                                district))
+            print('[{}: {}] [{}] [Unexpected district: {}] {}'.format(
+                i, j + 2, date, district, state))
 
         if entry['patientstatus'] == 'Recovered':
             inc(data[date]['TT']['delta'], 'recovered', 1)
@@ -240,23 +257,54 @@ def accumulate():
 
 
 def parse_icmr(icmr_data):
-    for entry in icmr_data['tested']:
-        date = convert_date(entry['updatetimestamp'].split()[0])
+    for j, entry in enumerate(icmr_data['tested']):
+        try:
+            fdate = datetime.strptime(entry['updatetimestamp'],
+                                      '%d/%m/%Y %H:%M:%S')
+            date = datetime.strftime(fdate, '%Y-%m-%d')
+        except ValueError:
+            # Bad timestamp
+            print('[{}] [Bad timestamp: {}]'.format(j + 2,
+                                                    entry['updatetimestamp']))
+            continue
 
         if entry['totalsamplestested']:
-            data[date]['TT']['total']['tested'] = int(
-                entry['totalsamplestested'])
+            try:
+                count = int(entry['totalsamplestested'])
+            except ValueError:
+                print('[{}] [{}] [Bad totalsamplestested: {}]'.format(
+                    j + 2, entry['updatetimestamp'],
+                    entry['totalsamplestested']))
+                continue
+
+            data[date]['TT']['total']['tested'] = count
             data[date]['TT']['meta']['tested']['source'] = entry['source']
             data[date]['TT']['meta']['tested']['last_updated'] = date
 
 
 def parse_state_test(state_test_data):
-    for entry in state_test_data['states_tested_data']:
-        date = convert_date(entry['updatedon'])
+    for j, entry in enumerate(state_test_data['states_tested_data']):
+        try:
+            fdate = datetime.strptime(entry['updatedon'], '%d/%m/%Y')
+            date = datetime.strftime(fdate, '%Y-%m-%d')
+        except ValueError:
+            # Bad date
+            print('[{}] [Bad date: {}] {}'.format(j + 2, entry['updatedon'],
+                                                  entry['state']))
+            continue
+
         state = STATE_CODES[entry['state']]
 
         if entry['totaltested']:
-            data[date][state]['total']['tested'] = int(entry['totaltested'])
+            try:
+                count = int(entry['totaltested'])
+            except ValueError:
+                print('[{}] [{}] [Bad totaltested: {}] {}'.format(
+                    j + 2, entry['updatedon'], entry['totaltested'],
+                    entry['state']))
+                continue
+
+            data[date][state]['total']['tested'] = count
             data[date][state]['meta']['tested']['source'] = entry['source1']
             data[date][state]['meta']['tested']['last_updated'] = date
 
@@ -290,25 +338,39 @@ def fill_deltas_tested():
 
 def add_state_meta(raw_data):
     last_data = data[sorted(data)[-1]]
-    for entry in raw_data['statewise']:
+    for j, entry in enumerate(raw_data['statewise']):
         state = entry['statecode']
-        fdate = datetime.strptime(entry['lastupdatedtime'],
-                                  '%d/%m/%Y %H:%M:%S')
+        try:
+            fdate = datetime.strptime(entry['lastupdatedtime'],
+                                      '%d/%m/%Y %H:%M:%S')
+        except ValueError:
+            # Bad timestamp
+            print('[{}] [Bad timestamp: {}] {}'.format(
+                j + 2, entry['lastupdatedtime'], state))
+            continue
+
         last_data[state]['meta']['last_updated'] = fdate.isoformat() + '+05:30'
         if entry['statenotes']:
             last_data[state]['meta']['notes'] = entry['statenotes']
 
         for statistic in ['confirmed', 'deceased', 'recovered']:
-            values = {
-                'total':
-                int(entry[statistic if statistic != 'deceased' else 'deaths']),
-                'delta':
-                int(entry['delta' + (
-                    statistic if statistic != 'deceased' else 'deaths')])
-            }
+            try:
+                values = {
+                    'total':
+                    int(entry[
+                        statistic if statistic != 'deceased' else 'deaths']),
+                    'delta':
+                    int(entry['delta' + (
+                        statistic if statistic != 'deceased' else 'deaths')])
+                }
+            except ValueError:
+                print('[{}] [{}] [Bad value for {}] {}'.format(
+                    j + 2, entry['lastupdatedtime'], statistic, state))
+                continue
+
             for stype in ['total', 'delta']:
-                if values[stype] and values[stype] != last_data[state][
-                        stype][statistic]:
+                if values[stype] and values[stype] != last_data[state][stype][
+                        statistic]:
                     # Print mismatch between statewise and v3
                     print(state, statistic, stype, values[stype],
                           last_data[state][stype][statistic])
@@ -316,7 +378,7 @@ def add_state_meta(raw_data):
 
 def add_district_meta(raw_data):
     last_data = data[sorted(data)[-1]]
-    for entry in raw_data.values():
+    for j, entry in enumerate(raw_data.values()):
         state = entry['statecode']
         for district, district_data in entry['districtData'].items():
             if district == 'Unknown':
@@ -325,18 +387,24 @@ def add_district_meta(raw_data):
                 last_data[state]['districts'][district]['meta'][
                     'notes'] = district_data['notes']
             for statistic in ['confirmed', 'deceased', 'recovered']:
-                values = {
-                    'total': int(district_data[statistic]),
-                    'delta': int(district_data['delta'][statistic])
-                }
+                try:
+                    values = {
+                        'total': int(district_data[statistic]),
+                        'delta': int(district_data['delta'][statistic])
+                    }
+                except ValueError:
+                    print('[{}] [Bad value for {}] {} {}'.format(
+                        j + 2, statistic, state, district))
+                    continue
+
                 for stype in ['total', 'delta']:
-                    if values[stype] and values[stype] != last_data[
-                            state]['districts'][district][stype][statistic]:
+                    if values[stype] and values[stype] != last_data[state][
+                            'districts'][district][stype][statistic]:
                         # Print mismatch between districtwise and v3
                         print(
-                            state, district, statistic, stype,
-                            values[stype], last_data[state]['districts']
-                            [district][stype][statistic])
+                            state, district, statistic, stype, values[stype],
+                            last_data[state]['districts'][district][stype]
+                            [statistic])
 
 
 def parse_old_districts(reader):
@@ -416,25 +484,40 @@ if __name__ == '__main__':
             parse_outcome(raw_data, i)
     print('Done!')
 
+    print('-' * PRINT_WIDTH)
+    print('Adding district data for 26th April...')
     # Parse gospel district data for 26th April
     with open(OLD_DISTRICT_DATA, 'r') as f:
         reader = csv.DictReader(f)
         parse_old_districts(reader)
+    print('Done!')
 
+    print('-' * PRINT_WIDTH)
+    print('Generating cumulative statistics...')
     # Generate total (cumulative) data points
     accumulate()
+    print('Done!')
 
+    print('-' * PRINT_WIDTH)
+    print('Parsing ICMR test data for India...')
     f = ICMR_TEST_DATA
     with open(f, 'r') as f:
         raw_data = json.load(f, object_pairs_hook=OrderedDict)
         parse_icmr(raw_data)
+    print('Done!')
 
+    print('-' * PRINT_WIDTH)
+    print('Parsing test data for all states...')
     f = STATE_TEST_DATA
     with open(f, 'r') as f:
         raw_data = json.load(f, object_pairs_hook=OrderedDict)
         parse_state_test(raw_data)
+    print('Done!')
 
+    print('-' * PRINT_WIDTH)
+    print('Generating daily tested values...')
     fill_deltas_tested()
+    print('Done!')
 
     print('-' * PRINT_WIDTH)
     print('Adding state/district meta data and tallying...')
@@ -484,3 +567,8 @@ if __name__ == '__main__':
         json.dump(timeseries, f, separators=(',', ':'), sort_keys=True)
 
     print('Done!')
+    print('-' * PRINT_WIDTH)
+    print('{:{align}{width}}'.format('PARSER V3 END',
+                                     align='^',
+                                     width=PRINT_WIDTH))
+    print('-' * PRINT_WIDTH)
