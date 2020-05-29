@@ -9,7 +9,9 @@ from pathlib import Path
 import sys
 
 # Set logging level
-logging.basicConfig(stream=sys.stdout, format='%(message)s', level=logging.INFO)
+logging.basicConfig(stream=sys.stdout,
+                    format='%(message)s',
+                    level=logging.INFO)
 
 # Tally final day counts with statewise/districtwise APIs?
 TALLY = True
@@ -36,7 +38,7 @@ DISTRICT_WISE = INPUT_DIR / 'state_district_wise.json'
 
 OUTPUT_DIR = Path('tmp', 'v3')
 OUTPUT_MIN_DIR = OUTPUT_DIR / 'min'
-OUTPUT_DATA_FILENAME = 'data'
+OUTPUT_DATA_PREFIX = 'data'
 OUTPUT_TIMESERIES_FILENAME = 'timeseries'
 
 STATE_CODES = {
@@ -595,21 +597,25 @@ if __name__ == '__main__':
     OUTPUT_MIN_DIR.mkdir(parents=True, exist_ok=True)
 
     # Dump prettified full data json
-    with open((OUTPUT_DIR / OUTPUT_DATA_FILENAME).with_suffix('.json'),
-              'w') as f:
+    fn = '{}-{}'.format(OUTPUT_DATA_PREFIX, 'all')
+    with open((OUTPUT_DIR / fn).with_suffix('.json'), 'w') as f:
         json.dump(data, f, indent=2, sort_keys=True)
     # Dump minified full data
-    with open((OUTPUT_MIN_DIR / OUTPUT_DATA_FILENAME).with_suffix('.min.json'),
-              'w') as f:
+    with open((OUTPUT_MIN_DIR / fn).with_suffix('.min.json'), 'w') as f:
         json.dump(data, f, separators=(',', ':'), sort_keys=True)
 
     # Split data and dump separate json for each date
-    for date in sorted(data):
+    for i, date in enumerate(sorted(data)):
         curr_data = data[date]
-        with open((OUTPUT_DIR / date).with_suffix('.json'), 'w') as f:
+        if i < len(data) - 1:
+            fn = '{}-{}'.format(OUTPUT_DATA_PREFIX, date)
+        else:
+            fn = OUTPUT_DATA_PREFIX
+
+        with open((OUTPUT_DIR / fn).with_suffix('.json'), 'w') as f:
             json.dump(curr_data, f, indent=2, sort_keys=True)
         # Minified
-        with open((OUTPUT_MIN_DIR / date).with_suffix('.min.json'), 'w') as f:
+        with open((OUTPUT_MIN_DIR / fn).with_suffix('.min.json'), 'w') as f:
             json.dump(curr_data, f, separators=(',', ':'), sort_keys=True)
 
     # Generate timeseries
