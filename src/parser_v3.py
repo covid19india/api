@@ -13,18 +13,16 @@ logging.basicConfig(format='%(message)s', level=logging.INFO)
 # Tally final day counts with statewise/districtwise APIs?
 TALLY = True
 
-RESOURCE_DIR = Path('lib')
-# Contains list of districts
-DISTRICT_LIST = RESOURCE_DIR / 'district_list.csv'
-# Contains district data on 26th April
-OLD_DISTRICT_DATA = RESOURCE_DIR / 'districts_26apr_gospel.csv'
-DATE_END_OLD = '2020-04-26'
-
 INPUT_DIR = Path('tmp')
+# Contains list of districts
+DISTRICT_LIST = INPUT_DIR / 'csv' / 'latest' / 'district_list.csv'
 # All raw_data's
 RAW_DATA = 'raw_data{n}.json'
 # Contains deaths and recoveries for entries in raw_data1 and raw_data2
 OUTCOME_DATA = 'deaths_recoveries{n}.json'
+# Contains district data on 26th April
+OLD_DISTRICT_DATA = INPUT_DIR / 'csv' / 'latest' / 'districts_26apr_gospel.csv'
+DATE_END_OLD = '2020-04-26'
 # India testing data
 ICMR_TEST_DATA = INPUT_DIR / 'data.json'
 # States testing data
@@ -79,9 +77,6 @@ STATE_CODES = {
     'Lakshadweep': 'LD',
     'Puducherry': 'PY',
     'Total': 'TT',
-    # To accomodate for improper entries in old data
-    #  'Dadra and Nagar Haveli': 'DN',
-    #  'Daman And Diu': 'DN',
 }
 
 # Some additional expected districts based on state bulletins
