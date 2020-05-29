@@ -13,9 +13,6 @@ logging.basicConfig(stream=sys.stdout,
                     format='%(message)s',
                     level=logging.INFO)
 
-# Tally final day counts with statewise/districtwise APIs?
-TALLY = True
-
 INPUT_DIR = Path('tmp')
 # Contains list of districts
 DISTRICT_LIST = INPUT_DIR / 'csv' / 'latest' / 'district_list.csv'
@@ -116,7 +113,7 @@ def parse(raw_data, i):
         except KeyError:
             # Entries having unrecognized state names are discarded
             if state_name:
-                logging.warning('[{}: {}] [{}] [Bad state: {}] {}'.format(
+                logging.warning('[V{}: L{}] [{}] [Bad state: {}] {}'.format(
                     i, j + 2, entry['dateannounced'], state_name,
                     entry['numcases']))
             continue
@@ -126,7 +123,7 @@ def parse(raw_data, i):
             date = datetime.strftime(fdate, '%Y-%m-%d')
         except ValueError:
             # Bad date
-            logging.warning('[{}: {}] [Bad date: {}] {}: {} {}'.format(
+            logging.warning('[V{}: L{}] [Bad date: {}] {}: {} {}'.format(
                 i, j + 2, entry['dateannounced'], entry['detectedstate'],
                 entry['detecteddistrict'], entry['numcases']))
             continue
@@ -141,13 +138,13 @@ def parse(raw_data, i):
         else:
             # Print unexpected district names
             logging.warning(
-                '[{}: {}] [{}] [Unexpected district: {}] {}'.format(
+                '[V{}: L{}] [{}] [Unexpected district: {}] {}'.format(
                     i, j + 2, date, district, state))
 
         try:
             count = int(entry['numcases'])
         except ValueError:
-            logging.warning('[{}: {}] [{}] [Bad numcases: {}] {}: {}'.format(
+            logging.warning('[V{}: L{}] [{}] [Bad numcases: {}] {}: {}'.format(
                 i, j + 2, date, entry['numcases'], state, district))
             continue
 
@@ -182,7 +179,7 @@ def parse_outcome(outcome_data, i):
         except KeyError:
             # Entries having unrecognized state names are discarded
             if state_name:
-                logging.warning('[{}: {}] [{}] [Bad state: {}]'.format(
+                logging.warning('[V{}: L{}] [{}] [Bad state: {}]'.format(
                     i, j + 2, entry['date'], state_name))
             continue
 
@@ -191,7 +188,7 @@ def parse_outcome(outcome_data, i):
             date = datetime.strftime(fdate, '%Y-%m-%d')
         except ValueError:
             # Bad date
-            logging.warning('[{}: {}] [Bad date: {}] {}'.format(
+            logging.warning('[V{}: L{}] [Bad date: {}] {}'.format(
                 i, j + 2, entry['date'], state))
             continue
 
@@ -205,7 +202,7 @@ def parse_outcome(outcome_data, i):
         else:
             # Print unexpected district names
             logging.warning(
-                '[{}: {}] [{}] [Unexpected district: {}] {}'.format(
+                '[V{}: L{}] [{}] [Unexpected district: {}] {}'.format(
                     i, j + 2, date, district, state))
 
         if entry['patientstatus'] == 'Recovered':
@@ -280,7 +277,7 @@ def parse_icmr(icmr_data):
             date = datetime.strftime(fdate, '%Y-%m-%d')
         except ValueError:
             # Bad timestamp
-            logging.warning('[{}] [Bad timestamp: {}]'.format(
+            logging.warning('[L{}] [Bad timestamp: {}]'.format(
                 j + 2, entry['updatetimestamp']))
             continue
 
@@ -289,7 +286,7 @@ def parse_icmr(icmr_data):
                 count = int(entry['totalsamplestested'])
             except ValueError:
                 logging.warning(
-                    '[{}] [{}] [Bad totalsamplestested: {}]'.format(
+                    '[L{}] [{}] [Bad totalsamplestested: {}]'.format(
                         j + 2, entry['updatetimestamp'],
                         entry['totalsamplestested']))
                 continue
@@ -306,7 +303,7 @@ def parse_state_test(state_test_data):
             date = datetime.strftime(fdate, '%Y-%m-%d')
         except ValueError:
             # Bad date
-            logging.warning('[{}] [Bad date: {}] {}'.format(
+            logging.warning('[L{}] [Bad date: {}] {}'.format(
                 j + 2, entry['updatedon'], entry['state']))
             continue
 
@@ -314,7 +311,7 @@ def parse_state_test(state_test_data):
             state = STATE_CODES[entry['state']]
         except KeyError:
             # Entries having unrecognized state names are discarded
-            logging.warning('[{}] [{}] [Bad state: {}]'.format(
+            logging.warning('[L{}] [{}] [Bad state: {}]'.format(
                 j + 2, entry['updatedon'], entry['state']))
             continue
 
@@ -322,7 +319,7 @@ def parse_state_test(state_test_data):
             try:
                 count = int(entry['totaltested'])
             except ValueError:
-                logging.warning('[{}] [{}] [Bad totaltested: {}] {}'.format(
+                logging.warning('[L{}] [{}] [Bad totaltested: {}] {}'.format(
                     j + 2, entry['updatedon'], entry['totaltested'],
                     entry['state']))
                 continue
@@ -371,7 +368,7 @@ def add_state_meta(raw_data):
         state = entry['statecode']
         if state not in STATE_CODES.values():
             # Entries having unrecognized state codes are discarded
-            logging.warning('[{}] [{}] [Bad state: {}]'.format(
+            logging.warning('[L{}] [{}] [Bad state: {}]'.format(
                 j + 2, entry['lastupdatedtime'], entry['statecode']))
             continue
 
@@ -380,7 +377,7 @@ def add_state_meta(raw_data):
                                       '%d/%m/%Y %H:%M:%S')
         except ValueError:
             # Bad timestamp
-            logging.warning('[{}] [Bad timestamp: {}] {}'.format(
+            logging.warning('[L{}] [Bad timestamp: {}] {}'.format(
                 j + 2, entry['lastupdatedtime'], state))
             continue
 
@@ -388,9 +385,44 @@ def add_state_meta(raw_data):
         if entry['statenotes']:
             last_data[state]['meta']['notes'] = entry['statenotes']
 
-        if not TALLY:
+
+def add_district_meta(raw_data):
+    last_data = data[sorted(data)[-1]]
+    for j, entry in enumerate(raw_data.values()):
+        state = entry['statecode']
+        if state not in STATE_CODES.values():
+            # Entries having unrecognized state codes are discarded
+            logging.warning('[L{}] [Bad state: {}]'.format(
+                j + 2, entry['statecode']))
             continue
-        # Tallying for sanity-check (would be removed later)
+
+        for district, district_data in entry['districtData'].items():
+            if district == 'Unknown':
+                district = 'Unassigned'
+            if district_data['notes']:
+                last_data[state]['districts'][district]['meta'][
+                    'notes'] = district_data['notes']
+
+
+def tally_statewise(raw_data):
+    last_data = data[sorted(data)[-1]]
+    for j, entry in enumerate(raw_data['statewise']):
+        state = entry['statecode']
+        if state not in STATE_CODES.values():
+            # Entries having unrecognized state codes are discarded
+            logging.warning('[L{}] [{}] [Bad state: {}]'.format(
+                j + 2, entry['lastupdatedtime'], entry['statecode']))
+            continue
+
+        try:
+            fdate = datetime.strptime(entry['lastupdatedtime'],
+                                      '%d/%m/%Y %H:%M:%S')
+        except ValueError:
+            # Bad timestamp
+            logging.warning('[L{}] [Bad timestamp: {}] {}'.format(
+                j + 2, entry['lastupdatedtime'], state))
+            continue
+
         for statistic in ['confirmed', 'deceased', 'recovered']:
             try:
                 values = {
@@ -402,7 +434,7 @@ def add_state_meta(raw_data):
                         statistic if statistic != 'deceased' else 'deaths')])
                 }
             except ValueError:
-                logging.warning('[{}] [{}] [Bad value for {}] {}'.format(
+                logging.warning('[L{}] [{}] [Bad value for {}] {}'.format(
                     j + 2, entry['lastupdatedtime'], statistic, state))
                 continue
 
@@ -416,26 +448,20 @@ def add_state_meta(raw_data):
                             last_data[state][stype][statistic]))
 
 
-def add_district_meta(raw_data):
+def tally_districtwise(raw_data):
     last_data = data[sorted(data)[-1]]
     for j, entry in enumerate(raw_data.values()):
         state = entry['statecode']
         if state not in STATE_CODES.values():
             # Entries having unrecognized state codes are discarded
-            logging.warning('[{}] [Bad state: {}]'.format(
+            logging.warning('[L{}] [Bad state: {}]'.format(
                 j + 2, entry['statecode']))
             continue
 
         for district, district_data in entry['districtData'].items():
             if district == 'Unknown':
                 district = 'Unassigned'
-            if district_data['notes']:
-                last_data[state]['districts'][district]['meta'][
-                    'notes'] = district_data['notes']
 
-            if not TALLY:
-                continue
-            # Tallying for sanity-check (can remove later)
             for statistic in ['confirmed', 'deceased', 'recovered']:
                 try:
                     values = {
@@ -443,7 +469,7 @@ def add_district_meta(raw_data):
                         'delta': int(district_data['delta'][statistic])
                     }
                 except ValueError:
-                    logging.warning('[{}] [Bad value for {}] {} {}'.format(
+                    logging.warning('[L{}] [Bad value for {}] {} {}'.format(
                         j + 2, statistic, state, district))
                     continue
 
@@ -585,7 +611,7 @@ if __name__ == '__main__':
     logging.info('Done!')
 
     logging.info('-' * PRINT_WIDTH)
-    logging.info('Adding state/district meta data and tallying...')
+    logging.info('Adding state/district meta data...')
     f = STATE_WISE
     with open(f, 'r') as f:
         raw_data = json.load(f, object_pairs_hook=OrderedDict)
@@ -636,6 +662,25 @@ if __name__ == '__main__':
         json.dump(timeseries, f, separators=(',', ':'), sort_keys=True)
 
     logging.info('Done!')
+
+    # Tally final day counts with statewise API
+    logging.info('-' * PRINT_WIDTH)
+    logging.info('Tallying final day counts with statewise...')
+    f = STATE_WISE
+    with open(f, 'r') as f:
+        raw_data = json.load(f, object_pairs_hook=OrderedDict)
+        tally_statewise(raw_data)
+    logging.info('Done!')
+
+    # Tally final day counts with districtwise API
+    logging.info('-' * PRINT_WIDTH)
+    logging.info('Tallying final day counts with districtwise...')
+    f = DISTRICT_WISE
+    with open(f, 'r') as f:
+        raw_data = json.load(f, object_pairs_hook=OrderedDict)
+        tally_districtwise(raw_data)
+    logging.info('Done!')
+
     logging.info('-' * PRINT_WIDTH)
     logging.info('{:{align}{width}}'.format('PARSER V3 END',
                                             align='^',
