@@ -490,8 +490,7 @@ def generate_timeseries(districts=False):
             for stype in ['total', 'delta']:
                 if stype in state_data:
                     for statistic, value in state_data[stype].items():
-                        timeseries[state]['timeseries'][date][stype][
-                            statistic] = value
+                        timeseries[state][date][stype][statistic] = value
 
             if not districts or state == 'TT' or date <= DATE_END_OLD:
                 # Total state has no district data
@@ -502,8 +501,8 @@ def generate_timeseries(districts=False):
                 for stype in ['total', 'delta']:
                     if stype in district_data:
                         for statistic, value in district_data[stype].items():
-                            timeseries[state]['districts'][district][
-                                'timeseries'][date][stype][statistic] = value
+                            timeseries[state]['districts'][district][date][
+                                stype][statistic] = value
 
 
 if __name__ == '__main__':
