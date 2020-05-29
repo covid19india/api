@@ -74,10 +74,11 @@ STATE_CODES = {
     'Puducherry': 'PY',
     'Total': 'TT',
     # To accomodate for improper entries in old data
-    'Dadra and Nagar Haveli': 'DN',
-    'Daman And Diu': 'DN',
+    #  'Dadra and Nagar Haveli': 'DN',
+    #  'Daman And Diu': 'DN',
 }
 
+# Some additional expected districts based on state bulletins
 DISTRICTS_DICT = defaultdict(dict)
 DISTRICTS_ADDITIONAL = {
     'bsf camp': 'BSF Camp',
@@ -106,8 +107,14 @@ def inc(ref, key, count):
 def parse(raw_data, i):
     for j, entry in enumerate(raw_data['raw_data']):
         state_name = entry['detectedstate']
-        if not state_name:
-            # Entries having no state name are discarded
+        try:
+            state = STATE_CODES[state_name]
+        except KeyError:
+            # Entries having unrecognized state names are discarded
+            if state_name:
+                print('[{}: {}] [{}] [Bad state: {}] {}'.format(
+                    i, j + 2, entry['dateannounced'], state_name,
+                    entry['numcases']))
             continue
 
         try:
@@ -120,7 +127,6 @@ def parse(raw_data, i):
                 entry['detecteddistrict'], entry['numcases']))
             continue
 
-        state = STATE_CODES[state_name]
         district = entry['detecteddistrict']
         if not district:
             district = 'Unassigned'
@@ -166,10 +172,14 @@ def parse(raw_data, i):
 def parse_outcome(outcome_data, i):
     for j, entry in enumerate(outcome_data['deaths_recoveries']):
         state_name = entry['state']
-        if not state_name:
-            # Entries having no state name are discarded
+        try:
+            state = STATE_CODES[state_name]
+        except KeyError:
+            # Entries having unrecognized state names are discarded
+            if state_name:
+                print('[{}: {}] [{}] [Bad state: {}]'.format(
+                    i, j + 2, entry['date'], state_name))
             continue
-        state = STATE_CODES[state_name]
 
         try:
             fdate = datetime.strptime(entry['date'], '%d/%m/%Y')
@@ -293,7 +303,13 @@ def parse_state_test(state_test_data):
                                                   entry['state']))
             continue
 
-        state = STATE_CODES[entry['state']]
+        try:
+            state = STATE_CODES[entry['state']]
+        except KeyError:
+            # Entries having unrecognized state names are discarded
+            print('[{}] [{}] [Bad state: {}]'.format(j + 2, entry['updatedon'],
+                                                     entry['state']))
+            continue
 
         if entry['totaltested']:
             try:
@@ -340,6 +356,13 @@ def add_state_meta(raw_data):
     last_data = data[sorted(data)[-1]]
     for j, entry in enumerate(raw_data['statewise']):
         state = entry['statecode']
+        if state not in STATE_CODES.values():
+            # Entries having unrecognized state codes are discarded
+            print('[{}] [{}] [Bad state: {}]'.format(j + 2,
+                                                     entry['lastupdatedtime'],
+                                                     entry['statecode']))
+            continue
+
         try:
             fdate = datetime.strptime(entry['lastupdatedtime'],
                                       '%d/%m/%Y %H:%M:%S')
@@ -380,6 +403,11 @@ def add_district_meta(raw_data):
     last_data = data[sorted(data)[-1]]
     for j, entry in enumerate(raw_data.values()):
         state = entry['statecode']
+        if state not in STATE_CODES.values():
+            # Entries having unrecognized state codes are discarded
+            print('[{}] [Bad state: {}]'.format(j + 2, entry['statecode']))
+            continue
+
         for district, district_data in entry['districtData'].items():
             if district == 'Unknown':
                 district = 'Unassigned'
@@ -408,20 +436,31 @@ def add_district_meta(raw_data):
 
 
 def parse_old_districts(reader):
-    for row in reader:
+    for i, row in enumerate(reader):
         state = row['State_Code']
+        if state not in STATE_CODES.values():
+            print('[{}] [Bad state: {}]'.format(i, state))
+            continue
         district = row['District']
         if district.lower() in DISTRICTS_DICT[state]:
             district = DISTRICTS_DICT[state][district.lower()]
 
         for statistic in ['confirmed', 'deceased', 'recovered']:
             if row[statistic.capitalize()]:
-                data[DATE_END_OLD][state]['districts'][district]['total'][
-                    statistic] = int(row[statistic.capitalize()])
+                try:
+                    data[DATE_END_OLD][state]['districts'][district]['total'][
+                        statistic] = int(row[statistic.capitalize()])
+                except ValueError:
+                    print('[{}] [Bad value for {}] {} {}'.format(
+                        i, statistic, state, district))
 
 
 def parse_district_list(reader):
-    for row in reader:
+    for i, row in enumerate(reader):
+        state_name = row['State']
+        if state_name not in STATE_CODES:
+            print('[{}] [Bad state: {}]'.format(i, state_name))
+            continue
         DISTRICTS_DICT[STATE_CODES[row['State']]][
             row['District'].lower()] = row['District']
 
@@ -455,10 +494,14 @@ if __name__ == '__main__':
     print('{:{align}{width}}'.format('PARSER V3 START',
                                      align='^',
                                      width=PRINT_WIDTH))
-    # Get all expected district names
+
+    # Get all actual district names
+    print('-' * PRINT_WIDTH)
+    print('Parsing districts list...')
     with open(DISTRICT_LIST, 'r') as f:
         reader = csv.DictReader(f)
         parse_district_list(reader)
+    print('Done!')
 
     # Parse raw_data's
     print('-' * PRINT_WIDTH)
