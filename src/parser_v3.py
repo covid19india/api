@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
 
 import csv
+import logging
 import json
 import requests
 from collections import defaultdict, OrderedDict
 from datetime import datetime, timedelta
 from pathlib import Path
+
+# Set logging level
+logging.basicConfig(format='%(message)s', level=logging.INFO)
+
+# Tally final day counts with statewise/districtwise APIs?
+TALLY = True
 
 RESOURCE_DIR = Path('lib')
 # Contains list of districts
@@ -112,7 +119,7 @@ def parse(raw_data, i):
         except KeyError:
             # Entries having unrecognized state names are discarded
             if state_name:
-                print('[{}: {}] [{}] [Bad state: {}] {}'.format(
+                logging.warning('[{}: {}] [{}] [Bad state: {}] {}'.format(
                     i, j + 2, entry['dateannounced'], state_name,
                     entry['numcases']))
             continue
@@ -122,7 +129,7 @@ def parse(raw_data, i):
             date = datetime.strftime(fdate, '%Y-%m-%d')
         except ValueError:
             # Bad date
-            print('[{}: {}] [Bad date: {}] {}: {} {}'.format(
+            logging.warning('[{}: {}] [Bad date: {}] {}: {} {}'.format(
                 i, j + 2, entry['dateannounced'], entry['detectedstate'],
                 entry['detecteddistrict'], entry['numcases']))
             continue
@@ -136,13 +143,14 @@ def parse(raw_data, i):
             district = DISTRICTS_ADDITIONAL[district.lower()]
         else:
             # Print unexpected district names
-            print('[{}: {}] [{}] [Unexpected district: {}] {}'.format(
-                i, j + 2, date, district, state))
+            logging.warning(
+                '[{}: {}] [{}] [Unexpected district: {}] {}'.format(
+                    i, j + 2, date, district, state))
 
         try:
             count = int(entry['numcases'])
         except ValueError:
-            print('[{}: {}] [{}] [Bad numcases: {}] {}: {}'.format(
+            logging.warning('[{}: {}] [{}] [Bad numcases: {}] {}: {}'.format(
                 i, j + 2, date, entry['numcases'], state, district))
             continue
 
@@ -177,7 +185,7 @@ def parse_outcome(outcome_data, i):
         except KeyError:
             # Entries having unrecognized state names are discarded
             if state_name:
-                print('[{}: {}] [{}] [Bad state: {}]'.format(
+                logging.warning('[{}: {}] [{}] [Bad state: {}]'.format(
                     i, j + 2, entry['date'], state_name))
             continue
 
@@ -186,8 +194,8 @@ def parse_outcome(outcome_data, i):
             date = datetime.strftime(fdate, '%Y-%m-%d')
         except ValueError:
             # Bad date
-            print('[{}: {}] [Bad date: {}] {}'.format(i, j + 2, entry['date'],
-                                                      state))
+            logging.warning('[{}: {}] [Bad date: {}] {}'.format(
+                i, j + 2, entry['date'], state))
             continue
 
         district = entry['district']
@@ -199,8 +207,9 @@ def parse_outcome(outcome_data, i):
             district = DISTRICTS_ADDITIONAL[district.lower()]
         else:
             # Print unexpected district names
-            print('[{}: {}] [{}] [Unexpected district: {}] {}'.format(
-                i, j + 2, date, district, state))
+            logging.warning(
+                '[{}: {}] [{}] [Unexpected district: {}] {}'.format(
+                    i, j + 2, date, district, state))
 
         if entry['patientstatus'] == 'Recovered':
             inc(data[date]['TT']['delta'], 'recovered', 1)
@@ -274,17 +283,18 @@ def parse_icmr(icmr_data):
             date = datetime.strftime(fdate, '%Y-%m-%d')
         except ValueError:
             # Bad timestamp
-            print('[{}] [Bad timestamp: {}]'.format(j + 2,
-                                                    entry['updatetimestamp']))
+            logging.warning('[{}] [Bad timestamp: {}]'.format(
+                j + 2, entry['updatetimestamp']))
             continue
 
         if entry['totalsamplestested']:
             try:
                 count = int(entry['totalsamplestested'])
             except ValueError:
-                print('[{}] [{}] [Bad totalsamplestested: {}]'.format(
-                    j + 2, entry['updatetimestamp'],
-                    entry['totalsamplestested']))
+                logging.warning(
+                    '[{}] [{}] [Bad totalsamplestested: {}]'.format(
+                        j + 2, entry['updatetimestamp'],
+                        entry['totalsamplestested']))
                 continue
 
             data[date]['TT']['total']['tested'] = count
@@ -299,23 +309,23 @@ def parse_state_test(state_test_data):
             date = datetime.strftime(fdate, '%Y-%m-%d')
         except ValueError:
             # Bad date
-            print('[{}] [Bad date: {}] {}'.format(j + 2, entry['updatedon'],
-                                                  entry['state']))
+            logging.warning('[{}] [Bad date: {}] {}'.format(
+                j + 2, entry['updatedon'], entry['state']))
             continue
 
         try:
             state = STATE_CODES[entry['state']]
         except KeyError:
             # Entries having unrecognized state names are discarded
-            print('[{}] [{}] [Bad state: {}]'.format(j + 2, entry['updatedon'],
-                                                     entry['state']))
+            logging.warning('[{}] [{}] [Bad state: {}]'.format(
+                j + 2, entry['updatedon'], entry['state']))
             continue
 
         if entry['totaltested']:
             try:
                 count = int(entry['totaltested'])
             except ValueError:
-                print('[{}] [{}] [Bad totaltested: {}] {}'.format(
+                logging.warning('[{}] [{}] [Bad totaltested: {}] {}'.format(
                     j + 2, entry['updatedon'], entry['totaltested'],
                     entry['state']))
                 continue
@@ -358,9 +368,8 @@ def add_state_meta(raw_data):
         state = entry['statecode']
         if state not in STATE_CODES.values():
             # Entries having unrecognized state codes are discarded
-            print('[{}] [{}] [Bad state: {}]'.format(j + 2,
-                                                     entry['lastupdatedtime'],
-                                                     entry['statecode']))
+            logging.warning('[{}] [{}] [Bad state: {}]'.format(
+                j + 2, entry['lastupdatedtime'], entry['statecode']))
             continue
 
         try:
@@ -368,7 +377,7 @@ def add_state_meta(raw_data):
                                       '%d/%m/%Y %H:%M:%S')
         except ValueError:
             # Bad timestamp
-            print('[{}] [Bad timestamp: {}] {}'.format(
+            logging.warning('[{}] [Bad timestamp: {}] {}'.format(
                 j + 2, entry['lastupdatedtime'], state))
             continue
 
@@ -376,6 +385,9 @@ def add_state_meta(raw_data):
         if entry['statenotes']:
             last_data[state]['meta']['notes'] = entry['statenotes']
 
+        if not TALLY:
+            continue
+        # Tallying for sanity-check (would be removed later)
         for statistic in ['confirmed', 'deceased', 'recovered']:
             try:
                 values = {
@@ -387,7 +399,7 @@ def add_state_meta(raw_data):
                         statistic if statistic != 'deceased' else 'deaths')])
                 }
             except ValueError:
-                print('[{}] [{}] [Bad value for {}] {}'.format(
+                logging.warning('[{}] [{}] [Bad value for {}] {}'.format(
                     j + 2, entry['lastupdatedtime'], statistic, state))
                 continue
 
@@ -395,8 +407,10 @@ def add_state_meta(raw_data):
                 if values[stype] and values[stype] != last_data[state][stype][
                         statistic]:
                     # Print mismatch between statewise and v3
-                    print(state, statistic, stype, values[stype],
-                          last_data[state][stype][statistic])
+                    logging.warning(
+                        '{} {} {} mismatch: (sheet: {}, v3: {})'.format(
+                            state, statistic, stype, values[stype],
+                            last_data[state][stype][statistic]))
 
 
 def add_district_meta(raw_data):
@@ -405,7 +419,8 @@ def add_district_meta(raw_data):
         state = entry['statecode']
         if state not in STATE_CODES.values():
             # Entries having unrecognized state codes are discarded
-            print('[{}] [Bad state: {}]'.format(j + 2, entry['statecode']))
+            logging.warning('[{}] [Bad state: {}]'.format(
+                j + 2, entry['statecode']))
             continue
 
         for district, district_data in entry['districtData'].items():
@@ -414,6 +429,10 @@ def add_district_meta(raw_data):
             if district_data['notes']:
                 last_data[state]['districts'][district]['meta'][
                     'notes'] = district_data['notes']
+
+            if not TALLY:
+                continue
+            # Tallying for sanity-check (can remove later)
             for statistic in ['confirmed', 'deceased', 'recovered']:
                 try:
                     values = {
@@ -421,7 +440,7 @@ def add_district_meta(raw_data):
                         'delta': int(district_data['delta'][statistic])
                     }
                 except ValueError:
-                    print('[{}] [Bad value for {}] {} {}'.format(
+                    logging.warning('[{}] [Bad value for {}] {} {}'.format(
                         j + 2, statistic, state, district))
                     continue
 
@@ -429,17 +448,18 @@ def add_district_meta(raw_data):
                     if values[stype] and values[stype] != last_data[state][
                             'districts'][district][stype][statistic]:
                         # Print mismatch between districtwise and v3
-                        print(
-                            state, district, statistic, stype, values[stype],
-                            last_data[state]['districts'][district][stype]
-                            [statistic])
+                        logging.warning(
+                            '{} {} {} {} mismatch: (sheet: {}, v3: {})'.format(
+                                state, district, statistic, stype,
+                                values[stype], last_data[state]['districts']
+                                [district][stype][statistic]))
 
 
 def parse_old_districts(reader):
     for i, row in enumerate(reader):
         state = row['State_Code']
         if state not in STATE_CODES.values():
-            print('[{}] [Bad state: {}]'.format(i, state))
+            logging.warning('[{}] [Bad state: {}]'.format(i, state))
             continue
         district = row['District']
         if district.lower() in DISTRICTS_DICT[state]:
@@ -451,7 +471,7 @@ def parse_old_districts(reader):
                     data[DATE_END_OLD][state]['districts'][district]['total'][
                         statistic] = int(row[statistic.capitalize()])
                 except ValueError:
-                    print('[{}] [Bad value for {}] {} {}'.format(
+                    logging.warning('[{}] [Bad value for {}] {} {}'.format(
                         i, statistic, state, district))
 
 
@@ -459,7 +479,7 @@ def parse_district_list(reader):
     for i, row in enumerate(reader):
         state_name = row['State']
         if state_name not in STATE_CODES:
-            print('[{}] [Bad state: {}]'.format(i, state_name))
+            logging.warning('[{}] [Bad state: {}]'.format(i, state_name))
             continue
         DISTRICTS_DICT[STATE_CODES[row['State']]][
             row['District'].lower()] = row['District']
@@ -490,22 +510,22 @@ def generate_timeseries(districts=False):
 
 
 if __name__ == '__main__':
-    print('-' * PRINT_WIDTH)
-    print('{:{align}{width}}'.format('PARSER V3 START',
-                                     align='^',
-                                     width=PRINT_WIDTH))
+    logging.info('-' * PRINT_WIDTH)
+    logging.info('{:{align}{width}}'.format('PARSER V3 START',
+                                            align='^',
+                                            width=PRINT_WIDTH))
 
     # Get all actual district names
-    print('-' * PRINT_WIDTH)
-    print('Parsing districts list...')
+    logging.info('-' * PRINT_WIDTH)
+    logging.info('Parsing districts list...')
     with open(DISTRICT_LIST, 'r') as f:
         reader = csv.DictReader(f)
         parse_district_list(reader)
-    print('Done!')
+    logging.info('Done!')
 
     # Parse raw_data's
-    print('-' * PRINT_WIDTH)
-    print('Parsing raw_data...')
+    logging.info('-' * PRINT_WIDTH)
+    logging.info('Parsing raw_data...')
     i = 1
     while True:
         f = INPUT_DIR / RAW_DATA.format(n=i)
@@ -515,55 +535,55 @@ if __name__ == '__main__':
             raw_data = json.load(f)
             parse(raw_data, i)
         i += 1
-    print('Done!')
+    logging.info('Done!')
 
     # Parse additional deceased/recovered info not in raw_data 1 and 2
-    print('-' * PRINT_WIDTH)
-    print('Parsing deaths_recoveries...')
+    logging.info('-' * PRINT_WIDTH)
+    logging.info('Parsing deaths_recoveries...')
     for i in [1, 2]:
         f = INPUT_DIR / OUTCOME_DATA.format(n=i)
         with open(f, 'r') as f:
             raw_data = json.load(f)
             parse_outcome(raw_data, i)
-    print('Done!')
+    logging.info('Done!')
 
-    print('-' * PRINT_WIDTH)
-    print('Adding district data for 26th April...')
+    logging.info('-' * PRINT_WIDTH)
+    logging.info('Adding district data for 26th April...')
     # Parse gospel district data for 26th April
     with open(OLD_DISTRICT_DATA, 'r') as f:
         reader = csv.DictReader(f)
         parse_old_districts(reader)
-    print('Done!')
+    logging.info('Done!')
 
-    print('-' * PRINT_WIDTH)
-    print('Generating cumulative statistics...')
+    logging.info('-' * PRINT_WIDTH)
+    logging.info('Generating cumulative statistics...')
     # Generate total (cumulative) data points
     accumulate()
-    print('Done!')
+    logging.info('Done!')
 
-    print('-' * PRINT_WIDTH)
-    print('Parsing ICMR test data for India...')
+    logging.info('-' * PRINT_WIDTH)
+    logging.info('Parsing ICMR test data for India...')
     f = ICMR_TEST_DATA
     with open(f, 'r') as f:
         raw_data = json.load(f, object_pairs_hook=OrderedDict)
         parse_icmr(raw_data)
-    print('Done!')
+    logging.info('Done!')
 
-    print('-' * PRINT_WIDTH)
-    print('Parsing test data for all states...')
+    logging.info('-' * PRINT_WIDTH)
+    logging.info('Parsing test data for all states...')
     f = STATE_TEST_DATA
     with open(f, 'r') as f:
         raw_data = json.load(f, object_pairs_hook=OrderedDict)
         parse_state_test(raw_data)
-    print('Done!')
+    logging.info('Done!')
 
-    print('-' * PRINT_WIDTH)
-    print('Generating daily tested values...')
+    logging.info('-' * PRINT_WIDTH)
+    logging.info('Generating daily tested values...')
     fill_deltas_tested()
-    print('Done!')
+    logging.info('Done!')
 
-    print('-' * PRINT_WIDTH)
-    print('Adding state/district meta data and tallying...')
+    logging.info('-' * PRINT_WIDTH)
+    logging.info('Adding state/district meta data and tallying...')
     f = STATE_WISE
     with open(f, 'r') as f:
         raw_data = json.load(f, object_pairs_hook=OrderedDict)
@@ -573,10 +593,10 @@ if __name__ == '__main__':
     with open(f, 'r') as f:
         raw_data = json.load(f, object_pairs_hook=OrderedDict)
         add_district_meta(raw_data)
-    print('Done!')
+    logging.info('Done!')
 
-    print('-' * PRINT_WIDTH)
-    print('Dumping APIs...')
+    logging.info('-' * PRINT_WIDTH)
+    logging.info('Dumping APIs...')
     OUTPUT_MIN_DIR.mkdir(parents=True, exist_ok=True)
 
     # Dump prettified full data json
@@ -609,9 +629,9 @@ if __name__ == '__main__':
             'w') as f:
         json.dump(timeseries, f, separators=(',', ':'), sort_keys=True)
 
-    print('Done!')
-    print('-' * PRINT_WIDTH)
-    print('{:{align}{width}}'.format('PARSER V3 END',
-                                     align='^',
-                                     width=PRINT_WIDTH))
-    print('-' * PRINT_WIDTH)
+    logging.info('Done!')
+    logging.info('-' * PRINT_WIDTH)
+    logging.info('{:{align}{width}}'.format('PARSER V3 END',
+                                            align='^',
+                                            width=PRINT_WIDTH))
+    logging.info('-' * PRINT_WIDTH)
