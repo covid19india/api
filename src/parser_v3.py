@@ -3,7 +3,6 @@
 import csv
 import logging
 import json
-import requests
 from collections import defaultdict, OrderedDict
 from datetime import datetime, timedelta
 from pathlib import Path
