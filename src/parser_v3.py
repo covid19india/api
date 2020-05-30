@@ -13,6 +13,10 @@ logging.basicConfig(stream=sys.stdout,
                     format='%(message)s',
                     level=logging.INFO)
 
+# Current date in India
+INDIA_DATE = datetime.strftime(
+    datetime.utcnow() + timedelta(hours=5, minutes=30), '%Y-%m-%d')
+
 INPUT_DIR = Path('tmp')
 # Contains state codes to be used as API keys
 STATE_META_DATA = INPUT_DIR / 'misc.json'
@@ -105,6 +109,14 @@ def parse(raw_data, i):
             fdate = datetime.strptime(entry['dateannounced'].strip(),
                                       '%d/%m/%Y')
             date = datetime.strftime(fdate, '%Y-%m-%d')
+            if date > INDIA_DATE:
+                # Entries from future dates will be ignored
+                logging.warning(
+                    '[V{}: L{}] [Future date: {}] {}: {} {}'.format(
+                        i, j + 2, entry['dateannounced'],
+                        entry['detectedstate'], entry['detecteddistrict'],
+                        entry['numcases']))
+                continue
         except ValueError:
             # Bad date
             logging.warning('[V{}: L{}] [Bad date: {}] {}: {} {}'.format(
@@ -171,6 +183,11 @@ def parse_outcome(outcome_data, i):
         try:
             fdate = datetime.strptime(entry['date'].strip(), '%d/%m/%Y')
             date = datetime.strftime(fdate, '%Y-%m-%d')
+            if date > INDIA_DATE:
+                # Entries from future dates will be ignored
+                logging.warning('[V{}: L{}] [Future date: {}] {}'.format(
+                    i, j + 2, entry['date'], state))
+                continue
         except ValueError:
             # Bad date
             logging.warning('[V{}: L{}] [Bad date: {}] {}'.format(
@@ -224,62 +241,17 @@ def parse_district_gospel(reader):
                         i, statistic, state, district))
 
 
-def accumulate():
-    for date in sorted(data):
-        curr_data = data[date]
-
-        fdate = datetime.strptime(date, '%Y-%m-%d')
-        prev_date = datetime.strftime(fdate - timedelta(days=1), '%Y-%m-%d')
-
-        if prev_date in data:
-            prev_data = data[prev_date]
-            for state, state_data in prev_data.items():
-                for statistic in ['confirmed', 'deceased', 'recovered']:
-                    if statistic in state_data['total']:
-                        inc(curr_data[state]['total'], statistic,
-                            state_data['total'][statistic])
-
-                if state == 'TT' or date <= GOSPEL_DATE:
-                    # Total state has no district data
-                    # Old district data is already accumulated
-                    continue
-
-                for district, district_data in state_data['districts'].items():
-                    for statistic in ['confirmed', 'deceased', 'recovered']:
-                        if statistic in district_data['total']:
-                            inc(
-                                curr_data[state]['districts'][district]
-                                ['total'], statistic,
-                                district_data['total'][statistic])
-
-        for state, state_data in curr_data.items():
-            if 'delta' in state_data:
-                for statistic in ['confirmed', 'deceased', 'recovered']:
-                    if statistic in state_data['delta']:
-                        inc(state_data['total'], statistic,
-                            state_data['delta'][statistic])
-
-                if state == 'TT' or date <= GOSPEL_DATE:
-                    # Total state has no district data
-                    # Old district data is already accumulated
-                    continue
-
-                for district, district_data in state_data['districts'].items():
-                    if 'delta' in district_data:
-                        for statistic in [
-                                'confirmed', 'deceased', 'recovered'
-                        ]:
-                            if statistic in district_data['delta']:
-                                inc(district_data['total'], statistic,
-                                    district_data['delta'][statistic])
-
-
 def parse_icmr(icmr_data):
     for j, entry in enumerate(icmr_data['tested']):
         try:
             fdate = datetime.strptime(entry['updatetimestamp'].strip(),
                                       '%d/%m/%Y %H:%M:%S')
             date = datetime.strftime(fdate, '%Y-%m-%d')
+            if date > INDIA_DATE:
+                # Entries from future dates will be ignored
+                logging.warning('[L{}] [Future timestamp: {}]'.format(
+                    j + 2, entry['updatetimestamp']))
+                continue
         except ValueError:
             # Bad timestamp
             logging.warning('[L{}] [Bad timestamp: {}]'.format(
@@ -304,6 +276,11 @@ def parse_state_test(state_test_data):
         try:
             fdate = datetime.strptime(entry['updatedon'].strip(), '%d/%m/%Y')
             date = datetime.strftime(fdate, '%Y-%m-%d')
+            if date > INDIA_DATE:
+                # Entries from future dates will be ignored
+                logging.warning('[L{}] [Future date: {}] {}'.format(
+                    j + 2, entry['updatedon'], entry['state']))
+                continue
         except ValueError:
             # Bad date
             logging.warning('[L{}] [Bad date: {}] {}'.format(
@@ -334,30 +311,30 @@ def parse_state_test(state_test_data):
         data[date][state]['meta']['tested']['last_updated'] = date
 
 
-def fill_deltas_tested():
-    for date in sorted(data):
+def fill_tested():
+    dates = sorted(data)
+    for i, date in enumerate(dates):
         curr_data = data[date]
 
-        fdate = datetime.strptime(date, '%Y-%m-%d')
-        prev_date = datetime.strftime(fdate - timedelta(days=1), '%Y-%m-%d')
-
+        # Initialize today's delta with today's cumulative
         for state, state_data in curr_data.items():
             if 'total' in state_data:
                 if 'tested' in state_data['total']:
-                    # Initialize today's delta with today's cumulative
                     state_data['delta']['tested'] = state_data['total'][
                         'tested']
 
-        if prev_date in data:
+        if i > 0:
+            prev_date = dates[i - 1]
             prev_data = data[prev_date]
             for state, state_data in prev_data.items():
                 if 'tested' in state_data['total']:
                     if 'tested' in curr_data[state]['total']:
-                        # Subtract previous date's cumulative to get delta
+                        # Subtract previous cumulative to get delta
                         curr_data[state]['delta']['tested'] -= state_data[
                             'total']['tested']
                     else:
-                        # Take today's value to be same as previous date's value
+                        # Take today's cumulative to be same as yesterday's
+                        # cumulative if today's cumulative is missing
                         curr_data[state]['total']['tested'] = state_data[
                             'total']['tested']
                         curr_data[state]['meta']['tested'][
@@ -365,6 +342,80 @@ def fill_deltas_tested():
                         curr_data[state]['meta']['tested'][
                             'last_updated'] = state_data['meta']['tested'][
                                 'last_updated']
+
+
+def accumulate():
+    dates = sorted(data)
+    for i, date in enumerate(dates):
+        curr_data = data[date]
+
+        if i > 0:
+            # Initialize today's cumulative with previous available
+            prev_date = dates[i - 1]
+            prev_data = data[prev_date]
+            for state, state_data in prev_data.items():
+                for statistic in ['confirmed', 'deceased', 'recovered']:
+                    if statistic in state_data['total']:
+                        inc(curr_data[state]['total'], statistic,
+                            state_data['total'][statistic])
+
+                if state == 'TT' or date <= GOSPEL_DATE:
+                    # Total state has no district data
+                    # Old district data is already accumulated
+                    continue
+
+                for district, district_data in state_data['districts'].items():
+                    for statistic in ['confirmed', 'deceased', 'recovered']:
+                        if statistic in district_data['total']:
+                            inc(
+                                curr_data[state]['districts'][district]
+                                ['total'], statistic,
+                                district_data['total'][statistic])
+
+        # Add today's dailys to today's cumulative
+        for state, state_data in curr_data.items():
+            if 'delta' in state_data:
+                for statistic in ['confirmed', 'deceased', 'recovered']:
+                    if statistic in state_data['delta']:
+                        inc(state_data['total'], statistic,
+                            state_data['delta'][statistic])
+
+                if state == 'TT' or date <= GOSPEL_DATE:
+                    # Total state has no district data
+                    # Old district data is already accumulated
+                    continue
+
+                for district, district_data in state_data['districts'].items():
+                    if 'delta' in district_data:
+                        for statistic in [
+                                'confirmed', 'deceased', 'recovered'
+                        ]:
+                            if statistic in district_data['delta']:
+                                inc(district_data['total'], statistic,
+                                    district_data['delta'][statistic])
+
+
+def generate_timeseries(districts=False):
+    for date in sorted(data):
+        curr_data = data[date]
+
+        for state, state_data in curr_data.items():
+            for stype in ['total', 'delta']:
+                if stype in state_data:
+                    for statistic, value in state_data[stype].items():
+                        timeseries[state][date][stype][statistic] = value
+
+            if not districts or state == 'TT' or date <= GOSPEL_DATE:
+                # Total state has no district data
+                # District timeseries starts only from 26th April
+                continue
+
+            for district, district_data in state_data['districts'].items():
+                for stype in ['total', 'delta']:
+                    if stype in district_data:
+                        for statistic, value in district_data[stype].items():
+                            timeseries[state]['districts'][district][date][
+                                stype][statistic] = value
 
 
 def add_state_meta(raw_data):
@@ -491,29 +542,6 @@ def tally_districtwise(raw_data):
                                     values[stype], parsed_value))
 
 
-def generate_timeseries(districts=False):
-    for date in sorted(data):
-        curr_data = data[date]
-
-        for state, state_data in curr_data.items():
-            for stype in ['total', 'delta']:
-                if stype in state_data:
-                    for statistic, value in state_data[stype].items():
-                        timeseries[state][date][stype][statistic] = value
-
-            if not districts or state == 'TT' or date <= GOSPEL_DATE:
-                # Total state has no district data
-                # District timeseries starts only from 26th April
-                continue
-
-            for district, district_data in state_data['districts'].items():
-                for stype in ['total', 'delta']:
-                    if stype in district_data:
-                        for statistic, value in district_data[stype].items():
-                            timeseries[state]['districts'][district][date][
-                                stype][statistic] = value
-
-
 if __name__ == '__main__':
     logging.info('-' * PRINT_WIDTH)
     logging.info('{:{align}{width}}'.format('PARSER V3 START',
@@ -569,12 +597,6 @@ if __name__ == '__main__':
     logging.info('Done!')
 
     logging.info('-' * PRINT_WIDTH)
-    logging.info('Generating cumulative statistics...')
-    # Generate total (cumulative) data points
-    accumulate()
-    logging.info('Done!')
-
-    logging.info('-' * PRINT_WIDTH)
     logging.info('Parsing ICMR test data for India...')
     f = ICMR_TEST_DATA
     with open(f, 'r') as f:
@@ -592,11 +614,23 @@ if __name__ == '__main__':
 
     logging.info('-' * PRINT_WIDTH)
     logging.info('Generating daily tested values...')
-    fill_deltas_tested()
+    fill_tested()
     logging.info('Done!')
 
     logging.info('-' * PRINT_WIDTH)
-    logging.info('Adding state/district meta data...')
+    logging.info('Generating cumulative CRD values...')
+    # Generate total (cumulative) data points
+    accumulate()
+    logging.info('Done!')
+
+    # Generate timeseries
+    logging.info('-' * PRINT_WIDTH)
+    logging.info('Generating timeseries...')
+    generate_timeseries(districts=False)
+    logging.info('Done!')
+
+    logging.info('-' * PRINT_WIDTH)
+    logging.info('Adding state/district metadata...')
     f = STATE_WISE
     with open(f, 'r') as f:
         raw_data = json.load(f, object_pairs_hook=OrderedDict)
@@ -634,9 +668,6 @@ if __name__ == '__main__':
         with open((OUTPUT_MIN_DIR / fn).with_suffix('.min.json'), 'w') as f:
             json.dump(curr_data, f, separators=(',', ':'), sort_keys=True)
 
-    # Generate timeseries
-    generate_timeseries(districts=False)
-
     # Dump timeseries json
     with open((OUTPUT_DIR / OUTPUT_TIMESERIES_FILENAME).with_suffix('.json'),
               'w') as f:
@@ -648,18 +679,18 @@ if __name__ == '__main__':
 
     logging.info('Done!')
 
-    # Tally final day counts with statewise API
+    # Tally final date counts with statewise API
     logging.info('-' * PRINT_WIDTH)
-    logging.info('Tallying final day counts with statewise...')
+    logging.info('Tallying final date counts with statewise sheet...')
     f = STATE_WISE
     with open(f, 'r') as f:
         raw_data = json.load(f, object_pairs_hook=OrderedDict)
         tally_statewise(raw_data)
     logging.info('Done!')
 
-    # Tally final day counts with districtwise API
+    # Tally final date counts with districtwise API
     logging.info('-' * PRINT_WIDTH)
-    logging.info('Tallying final day counts with districtwise...')
+    logging.info('Tallying final date counts with districtwise sheet...')
     f = DISTRICT_WISE
     with open(f, 'r') as f:
         raw_data = json.load(f, object_pairs_hook=OrderedDict)
