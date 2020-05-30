@@ -14,15 +14,17 @@ logging.basicConfig(stream=sys.stdout,
                     level=logging.INFO)
 
 INPUT_DIR = Path('tmp')
-# Contains list of districts
+# Contains state codes to be used as API keys
+STATE_META_DATA = INPUT_DIR / 'misc.json'
+# Contains list of geographical districts
 DISTRICT_LIST = INPUT_DIR / 'csv' / 'latest' / 'district_list.csv'
 # All raw_data's
 RAW_DATA = 'raw_data{n}.json'
 # Contains deaths and recoveries for entries in raw_data1 and raw_data2
 OUTCOME_DATA = 'deaths_recoveries{n}.json'
 # Contains district data on 26th April
-OLD_DISTRICT_DATA = INPUT_DIR / 'csv' / 'latest' / 'districts_26apr_gospel.csv'
-DATE_END_OLD = '2020-04-26'
+DISTRICT_DATA_GOSPEL = INPUT_DIR / 'csv' / 'latest' / 'districts_26apr_gospel.csv'
+GOSPEL_DATE = '2020-04-26'
 # India testing data
 ICMR_TEST_DATA = INPUT_DIR / 'data.json'
 # States testing data
@@ -38,49 +40,11 @@ OUTPUT_MIN_DIR = OUTPUT_DIR / 'min'
 OUTPUT_DATA_PREFIX = 'data'
 OUTPUT_TIMESERIES_FILENAME = 'timeseries'
 
-STATE_CODES = {
-    'Andhra Pradesh': 'AP',
-    'Arunachal Pradesh': 'AR',
-    'Assam': 'AS',
-    'Bihar': 'BR',
-    'Chhattisgarh': 'CT',
-    'Goa': 'GA',
-    'Gujarat': 'GJ',
-    'Haryana': 'HR',
-    'Himachal Pradesh': 'HP',
-    'Jharkhand': 'JH',
-    'Karnataka': 'KA',
-    'Kerala': 'KL',
-    'Madhya Pradesh': 'MP',
-    'Maharashtra': 'MH',
-    'Manipur': 'MN',
-    'Meghalaya': 'ML',
-    'Mizoram': 'MZ',
-    'Nagaland': 'NL',
-    'Odisha': 'OR',
-    'Punjab': 'PB',
-    'Rajasthan': 'RJ',
-    'Sikkim': 'SK',
-    'State Unassigned': 'UN',
-    'Tamil Nadu': 'TN',
-    'Telangana': 'TG',
-    'Tripura': 'TR',
-    'Uttarakhand': 'UT',
-    'Uttar Pradesh': 'UP',
-    'West Bengal': 'WB',
-    'Andaman and Nicobar Islands': 'AN',
-    'Chandigarh': 'CH',
-    'Dadra and Nagar Haveli and Daman and Diu': 'DN',
-    'Delhi': 'DL',
-    'Jammu and Kashmir': 'JK',
-    'Ladakh': 'LA',
-    'Lakshadweep': 'LD',
-    'Puducherry': 'PY',
-    'Total': 'TT',
-}
-
-# Some additional expected districts based on state bulletins
+# Two digit state codes
+STATE_CODES = {}
 DISTRICTS_DICT = defaultdict(dict)
+# Some additional expected districts based on state bulletins
+# These won't show up as Unexpected districts in the log
 DISTRICTS_ADDITIONAL = {
     'bsf camp': 'BSF Camp',
     'italians': 'Italians',
@@ -92,11 +56,28 @@ DISTRICTS_ADDITIONAL = {
     'unassigned': 'Unassigned',
 }
 
-PRINT_WIDTH = 60
+PRINT_WIDTH = 70
 
+# Nested default dict of dict
 ddict = lambda: defaultdict(ddict)
 data = ddict()
 timeseries = ddict()
+
+
+def parse_state_codes(raw_data):
+    for entry in raw_data['state_meta_data']:
+        STATE_CODES[entry['stateut'].strip().lower(
+        )] = entry['abbreviation'].strip().upper()
+
+
+def parse_district_list(reader):
+    for i, row in enumerate(reader):
+        state_name = row['State'].strip().lower()
+        if state_name not in STATE_CODES:
+            logging.warning('[{}] [Bad state: {}]'.format(i, row['State']))
+            continue
+        district = row['District'].strip()
+        DISTRICTS_DICT[STATE_CODES[state_name]][district.lower()] = district
 
 
 def inc(ref, key, count):
@@ -107,19 +88,21 @@ def inc(ref, key, count):
 
 def parse(raw_data, i):
     for j, entry in enumerate(raw_data['raw_data']):
-        state_name = entry['detectedstate']
+        state_name = entry['detectedstate'].strip().lower()
         try:
             state = STATE_CODES[state_name]
         except KeyError:
-            # Entries having unrecognized state names are discarded
+            # Entries with empty state names are discarded
             if state_name:
+                # Unrecognized state entries are discarded and logged
                 logging.warning('[V{}: L{}] [{}] [Bad state: {}] {}'.format(
-                    i, j + 2, entry['dateannounced'], state_name,
+                    i, j + 2, entry['dateannounced'], entry['detectedstate'],
                     entry['numcases']))
             continue
 
         try:
-            fdate = datetime.strptime(entry['dateannounced'], '%d/%m/%Y')
+            fdate = datetime.strptime(entry['dateannounced'].strip(),
+                                      '%d/%m/%Y')
             date = datetime.strftime(fdate, '%Y-%m-%d')
         except ValueError:
             # Bad date
@@ -128,7 +111,7 @@ def parse(raw_data, i):
                 entry['detecteddistrict'], entry['numcases']))
             continue
 
-        district = entry['detecteddistrict']
+        district = entry['detecteddistrict'].strip()
         if not district:
             district = 'Unassigned'
         elif district.lower() in DISTRICTS_DICT[state]:
@@ -142,27 +125,27 @@ def parse(raw_data, i):
                     i, j + 2, date, district, state))
 
         try:
-            count = int(entry['numcases'])
+            count = int(entry['numcases'].strip())
         except ValueError:
             logging.warning('[V{}: L{}] [{}] [Bad numcases: {}] {}: {}'.format(
                 i, j + 2, date, entry['numcases'], state, district))
             continue
 
-        if entry['currentstatus'] == 'Hospitalized' or i < 3:
+        if entry['currentstatus'].strip() == 'Hospitalized' or i < 3:
             inc(data[date]['TT']['delta'], 'confirmed', count)
             inc(data[date][state]['delta'], 'confirmed', count)
             # Don't parse old district data since it's unreliable
             if i > 2:
                 inc(data[date][state]['districts'][district]['delta'],
                     'confirmed', count)
-        elif entry['currentstatus'] == 'Recovered':
+        elif entry['currentstatus'].strip() == 'Recovered':
             inc(data[date]['TT']['delta'], 'recovered', count)
             inc(data[date][state]['delta'], 'recovered', count)
             # Don't parse old district data unreliable since it's unreliable
             if i > 2:
                 inc(data[date][state]['districts'][district]['delta'],
                     'recovered', count)
-        elif entry['currentstatus'] == 'Deceased':
+        elif entry['currentstatus'].strip() == 'Deceased':
             inc(data[date]['TT']['delta'], 'deceased', count)
             inc(data[date][state]['delta'], 'deceased', count)
             # Don't parse old district data unreliable since it's unreliable
@@ -173,18 +156,19 @@ def parse(raw_data, i):
 
 def parse_outcome(outcome_data, i):
     for j, entry in enumerate(outcome_data['deaths_recoveries']):
-        state_name = entry['state']
+        state_name = entry['state'].strip().lower()
         try:
             state = STATE_CODES[state_name]
         except KeyError:
-            # Entries having unrecognized state names are discarded
+            # Entries with empty state names are discarded
             if state_name:
+                # Unrecognized state entries are discarded and logged
                 logging.warning('[V{}: L{}] [{}] [Bad state: {}]'.format(
-                    i, j + 2, entry['date'], state_name))
+                    i, j + 2, entry['date'], entry['state']))
             continue
 
         try:
-            fdate = datetime.strptime(entry['date'], '%d/%m/%Y')
+            fdate = datetime.strptime(entry['date'].strip(), '%d/%m/%Y')
             date = datetime.strftime(fdate, '%Y-%m-%d')
         except ValueError:
             # Bad date
@@ -192,7 +176,7 @@ def parse_outcome(outcome_data, i):
                 i, j + 2, entry['date'], state))
             continue
 
-        district = entry['district']
+        district = entry['district'].strip()
         if not district:
             district = 'Unassigned'
         elif district.lower() in DISTRICTS_DICT[state]:
@@ -205,18 +189,38 @@ def parse_outcome(outcome_data, i):
                 '[V{}: L{}] [{}] [Unexpected district: {}] {}'.format(
                     i, j + 2, date, district, state))
 
-        if entry['patientstatus'] == 'Recovered':
+        if entry['patientstatus'].strip() == 'Recovered':
             inc(data[date]['TT']['delta'], 'recovered', 1)
             inc(data[date][state]['delta'], 'recovered', 1)
             ## Don't parse old district data since it's unreliable
             #  inc(data[date][state]['districts'][district]['delta'], 'recovered',
             #      1)
-        elif entry['patientstatus'] == 'Deceased':
+        elif entry['patientstatus'].strip() == 'Deceased':
             inc(data[date]['TT']['delta'], 'deceased', 1)
             inc(data[date][state]['delta'], 'deceased', 1)
             ## Don't parse old district data since it's unreliable
             #  inc(data[date][state]['districts'][district]['delta'], 'deceased',
             #      1)
+
+
+def parse_district_gospel(reader):
+    for i, row in enumerate(reader):
+        state = row['State_Code'].strip().upper()
+        if state not in STATE_CODES.values():
+            logging.warning('[{}] [Bad state: {}]'.format(i, state))
+            continue
+        district = row['District'].strip()
+        if district.lower() in DISTRICTS_DICT[state]:
+            district = DISTRICTS_DICT[state][district.lower()]
+
+        for statistic in ['confirmed', 'deceased', 'recovered']:
+            if row[statistic.capitalize()]:
+                try:
+                    data[GOSPEL_DATE][state]['districts'][district]['total'][
+                        statistic] = int(row[statistic.capitalize()])
+                except ValueError:
+                    logging.warning('[{}] [Bad value for {}] {} {}'.format(
+                        i, statistic, state, district))
 
 
 def accumulate():
@@ -234,7 +238,7 @@ def accumulate():
                         inc(curr_data[state]['total'], statistic,
                             state_data['total'][statistic])
 
-                if state == 'TT' or date <= DATE_END_OLD:
+                if state == 'TT' or date <= GOSPEL_DATE:
                     # Total state has no district data
                     # Old district data is already accumulated
                     continue
@@ -254,7 +258,7 @@ def accumulate():
                         inc(state_data['total'], statistic,
                             state_data['delta'][statistic])
 
-                if state == 'TT' or date <= DATE_END_OLD:
+                if state == 'TT' or date <= GOSPEL_DATE:
                     # Total state has no district data
                     # Old district data is already accumulated
                     continue
@@ -272,7 +276,7 @@ def accumulate():
 def parse_icmr(icmr_data):
     for j, entry in enumerate(icmr_data['tested']):
         try:
-            fdate = datetime.strptime(entry['updatetimestamp'],
+            fdate = datetime.strptime(entry['updatetimestamp'].strip(),
                                       '%d/%m/%Y %H:%M:%S')
             date = datetime.strftime(fdate, '%Y-%m-%d')
         except ValueError:
@@ -281,25 +285,23 @@ def parse_icmr(icmr_data):
                 j + 2, entry['updatetimestamp']))
             continue
 
-        if entry['totalsamplestested']:
-            try:
-                count = int(entry['totalsamplestested'])
-            except ValueError:
-                logging.warning(
-                    '[L{}] [{}] [Bad totalsamplestested: {}]'.format(
-                        j + 2, entry['updatetimestamp'],
-                        entry['totalsamplestested']))
-                continue
+        count_str = entry['totalsamplestested'].strip()
+        try:
+            count = int(count_str)
+        except ValueError:
+            logging.warning('[L{}] [{}] [Bad totalsamplestested: {}]'.format(
+                j + 2, entry['updatetimestamp'], entry['totalsamplestested']))
+            continue
 
-            data[date]['TT']['total']['tested'] = count
-            data[date]['TT']['meta']['tested']['source'] = entry['source']
-            data[date]['TT']['meta']['tested']['last_updated'] = date
+        data[date]['TT']['total']['tested'] = count
+        data[date]['TT']['meta']['tested']['source'] = entry['source'].strip()
+        data[date]['TT']['meta']['tested']['last_updated'] = date
 
 
 def parse_state_test(state_test_data):
     for j, entry in enumerate(state_test_data['states_tested_data']):
         try:
-            fdate = datetime.strptime(entry['updatedon'], '%d/%m/%Y')
+            fdate = datetime.strptime(entry['updatedon'].strip(), '%d/%m/%Y')
             date = datetime.strftime(fdate, '%Y-%m-%d')
         except ValueError:
             # Bad date
@@ -307,26 +309,28 @@ def parse_state_test(state_test_data):
                 j + 2, entry['updatedon'], entry['state']))
             continue
 
+        state_name = entry['state'].strip().lower()
         try:
-            state = STATE_CODES[entry['state']]
+            state = STATE_CODES[state_name]
         except KeyError:
             # Entries having unrecognized state names are discarded
             logging.warning('[L{}] [{}] [Bad state: {}]'.format(
                 j + 2, entry['updatedon'], entry['state']))
             continue
 
-        if entry['totaltested']:
-            try:
-                count = int(entry['totaltested'])
-            except ValueError:
-                logging.warning('[L{}] [{}] [Bad totaltested: {}] {}'.format(
-                    j + 2, entry['updatedon'], entry['totaltested'],
-                    entry['state']))
-                continue
+        count_str = entry['totaltested'].strip()
+        try:
+            count = int(count_str)
+        except ValueError:
+            logging.warning('[L{}] [{}] [Bad totaltested: {}] {}'.format(
+                j + 2, entry['updatedon'], entry['totaltested'],
+                entry['state']))
+            continue
 
-            data[date][state]['total']['tested'] = count
-            data[date][state]['meta']['tested']['source'] = entry['source1']
-            data[date][state]['meta']['tested']['last_updated'] = date
+        data[date][state]['total']['tested'] = count
+        data[date][state]['meta']['tested']['source'] = entry['source1'].strip(
+        )
+        data[date][state]['meta']['tested']['last_updated'] = date
 
 
 def fill_deltas_tested():
@@ -365,7 +369,7 @@ def fill_deltas_tested():
 def add_state_meta(raw_data):
     last_data = data[sorted(data)[-1]]
     for j, entry in enumerate(raw_data['statewise']):
-        state = entry['statecode']
+        state = entry['statecode'].strip().upper()
         if state not in STATE_CODES.values():
             # Entries having unrecognized state codes are discarded
             logging.warning('[L{}] [{}] [Bad state: {}]'.format(
@@ -373,7 +377,7 @@ def add_state_meta(raw_data):
             continue
 
         try:
-            fdate = datetime.strptime(entry['lastupdatedtime'],
+            fdate = datetime.strptime(entry['lastupdatedtime'].strip(),
                                       '%d/%m/%Y %H:%M:%S')
         except ValueError:
             # Bad timestamp
@@ -383,13 +387,13 @@ def add_state_meta(raw_data):
 
         last_data[state]['meta']['last_updated'] = fdate.isoformat() + '+05:30'
         if entry['statenotes']:
-            last_data[state]['meta']['notes'] = entry['statenotes']
+            last_data[state]['meta']['notes'] = entry['statenotes'].strip()
 
 
 def add_district_meta(raw_data):
     last_data = data[sorted(data)[-1]]
     for j, entry in enumerate(raw_data.values()):
-        state = entry['statecode']
+        state = entry['statecode'].strip().upper()
         if state not in STATE_CODES.values():
             # Entries having unrecognized state codes are discarded
             logging.warning('[L{}] [Bad state: {}]'.format(
@@ -397,17 +401,18 @@ def add_district_meta(raw_data):
             continue
 
         for district, district_data in entry['districtData'].items():
+            district = district.strip()
             if district == 'Unknown':
                 district = 'Unassigned'
             if district_data['notes']:
                 last_data[state]['districts'][district]['meta'][
-                    'notes'] = district_data['notes']
+                    'notes'] = district_data['notes'].strip()
 
 
 def tally_statewise(raw_data):
     last_data = data[sorted(data)[-1]]
     for j, entry in enumerate(raw_data['statewise']):
-        state = entry['statecode']
+        state = entry['statecode'].strip().upper()
         if state not in STATE_CODES.values():
             # Entries having unrecognized state codes are discarded
             logging.warning('[L{}] [{}] [Bad state: {}]'.format(
@@ -415,7 +420,7 @@ def tally_statewise(raw_data):
             continue
 
         try:
-            fdate = datetime.strptime(entry['lastupdatedtime'],
+            fdate = datetime.strptime(entry['lastupdatedtime'].strip(),
                                       '%d/%m/%Y %H:%M:%S')
         except ValueError:
             # Bad timestamp
@@ -427,11 +432,11 @@ def tally_statewise(raw_data):
             try:
                 values = {
                     'total':
-                    int(entry[
-                        statistic if statistic != 'deceased' else 'deaths']),
+                    int(entry[statistic if statistic != 'deceased' else
+                              'deaths'].strip()),
                     'delta':
-                    int(entry['delta' + (
-                        statistic if statistic != 'deceased' else 'deaths')])
+                    int(entry['delta' + (statistic if statistic != 'deceased'
+                                         else 'deaths').strip()])
                 }
             except ValueError:
                 logging.warning('[L{}] [{}] [Bad value for {}] {}'.format(
@@ -439,19 +444,22 @@ def tally_statewise(raw_data):
                 continue
 
             for stype in ['total', 'delta']:
-                if values[stype] and values[stype] != last_data[state][stype][
-                        statistic]:
-                    # Print mismatch between statewise and v3
-                    logging.warning(
-                        '{} {} {} mismatch: (sheet: {}, v3: {})'.format(
-                            state, statistic, stype, values[stype],
-                            last_data[state][stype][statistic]))
+                if values[stype]:
+                    parsed_value = last_data[state][stype][statistic]
+                    if not isinstance(parsed_value, int):
+                        parsed_value = 0
+                    if values[stype] != parsed_value:
+                        # Print mismatch between statewise and parser
+                        logging.warning(
+                            '{} {} {}: (sheet: {}, parser: {})'.format(
+                                state, statistic, stype, values[stype],
+                                parsed_value))
 
 
 def tally_districtwise(raw_data):
     last_data = data[sorted(data)[-1]]
     for j, entry in enumerate(raw_data.values()):
-        state = entry['statecode']
+        state = entry['statecode'].strip().upper()
         if state not in STATE_CODES.values():
             # Entries having unrecognized state codes are discarded
             logging.warning('[L{}] [Bad state: {}]'.format(
@@ -459,59 +467,27 @@ def tally_districtwise(raw_data):
             continue
 
         for district, district_data in entry['districtData'].items():
+            district = district.strip()
             if district == 'Unknown':
                 district = 'Unassigned'
 
             for statistic in ['confirmed', 'deceased', 'recovered']:
-                try:
-                    values = {
-                        'total': int(district_data[statistic]),
-                        'delta': int(district_data['delta'][statistic])
-                    }
-                except ValueError:
-                    logging.warning('[L{}] [Bad value for {}] {} {}'.format(
-                        j + 2, statistic, state, district))
-                    continue
-
+                values = {
+                    'total': district_data[statistic],
+                    'delta': district_data['delta'][statistic]
+                }
                 for stype in ['total', 'delta']:
-                    if values[stype] and values[stype] != last_data[state][
-                            'districts'][district][stype][statistic]:
-                        # Print mismatch between districtwise and v3
-                        logging.warning(
-                            '{} {} {} {} mismatch: (sheet: {}, v3: {})'.format(
-                                state, district, statistic, stype,
-                                values[stype], last_data[state]['districts']
-                                [district][stype][statistic]))
-
-
-def parse_old_districts(reader):
-    for i, row in enumerate(reader):
-        state = row['State_Code']
-        if state not in STATE_CODES.values():
-            logging.warning('[{}] [Bad state: {}]'.format(i, state))
-            continue
-        district = row['District']
-        if district.lower() in DISTRICTS_DICT[state]:
-            district = DISTRICTS_DICT[state][district.lower()]
-
-        for statistic in ['confirmed', 'deceased', 'recovered']:
-            if row[statistic.capitalize()]:
-                try:
-                    data[DATE_END_OLD][state]['districts'][district]['total'][
-                        statistic] = int(row[statistic.capitalize()])
-                except ValueError:
-                    logging.warning('[{}] [Bad value for {}] {} {}'.format(
-                        i, statistic, state, district))
-
-
-def parse_district_list(reader):
-    for i, row in enumerate(reader):
-        state_name = row['State']
-        if state_name not in STATE_CODES:
-            logging.warning('[{}] [Bad state: {}]'.format(i, state_name))
-            continue
-        DISTRICTS_DICT[STATE_CODES[row['State']]][
-            row['District'].lower()] = row['District']
+                    if values[stype]:
+                        parsed_value = last_data[state]['districts'][district][
+                            stype][statistic]
+                        if not isinstance(parsed_value, int):
+                            parsed_value = 0
+                        if values[stype] != parsed_value:
+                            # Print mismatch between districtwise and parser
+                            logging.warning(
+                                '{} {} {} {}: (sheet: {}, parser: {})'.format(
+                                    state, district, statistic, stype,
+                                    values[stype], parsed_value))
 
 
 def generate_timeseries(districts=False):
@@ -524,7 +500,7 @@ def generate_timeseries(districts=False):
                     for statistic, value in state_data[stype].items():
                         timeseries[state][date][stype][statistic] = value
 
-            if not districts or state == 'TT' or date <= DATE_END_OLD:
+            if not districts or state == 'TT' or date <= GOSPEL_DATE:
                 # Total state has no district data
                 # District timeseries starts only from 26th April
                 continue
@@ -542,6 +518,14 @@ if __name__ == '__main__':
     logging.info('{:{align}{width}}'.format('PARSER V3 START',
                                             align='^',
                                             width=PRINT_WIDTH))
+
+    # Get possible state codes
+    logging.info('-' * PRINT_WIDTH)
+    logging.info('Parsing state meta data...')
+    with open(STATE_META_DATA, 'r') as f:
+        raw_data = json.load(f)
+        parse_state_codes(raw_data)
+    logging.info('Done!')
 
     # Get all actual district names
     logging.info('-' * PRINT_WIDTH)
@@ -578,9 +562,9 @@ if __name__ == '__main__':
     logging.info('-' * PRINT_WIDTH)
     logging.info('Adding district data for 26th April...')
     # Parse gospel district data for 26th April
-    with open(OLD_DISTRICT_DATA, 'r') as f:
+    with open(DISTRICT_DATA_GOSPEL, 'r') as f:
         reader = csv.DictReader(f)
-        parse_old_districts(reader)
+        parse_district_gospel(reader)
     logging.info('Done!')
 
     logging.info('-' * PRINT_WIDTH)
