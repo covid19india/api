@@ -61,6 +61,15 @@ DISTRICTS_ADDITIONAL = {
     'unassigned': 'Unassigned',
 }
 
+PRIMARY_STATISTICS = ['confirmed', 'deceased', 'recovered']
+
+RAW_DATA_MAP = {
+    'hospitalized': 'confirmed',
+    'deceased': 'deceased',
+    'recovered': 'recovered',
+    'migrated_other': 'migrated',
+}
+
 PRINT_WIDTH = 70
 
 # Nested default dict of dict
@@ -144,27 +153,24 @@ def parse(raw_data, i):
                 i, j + 2, date, entry['numcases'], state, district))
             continue
 
-        if entry['currentstatus'].strip() == 'Hospitalized' or i < 3:
-            inc(data[date]['TT']['delta'], 'confirmed', count)
-            inc(data[date][state]['delta'], 'confirmed', count)
+        try:
+            # All rows in v1 and v2 are confirmed cases
+            statistic = 'confirmed' if i < 3 else RAW_DATA_MAP[
+                entry['currentstatus'].strip().lower()]
+
+            inc(data[date]['TT']['delta'], statistic, count)
+            inc(data[date][state]['delta'], statistic, count)
             # Don't parse old district data since it's unreliable
             if i > 2:
                 inc(data[date][state]['districts'][district]['delta'],
-                    'confirmed', count)
-        elif entry['currentstatus'].strip() == 'Recovered':
-            inc(data[date]['TT']['delta'], 'recovered', count)
-            inc(data[date][state]['delta'], 'recovered', count)
-            # Don't parse old district data unreliable since it's unreliable
-            if i > 2:
-                inc(data[date][state]['districts'][district]['delta'],
-                    'recovered', count)
-        elif entry['currentstatus'].strip() == 'Deceased':
-            inc(data[date]['TT']['delta'], 'deceased', count)
-            inc(data[date][state]['delta'], 'deceased', count)
-            # Don't parse old district data unreliable since it's unreliable
-            if i > 2:
-                inc(data[date][state]['districts'][district]['delta'],
-                    'deceased', count)
+                    statistic, count)
+
+        except KeyError:
+            # Unrecognized status
+            logging.warning(
+                '[V{}: L{}] [{}] [Bad currentstatus: {}] {}: {} {}'.format(
+                    i, j + 2, date, entry['currentstatus'], state, district,
+                    entry['numcases']))
 
 
 def parse_outcome(outcome_data, i):
@@ -207,18 +213,19 @@ def parse_outcome(outcome_data, i):
                 '[V{}: L{}] [{}] [Unexpected district: {}] {}'.format(
                     i, j + 2, date, district, state))
 
-        if entry['patientstatus'].strip() == 'Recovered':
-            inc(data[date]['TT']['delta'], 'recovered', 1)
-            inc(data[date][state]['delta'], 'recovered', 1)
+        try:
+            statistic = RAW_DATA_MAP[entry['patientstatus'].strip().lower()]
+
+            inc(data[date]['TT']['delta'], statistic, 1)
+            inc(data[date][state]['delta'], statistic, 1)
             ## Don't parse old district data since it's unreliable
-            #  inc(data[date][state]['districts'][district]['delta'], 'recovered',
+            #  inc(data[date][state]['districts'][district]['delta'], statistic,
             #      1)
-        elif entry['patientstatus'].strip() == 'Deceased':
-            inc(data[date]['TT']['delta'], 'deceased', 1)
-            inc(data[date][state]['delta'], 'deceased', 1)
-            ## Don't parse old district data since it's unreliable
-            #  inc(data[date][state]['districts'][district]['delta'], 'deceased',
-            #      1)
+        except KeyError:
+            # Unrecognized status
+            logging.warning(
+                '[V{}: L{}] [{}] [Bad patientstatus: {}] {}: {}'.format(
+                    i, j + 2, date, entry['patientstatus'], state, district))
 
 
 def parse_district_gospel(reader):
@@ -231,7 +238,7 @@ def parse_district_gospel(reader):
         if district.lower() in DISTRICTS_DICT[state]:
             district = DISTRICTS_DICT[state][district.lower()]
 
-        for statistic in ['confirmed', 'deceased', 'recovered']:
+        for statistic in PRIMARY_STATISTICS:
             if row[statistic.capitalize()]:
                 try:
                     data[GOSPEL_DATE][state]['districts'][district]['total'][
@@ -354,7 +361,7 @@ def accumulate():
             prev_date = dates[i - 1]
             prev_data = data[prev_date]
             for state, state_data in prev_data.items():
-                for statistic in ['confirmed', 'deceased', 'recovered']:
+                for statistic in RAW_DATA_MAP.values():
                     if statistic in state_data['total']:
                         inc(curr_data[state]['total'], statistic,
                             state_data['total'][statistic])
@@ -365,7 +372,7 @@ def accumulate():
                     continue
 
                 for district, district_data in state_data['districts'].items():
-                    for statistic in ['confirmed', 'deceased', 'recovered']:
+                    for statistic in RAW_DATA_MAP.values():
                         if statistic in district_data['total']:
                             inc(
                                 curr_data[state]['districts'][district]
@@ -375,7 +382,7 @@ def accumulate():
         # Add today's dailys to today's cumulative
         for state, state_data in curr_data.items():
             if 'delta' in state_data:
-                for statistic in ['confirmed', 'deceased', 'recovered']:
+                for statistic in RAW_DATA_MAP.values():
                     if statistic in state_data['delta']:
                         inc(state_data['total'], statistic,
                             state_data['delta'][statistic])
@@ -387,9 +394,7 @@ def accumulate():
 
                 for district, district_data in state_data['districts'].items():
                     if 'delta' in district_data:
-                        for statistic in [
-                                'confirmed', 'deceased', 'recovered'
-                        ]:
+                        for statistic in RAW_DATA_MAP.values():
                             if statistic in district_data['delta']:
                                 inc(district_data['total'], statistic,
                                     district_data['delta'][statistic])
@@ -480,7 +485,7 @@ def tally_statewise(raw_data):
                 j + 2, entry['lastupdatedtime'], state))
             continue
 
-        for statistic in ['confirmed', 'deceased', 'recovered']:
+        for statistic in PRIMARY_STATISTICS:
             try:
                 values = {
                     'total':
@@ -523,7 +528,7 @@ def tally_districtwise(raw_data):
             if district == 'Unknown':
                 district = 'Unassigned'
 
-            for statistic in ['confirmed', 'deceased', 'recovered']:
+            for statistic in PRIMARY_STATISTICS:
                 values = {
                     'total': district_data[statistic],
                     'delta': district_data['delta'][statistic]
