@@ -250,14 +250,17 @@ def parse_district_gospel(reader):
 
 def parse_icmr(icmr_data):
     for j, entry in enumerate(icmr_data['tested']):
+        count_str = entry['totalsamplestested'].strip()
         try:
             fdate = datetime.strptime(entry['updatetimestamp'].strip(),
                                       '%d/%m/%Y %H:%M:%S')
             date = datetime.strftime(fdate, '%Y-%m-%d')
             if date > INDIA_DATE:
                 # Entries from future dates will be ignored
-                logging.warning('[L{}] [Future timestamp: {}]'.format(
-                    j + 2, entry['updatetimestamp']))
+                if count_str:
+                    # Log non-zero entries
+                    logging.warning('[L{}] [Future timestamp: {}]'.format(
+                        j + 2, entry['updatetimestamp']))
                 continue
         except ValueError:
             # Bad timestamp
@@ -265,7 +268,6 @@ def parse_icmr(icmr_data):
                 j + 2, entry['updatetimestamp']))
             continue
 
-        count_str = entry['totalsamplestested'].strip()
         try:
             count = int(count_str)
         except ValueError:
@@ -282,13 +284,16 @@ def parse_icmr(icmr_data):
 
 def parse_state_test(state_test_data):
     for j, entry in enumerate(state_test_data['states_tested_data']):
+        count_str = entry['totaltested'].strip()
         try:
             fdate = datetime.strptime(entry['updatedon'].strip(), '%d/%m/%Y')
             date = datetime.strftime(fdate, '%Y-%m-%d')
             if date > INDIA_DATE:
                 # Entries from future dates will be ignored
-                logging.warning('[L{}] [Future date: {}] {}'.format(
-                    j + 2, entry['updatedon'], entry['state']))
+                if count_str:
+                    # Log non-zero entries
+                    logging.warning('[L{}] [Future date: {}] {}'.format(
+                        j + 2, entry['updatedon'], entry['state']))
                 continue
         except ValueError:
             # Bad date
@@ -305,7 +310,6 @@ def parse_state_test(state_test_data):
                 j + 2, entry['updatedon'], entry['state']))
             continue
 
-        count_str = entry['totaltested'].strip()
         try:
             count = int(count_str)
         except ValueError:
