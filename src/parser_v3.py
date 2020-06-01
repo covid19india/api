@@ -101,6 +101,20 @@ def parse_district_list(reader):
         DISTRICTS_DICT[STATE_CODES[state_name]][district.lower()] = district
 
 
+def parse_district(district, state):
+    district = district.strip()
+    expected = True
+    if not district or district.lower() == 'unknown':
+        district = 'Unassigned'
+    elif district.lower() in DISTRICTS_DICT[state]:
+        district = DISTRICTS_DICT[state][district.lower()]
+    elif district.lower() in DISTRICTS_ADDITIONAL:
+        district = DISTRICTS_ADDITIONAL[district.lower()]
+    else:
+        expected = False
+    return district, expected
+
+
 def inc(ref, key, count):
     if not isinstance(ref[key], int):
         # Initialize with 0
@@ -142,14 +156,8 @@ def parse(raw_data, i):
                 entry['detecteddistrict'], entry['numcases']))
             continue
 
-        district = entry['detecteddistrict'].strip()
-        if not district:
-            district = 'Unassigned'
-        elif district.lower() in DISTRICTS_DICT[state]:
-            district = DISTRICTS_DICT[state][district.lower()]
-        elif district.lower() in DISTRICTS_ADDITIONAL:
-            district = DISTRICTS_ADDITIONAL[district.lower()]
-        else:
+        district, expected = parse_district(entry['detecteddistrict'], state)
+        if not expected:
             # Print unexpected district names
             logging.warning(
                 '[V{}: L{}] [{}] [Unexpected district: {}] {}'.format(
@@ -171,7 +179,7 @@ def parse(raw_data, i):
                 inc(data[date]['TT']['delta'], statistic, count)
                 inc(data[date][state]['delta'], statistic, count)
                 # Don't parse old district data since it's unreliable
-                if i > 2:
+                if i > 2 and date > GOSPEL_DATE:
                     inc(data[date][state]['districts'][district]['delta'],
                         statistic, count)
 
@@ -210,14 +218,8 @@ def parse_outcome(outcome_data, i):
                 i, j + 2, entry['date'], state))
             continue
 
-        district = entry['district'].strip()
-        if not district:
-            district = 'Unassigned'
-        elif district.lower() in DISTRICTS_DICT[state]:
-            district = DISTRICTS_DICT[state][district.lower()]
-        elif district.lower() in DISTRICTS_ADDITIONAL:
-            district = DISTRICTS_ADDITIONAL[district.lower()]
-        else:
+        district, expected = parse_district(entry['district'], state)
+        if not expected:
             # Print unexpected district names
             logging.warning(
                 '[V{}: L{}] [{}] [Unexpected district: {}] {}'.format(
@@ -242,11 +244,13 @@ def parse_district_gospel(reader):
     for i, row in enumerate(reader):
         state = row['State_Code'].strip().upper()
         if state not in STATE_CODES.values():
-            logging.warning('[{}] [Bad state: {}]'.format(i, state))
+            logging.warning('[{}] Bad state: {}'.format(i, state))
             continue
-        district = row['District'].strip()
-        if district.lower() in DISTRICTS_DICT[state]:
-            district = DISTRICTS_DICT[state][district.lower()]
+        district, expected = parse_district(row['District'], state)
+        if not expected:
+            # Print unexpected district names
+            logging.warning('[{}] Unexpected district: {} {}'.format(
+                i, state, district))
 
         for statistic in PRIMARY_STATISTICS:
             count = int(row[statistic.capitalize()] or 0)
@@ -452,7 +456,7 @@ def add_state_meta(raw_data):
         state = entry['statecode'].strip().upper()
         if state not in STATE_CODES.values():
             # Entries having unrecognized state codes are discarded
-            logging.warning('[L{}] [{}] [Bad state: {}]'.format(
+            logging.warning('[L{}] [{}] Bad state: {}'.format(
                 j + 2, entry['lastupdatedtime'], entry['statecode']))
             continue
 
@@ -476,14 +480,16 @@ def add_district_meta(raw_data):
         state = entry['statecode'].strip().upper()
         if state not in STATE_CODES.values():
             # Entries having unrecognized state codes are discarded
-            logging.warning('[L{}] [Bad state: {}]'.format(
+            logging.warning('[L{}] Bad state: {}'.format(
                 j + 2, entry['statecode']))
             continue
 
         for district, district_data in entry['districtData'].items():
-            district = district.strip()
-            if district == 'Unknown':
-                district = 'Unassigned'
+            district, expected = parse_district(district, state)
+            if not expected:
+                logging.warning('[L{}] Unexpected district: {} {}'.format(
+                    j + 2, state, district))
+
             if district_data['notes']:
                 last_data[state]['districts'][district]['meta'][
                     'notes'] = district_data['notes'].strip()
@@ -509,9 +515,6 @@ def tally_statewise(raw_data):
     for j, entry in enumerate(raw_data['statewise']):
         state = entry['statecode'].strip().upper()
         if state not in STATE_CODES.values():
-            # Entries having unrecognized state codes are discarded
-            logging.warning('[L{}] [{}] [Bad state: {}]'.format(
-                j + 2, entry['lastupdatedtime'], entry['statecode']))
             continue
 
         try:
@@ -562,10 +565,10 @@ def tally_districtwise(raw_data):
         if state_name in raw_data:
             for district, district_data in state_data['districts'].items():
                 found = False
-                for entry in raw_data[state_name]['districtData'].keys():
-                    if entry == 'Unknown':
-                        entry = 'Unassigned'
-                    if district == entry:
+                for entryDistrict in raw_data[state_name]['districtData'].keys(
+                ):
+                    entryDistrict, _ = parse_district(entryDistrict, state)
+                    if district == entryDistrict:
                         found = True
                         break
                 if not found:
@@ -582,16 +585,10 @@ def tally_districtwise(raw_data):
     for j, entry in enumerate(raw_data.values()):
         state = entry['statecode'].strip().upper()
         if state not in STATE_CODES.values():
-            # Entries having unrecognized state codes are discarded
-            logging.warning('[L{}] [Bad state: {}]'.format(
-                j + 2, entry['statecode']))
             continue
 
         for district, district_data in entry['districtData'].items():
-            district = district.strip()
-            if district == 'Unknown':
-                district = 'Unassigned'
-
+            district, _ = parse_district(district, state)
             for statistic in PRIMARY_STATISTICS:
                 values = {
                     'total': district_data[statistic],
