@@ -95,7 +95,6 @@ API for current cases, statewise, districtwise and historical data of India COVI
 - [COVID-19 INDIA TRACKER](https://www.covid19india.org/) (Main Dashboard)
 - [covid19india.org Ops Telegram Channel](https://t.me/covid19indiaorg) (News and Announcements from covid19india.org Team)
 - [Telegram instant Updates](https://t.me/covid19indiaorg_updates) (Instant Updates from covid19india.org Team)
-- [R0 Tracker India](https://www.nidhigupta.live/rtcovid) (States and Districts wise R0 tracking in India)
 
 ### Some other categories of projects using this API:
 
