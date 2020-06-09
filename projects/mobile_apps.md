@@ -2,6 +2,8 @@
 
 ### _Android apps:_
 
+- [Covid-19 India App](https://github.com/GRajin/Covid-19IndiaApp) (by Rajin Gangadharan[@GRajin](https://github.com/GRajin)) is a lightweight app 4mb which shows the cases StateWise, DistrictWise and DayWise with Graphs. To Download APK click [here](https://github.com/GRajin/Covid-19IndiaApp/releases/download/Covid19_India_v1.0/Covid-19.India.apk)
+
 - [COVID19-India-Tracker](https://github.com/Gopal-Dahale/COVID19-India-Tracker) (by Gopal Dahale [@Gopal-Dahale](https://github.com/Gopal-Dahale)) shows the number of cases in states and districts of India. It also features an interactive map to display Coronavirus spread across India.
 
 - [COVID-19 India Tracker (Flutter) built for COVID-19 stats & patient tracing in India with common code base for Android/IOS/Web Application](https://github.com/akashengginer/covid-19_tracker_india) (by Akash Gupta [@akashengginer](https://github.com/akashengginer)). To Download APK click [here](https://github.com/akashengginer/covid-19_tracker_india/blob/master/apk/app-release.apk) 
