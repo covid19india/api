@@ -4,6 +4,8 @@
 
 - [Covid-19 India Android (React-Native) App](https://github.com/RajeevTomar/Covid-19) (by Rajeev Tomar [@RajeevTomar](https://github.com/RajeevTomar/)) --- <a href="http://positivemind.co.in/apk/covid-19_v1.1.apk"> Download Android App</a>
 
+- [react-native-Covid19India](https://github.com/tejachundru/react-native-Covid19India) (by Teja Chundru [@tejaChundru](https://github.com/tejachundru/))
+
 - [COVID19-India-Tracker](https://github.com/Gopal-Dahale/COVID19-India-Tracker) (by Gopal Dahale [@Gopal-Dahale](https://github.com/Gopal-Dahale)) shows the number of cases in states and districts of India. It also features an interactive map to display Coronavirus spread across India.
 
 - [COVID-19 India Tracker (Flutter) built for COVID-19 stats & patient tracing in India with common code base for Android/IOS/Web Application](https://github.com/akashengginer/covid-19_tracker_india) (by Akash Gupta [@akashengginer](https://github.com/akashengginer)). To Download APK click [here](https://github.com/akashengginer/covid-19_tracker_india/blob/master/apk/app-release.apk) 
