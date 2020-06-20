@@ -26,6 +26,8 @@
 
 - [Covid19India Stats & News] (https://t.me/Covid19trackerindiagj27_bot) (by [@akhiltrivedi])
 
+- [Karnataka COVID 19 Counts](https://t.me/KarCovid19Bot) (by [@AbhishekPednekar84](https://github.com/AbhishekPednekar84/covid19-kar-bot))
+
 ---
 
 ### _Twitter bots:_
