@@ -4,6 +4,8 @@
 
 - [Indian Bot | भारतीय स्वायत्तसेवा](https://discord.com/oauth2/authorize?scope=bot&client_id=583897295267954697&permissions=1342565446) (by [gouenji-shuuya](https://github.com/gouenji-shuuya))
 
+- [COVID-19 India Bot](https://discordapp.com/oauth2/authorize?&client_id=723409740083757166&scope=bot&permissions=8) (by [vj1224](https://github.com/VJ1224))
+
 ---
 
 ### _Reddit bots:_
