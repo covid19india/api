@@ -1,5 +1,9 @@
 # Other Trackers/Dashboards using this API
 
+- [CG Specific Dashboard](https://cgcovid19.info/)
+  - By: [@yogeshjain96](https://github.com/yogeshjain96)
+
+---
 - [Tracker](https://covidstat.info/)
   - By: [@skavinvarnan](https://github.com/skavinvarnan)
 
