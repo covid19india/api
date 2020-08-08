@@ -60,7 +60,7 @@ Sometimes, having files in a spreadsheet format is more useful for analysts and 
 This repository contains both the code that routinely fetches the data from Google Sheet and convert it into JSON files in the required format and the data itself (in the gh-pages branch). So, the content of this repository is licensed in two ways : Code and Data
 
 License for Code (Consider this as everything in the `master` branch) : MIT License (Detailed in LICENSE_CODE.txt)  
-License for Data (Consider this as everything in the `gh-ages` branch) : CC-BY-SA-4.0 License (Detailed in LICENSE_DATA.txt)
+License for Data (Consider this as everything in the `gh-pages` branch) : CC-BY-SA-4.0 License (Detailed in LICENSE_DATA.txt)
 
 ## Citation
 
