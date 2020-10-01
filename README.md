@@ -49,10 +49,10 @@ Sometimes, having files in a spreadsheet format is more useful for analysts and 
 
 ## How this works
 
-- Data in this repository is generated from Google Sheets
-- Volunteers collect data from trusted sources and update the sheet
-- Github Actions periodically fetch the data from the sheet and upload static json and csv files into `gh-pages` branch of this repo
-- `gh-pages` serves the json/csv files at <https://api.covid19india.org>
+- Data in this repository is generated from Google Sheets.
+- Volunteers collect data from trusted sources and update the sheet.
+- Github Actions periodically fetch the data from the sheet and upload static json and csv files into `gh-pages` branch of this repository.
+- `gh-pages` serves the json/csv files at <https://api.covid19india.org> .
 
 ## License
 
@@ -63,7 +63,7 @@ License for Data (Consider this as everything in the `gh-pages` branch) : CC-BY-
 
 ## Citation
 
-You can cite us in your work in the following format  
+You can cite us in your work in the following format:  
 
 ```tex
 @misc{covid19indiaorg2020tracker,
