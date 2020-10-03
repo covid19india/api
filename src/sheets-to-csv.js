@@ -104,7 +104,8 @@ const SHEETS_V16 = [
   ['tested_numbers_icmr_data', '2143634168'],
   //     ["travel_history", "1532084277"],
   ['district_list', '1207378023'],
-  ['district_testing', '458610673']
+  ['district_testing', '458610673'],
+  ['icmr_labs_statewise','847799380'],
 ]
 
 async function sheetsToCSV (sheets, pubId) {
