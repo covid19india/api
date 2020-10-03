@@ -42,10 +42,9 @@ These are the files available
 | :green_heart: | districts                        | <https://api.covid19india.org/csv/latest/districts.csv>                  | Districtwise timeseries of Confirmed, Recovered and Deceased numbers in long format                           |
 | :green_heart: | statewise_tested_numbers_data | <https://api.covid19india.org/csv/latest/statewise_tested_numbers_data.csv> | Number of tests conducted in each state, ventilators and hospital bed information reported in state bulletins |
 | :green_heart: | tested_numbers_icmr_data      | <https://api.covid19india.org/csv/latest/tested_numbers_icmr_data.csv>      | Number of tests reported by ICMR                                                                |
+| :green_heart: | icmr_labs_statewise      | <https://api.covid19india.org/csv/latest/icmr_labs_statewise.csv>      | Number of Labs in each state as per ICMR                                                                |
+
 | :green_heart: | sources_list                  | <https://api.covid19india.org/csv/latest/sources_list.csv>                  | List of sources that we are using.                                                              |
-| :end:         | raw_data                      | <https://api.covid19india.org/csv/latest/raw_data.csv>                      | raw_data1 + raw_data2. This is frozen as of Apr 26th.                                           |
-| :end:         | death_and_recovered           | <https://api.covid19india.org/csv/latest/death_and_recovered.csv>           | death_and_recovered1 + death_and_recovered2. This is frozen as of Apr 26th.                     |
-| :end:         | travel_history                | <https://api.covid19india.org/csv/latest/travel_history.csv>                | Travel history of patients. This data is not reported or captured anymore.                      |
 
 #### Note
 
