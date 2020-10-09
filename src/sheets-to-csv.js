@@ -95,11 +95,11 @@ const SHEETS_V15 = [
 ]
 
 const SHEETS_V16 = [
-  ['raw_data15', '0']
+  ['raw_data16', '0']
 ]
 
 const SHEETS_V17 = [
-  ['raw_data16', '0'],
+  ['raw_data17', '0'],
   ['state_wise', '1896310216'],
   ['state_wise_daily', '1395461826'],
   ['sources_list', '704389477'],
