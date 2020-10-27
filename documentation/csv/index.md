@@ -32,7 +32,6 @@ These are the files available
 | :green_heart: | raw_data17 | <https://api.covid19india.org/csv/latest/raw_data17.csv> | Oct 9th to Oct 26th    |
 | :green_heart: | raw_data18 | <https://api.covid19india.org/csv/latest/raw_data18.csv> | Oct 27th onwards       |
 
-
 #### Other Sheets
 
 | Status        | Sheet Name                    | Link to CSV                                                                 | Description                                                                                     |
