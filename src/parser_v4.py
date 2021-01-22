@@ -324,7 +324,8 @@ def parse_district_gospel(reader):
 
 def parse_icmr(icmr_data):
   for j, entry in enumerate(icmr_data['tested']):
-    count_str = entry['totalsamplestested'].strip()
+    tested_count_str = entry['totalsamplestested'].strip()
+    
     try:
       fdate = datetime.strptime(entry['testedasof'].strip(), '%d/%m/%Y')
       date = datetime.strftime(fdate, '%Y-%m-%d')
@@ -342,17 +343,31 @@ def parse_icmr(icmr_data):
       continue
 
     try:
-      count = int(count_str)
+      tested_count = int(tested_count_str)
     except ValueError:
       logging.warning('[L{}] [{}] [Bad totalsamplestested: {}]'.format(
           j + 2, entry['testedasof'], entry['totalsamplestested']))
       continue
 
-    if count:
-      data[date]['TT']['total']['tested'] = count
+    if tested_count:
+      data[date]['TT']['total']['tested'] = tested_count
       data[date]['TT']['meta']['tested']['source'] = entry['source'].strip()
       data[date]['TT']['meta']['tested']['last_updated'] = date
 
+    if(entry['totaldosesadministered']):
+      vaccinated_count_str = entry['totaldosesadministered'].strip() 
+
+      try:
+        vaccinated_count = int(vaccinated_count_str)
+      except ValueError:
+        logging.warning('[L{}] [{}] [Bad totaldosesadministered: {}]'.format(
+            j + 2, entry['testedasof'], entry['totaldosesadministered']))
+        continue
+
+      if vaccinated_count:
+        data[date]['TT']['total']['vaccinated'] = vaccinated_count
+        data[date]['TT']['meta']['vaccinated']['source'] = entry['source4'].strip()
+        data[date]['TT']['meta']['vaccinated']['last_updated'] = date
 
 def parse_state_test(raw_data):
   for j, entry in enumerate(raw_data['states_tested_data']):
@@ -501,6 +516,9 @@ def fill_tested():
       if contains(state_data, ['total', 'tested']):
         state_data['delta']['tested'] = state_data['total']['tested']
 
+      if contains(state_data, ['total', 'vaccinated']):
+        state_data['delta']['vaccinated'] = state_data['total']['vaccinated']
+
       if 'districts' not in state_data:
         continue
 
@@ -525,6 +543,20 @@ def fill_tested():
                 'tested']['source']
             curr_data[state]['meta']['tested']['last_updated'] = state_data[
                 'meta']['tested']['last_updated']
+
+        if contains(state_data, ['total', 'vaccinated']):
+          if 'vaccinated' in curr_data[state]['total']:
+            # Subtract previous cumulative to get delta
+            curr_data[state]['delta']['vaccinated'] -= state_data['total'][
+                'vaccinated']
+          else:
+            # Take today's cumulative to be same as yesterday's
+            # cumulative if today's cumulative is missing
+            curr_data[state]['total']['vaccinated'] = state_data['total']['vaccinated']
+            curr_data[state]['meta']['vaccinated']['source'] = state_data['meta'][
+                'vaccinated']['source']
+            curr_data[state]['meta']['vaccinated']['last_updated'] = state_data[
+                'meta']['vaccinated']['last_updated']
 
         if 'districts' not in state_data:
           continue
