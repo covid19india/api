@@ -39,6 +39,9 @@ ICMR_TEST_DATA = ROOT_DIR / 'data.json'
 STATE_TEST_DATA = ROOT_DIR / 'state_test_data.json'
 # District testing data
 DISTRICT_TEST_DATA = CSV_DIR / 'district_testing.csv'
+# State vaccination data
+STATE_VACCINATION_DATA = CSV_DIR / 'vaccine_doses_statewise.csv'
+
 ## For adding metadata
 # For state notes and last updated
 STATE_WISE = ROOT_DIR / 'data.json'
@@ -322,13 +325,13 @@ def parse_district_gospel(reader):
     state = row['State_Code'].strip().upper()
     if state not in STATE_CODES.values() or state in SINGLE_DISTRICT_STATES:
       if state not in STATE_CODES.values():
-        logging.warning('[{}] Bad state: {}'.format(i, state))
+        logging.warning('[{}] Bad state: {}'.format(i + 2, state))
       continue
     district, expected = parse_district(row['District'], state)
     if not expected:
       # Print unexpected district names
       logging.warning('[{}] Unexpected district: {} {}'.format(
-          i, state, district))
+          i + 2, state, district))
 
     for statistic in PRIMARY_STATISTICS:
       count = int(row[statistic.capitalize()] or 0)
@@ -501,6 +504,45 @@ def parse_district_test(reader):
         #      'source'] = source
         data[date][state]['districts'][district]['meta']['tested'][
             'last_updated'] = date
+
+
+def parse_state_vaccination(reader):
+  for i, row in enumerate(reader):
+    # Pop state name from dict
+    state_name = row.pop('State').strip().lower()
+    try:
+      state = STATE_CODES[state_name]
+    except KeyError:
+      # Entries with empty state names are discarded
+      if state_name:
+        # Unrecognized state entries are discarded and logged
+        logging.warning('[L{}] [Bad state: {}]'.format(i + 2, state_name))
+      continue
+
+    for j, date_raw in enumerate(row):
+      try:
+        fdate = datetime.strptime(date_raw.strip(), '%d/%m/%Y')
+        date = datetime.strftime(fdate, '%Y-%m-%d')
+        if date > INDIA_DATE:
+          # Entries from future dates will be ignored
+          continue
+      except ValueError:
+        # Bad date
+        if not j:
+          logging.warning('[{}] Bad date: {}'.format(column_str(j + 2),
+                                                     date_raw))
+      count_str = row[date_raw]
+
+      try:
+        count = int(count_str)
+      except ValueError:
+        if count_str:
+          logging.warning('[L{} {}] [{}] [Bad vaccinated: {}] {}'.format(
+              i + 2, column_str(j + 2), date_raw, row[date_raw], state))
+        continue
+
+      if count:
+        data[date][state]['total']['vaccinated'] = count
 
 
 def contains(raw_data, keys):
@@ -935,11 +977,11 @@ if __name__ == '__main__':
   logging.info('Parsing raw_data...')
   i = 1
   while True:
-    f = ROOT_DIR / RAW_DATA.format(n=i)
-    if not f.is_file():
+    fn = ROOT_DIR / RAW_DATA.format(n=i)
+    if not fn.is_file():
       break
-    with open(f, 'r') as f:
-      logging.info('File: {}'.format(RAW_DATA.format(n=i)))
+    with open(fn, 'r') as f:
+      logging.info('File: {}'.format(fn.name))
       raw_data = json.load(f)
       parse(raw_data, i)
     i += 1
@@ -949,9 +991,9 @@ if __name__ == '__main__':
   logging.info('-' * PRINT_WIDTH)
   logging.info('Parsing deaths_recoveries...')
   for i in [1, 2]:
-    f = ROOT_DIR / OUTCOME_DATA.format(n=i)
-    with open(f, 'r') as f:
-      logging.info('File: {}'.format(OUTCOME_DATA.format(n=i)))
+    fn = ROOT_DIR / OUTCOME_DATA.format(n=i)
+    with open(fn, 'r') as f:
+      logging.info('File: {}'.format(fn.name))
       raw_data = json.load(f)
       parse_outcome(raw_data, i)
   logging.info('Done!')
@@ -967,8 +1009,7 @@ if __name__ == '__main__':
 
   logging.info('-' * PRINT_WIDTH)
   logging.info('Parsing ICMR test data for India...')
-  f = ICMR_TEST_DATA
-  with open(f, 'r') as f:
+  with open(ICMR_TEST_DATA, 'r') as f:
     logging.info('File: {}'.format(ICMR_TEST_DATA.name))
     raw_data = json.load(f, object_pairs_hook=OrderedDict)
     parse_icmr(raw_data)
@@ -976,8 +1017,7 @@ if __name__ == '__main__':
 
   logging.info('-' * PRINT_WIDTH)
   logging.info('Parsing test data for all states...')
-  f = STATE_TEST_DATA
-  with open(f, 'r') as f:
+  with open(STATE_TEST_DATA, 'r') as f:
     logging.info('File: {}'.format(STATE_TEST_DATA.name))
     raw_data = json.load(f, object_pairs_hook=OrderedDict)
     parse_state_test(raw_data)
@@ -985,11 +1025,18 @@ if __name__ == '__main__':
 
   logging.info('-' * PRINT_WIDTH)
   logging.info('Parsing test data for districts...')
-  f = DISTRICT_TEST_DATA
-  with open(f, 'r') as f:
+  with open(DISTRICT_TEST_DATA, 'r') as f:
     logging.info('File: {}'.format(DISTRICT_TEST_DATA.name))
     reader = csv.reader(f)
     parse_district_test(reader)
+  logging.info('Done!')
+
+  logging.info('-' * PRINT_WIDTH)
+  logging.info('Parsing vaccination data for states...')
+  with open(STATE_VACCINATION_DATA, 'r') as f:
+    logging.info('File: {}'.format(STATE_VACCINATION_DATA.name))
+    reader = csv.DictReader(f)
+    parse_state_vaccination(reader)
   logging.info('Done!')
 
   # Fill delta values for tested
@@ -1035,14 +1082,12 @@ if __name__ == '__main__':
 
   logging.info('-' * PRINT_WIDTH)
   logging.info('Adding state and district metadata...')
-  f = STATE_WISE
-  with open(f, 'r') as f:
+  with open(STATE_WISE, 'r') as f:
     logging.info('File: {}'.format(STATE_WISE.name))
     raw_data = json.load(f, object_pairs_hook=OrderedDict)
     add_state_meta(raw_data)
 
-  f = DISTRICT_WISE
-  with open(f, 'r') as f:
+  with open(DISTRICT_WISE, 'r') as f:
     logging.info('File: {}'.format(DISTRICT_WISE.name))
     raw_data = json.load(f, object_pairs_hook=OrderedDict)
     add_district_meta(raw_data)
@@ -1112,8 +1157,7 @@ if __name__ == '__main__':
   # Tally final date counts with statewise API
   logging.info('-' * PRINT_WIDTH)
   logging.info('Comparing data with statewise sheet...')
-  f = STATE_WISE
-  with open(f, 'r') as f:
+  with open(STATE_WISE, 'r') as f:
     logging.info('File: {}'.format(STATE_WISE.name))
     raw_data = json.load(f, object_pairs_hook=OrderedDict)
     tally_statewise(raw_data)
@@ -1122,8 +1166,7 @@ if __name__ == '__main__':
   # Tally final date counts with districtwise API
   logging.info('-' * PRINT_WIDTH)
   logging.info('Comparing data with districtwise sheet...')
-  f = DISTRICT_WISE
-  with open(f, 'r') as f:
+  with open(DISTRICT_WISE, 'r') as f:
     logging.info('File: {}'.format(DISTRICT_WISE.name))
     raw_data = json.load(f, object_pairs_hook=OrderedDict)
     tally_districtwise(raw_data)
