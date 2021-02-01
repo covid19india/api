@@ -224,9 +224,9 @@ def parse(raw_data, i):
     try:
       fdate = datetime.strptime(entry['dateannounced'].strip(), '%d/%m/%Y')
       date = datetime.strftime(fdate, '%Y-%m-%d')
-      if date > INDIA_DATE:
+      if date < '2020-01-01' or date > INDIA_DATE:
         # Entries from future dates will be ignored
-        logging.warning('[L{}] [Future date: {}] {}: {} {}'.format(
+        logging.warning('[L{}] [Future/past date: {}] {}: {} {}'.format(
             j + 2, entry['dateannounced'], entry['detectedstate'],
             entry['detecteddistrict'], entry['numcases']))
         continue
@@ -287,9 +287,9 @@ def parse_outcome(outcome_data, i):
     try:
       fdate = datetime.strptime(entry['date'].strip(), '%d/%m/%Y')
       date = datetime.strftime(fdate, '%Y-%m-%d')
-      if date > INDIA_DATE:
+      if date < '2020-01-01' or date > INDIA_DATE:
         # Entries from future dates will be ignored
-        logging.warning('[L{}] [Future date: {}] {}'.format(
+        logging.warning('[L{}] [Future/past date: {}] {}'.format(
             j + 2, entry['date'], state))
         continue
     except ValueError:
@@ -352,9 +352,9 @@ def parse_icmr(icmr_data):
       try:
         fdate = datetime.strptime(entry['testedasof'].strip(), '%d/%m/%Y')
         date = datetime.strftime(fdate, '%Y-%m-%d')
-        if date > INDIA_DATE:
+        if date < '2020-01-01' or date > INDIA_DATE:
           # Entries from future dates will be ignored and logged
-          logging.warning('[L{}] [Future date: {}]'.format(
+          logging.warning('[L{}] [Future/past date: {}]'.format(
               j + 2, entry['testedasof']))
           continue
       except ValueError:
@@ -386,9 +386,9 @@ def parse_state_test(raw_data):
     try:
       fdate = datetime.strptime(entry['updatedon'].strip(), '%d/%m/%Y')
       date = datetime.strftime(fdate, '%Y-%m-%d')
-      if date > INDIA_DATE:
+      if date < '2020-01-01' or date > INDIA_DATE:
         # Entries from future dates will be ignored and logged
-        logging.warning('[L{}] [Future date: {}] {}'.format(
+        logging.warning('[L{}] [Future/past date: {}] {}'.format(
             j + 2, entry['updatedon'], entry['state']))
         continue
     except ValueError:
@@ -447,8 +447,8 @@ def parse_district_test(reader):
     try:
       fdate = datetime.strptime(header[j].strip(), '%d/%m/%Y')
       date = datetime.strftime(fdate, '%Y-%m-%d')
-      if date <= INDIA_DATE:
-        # Only keep entries from present or past dates
+      if '2020-01-01' < date <= INDIA_DATE:
+        # Only keep entries upto present date
         dates[j] = date
     except ValueError:
       # Bad date
@@ -523,8 +523,8 @@ def parse_state_vaccination(reader):
       try:
         fdate = datetime.strptime(date_raw.strip(), '%d/%m/%Y')
         date = datetime.strftime(fdate, '%Y-%m-%d')
-        if date > INDIA_DATE:
-          # Entries from future dates will be ignored
+        if date < '2020-01-01' or date > INDIA_DATE:
+          # Entries from future/past dates will be ignored
           continue
       except ValueError:
         # Bad date
