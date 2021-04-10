@@ -6611,19 +6611,20 @@
       "2021-04-10": {
         "delta": {
           "confirmed": 3,
-          "recovered": 1
+          "recovered": 1,
+          "tested": 320
         },
         "delta7": {
           "confirmed": 29,
           "recovered": 5,
-          "tested": 2110,
+          "tested": 2430,
           "vaccinated": 22041
         },
         "total": {
           "confirmed": 16878,
           "deceased": 56,
           "recovered": 16790,
-          "tested": 416577,
+          "tested": 416897,
           "vaccinated": 126477
         }
       }
@@ -56210,13 +56211,16 @@
             }
           },
           "2021-04-10": {
+            "delta": {
+              "confirmed": 1
+            },
             "delta7": {
-              "confirmed": 12,
+              "confirmed": 13,
               "recovered": 3,
               "vaccinated": 1106
             },
             "total": {
-              "confirmed": 490,
+              "confirmed": 491,
               "recovered": 478,
               "tested": 12169,
               "vaccinated": 4484
@@ -97004,24 +97008,6 @@
           }
         }
       },
-      "Unknown": {
-        "dates": {
-          "2021-04-10": {
-            "delta": {
-              "confirmed": 1,
-              "recovered": 1
-            },
-            "delta7": {
-              "confirmed": 1,
-              "recovered": 1
-            },
-            "total": {
-              "confirmed": 1,
-              "recovered": 1
-            }
-          }
-        }
-      },
       "Upper Dibang Valley": {
         "dates": {
           "2020-06-01": {
@@ -114475,14 +114461,18 @@
             }
           },
           "2021-04-10": {
+            "delta": {
+              "recovered": 1
+            },
             "delta7": {
               "confirmed": 1,
+              "recovered": 1,
               "vaccinated": 812
             },
             "total": {
               "confirmed": 952,
               "deceased": 4,
-              "recovered": 946,
+              "recovered": 947,
               "tested": 28155,
               "vaccinated": 12399
             }
