@@ -1822,7 +1822,7 @@
       }
     },
     "meta": {
-      "last_updated": "2021-04-20T19:14:21+05:30",
+      "last_updated": "2021-04-20T19:23:40+05:30",
       "population": 1179000,
       "tested": {
         "last_updated": "2021-04-19",
@@ -2583,7 +2583,7 @@
       }
     },
     "meta": {
-      "last_updated": "2021-04-20T19:14:30+05:30",
+      "last_updated": "2021-04-20T19:23:54+05:30",
       "population": 959000,
       "tested": {
         "last_updated": "2020-10-20",
@@ -6197,17 +6197,25 @@
     }
   },
   "LD": {
+    "delta": {
+      "confirmed": 53,
+      "recovered": 26
+    },
     "delta7": {
-      "confirmed": 448,
-      "recovered": 45,
+      "confirmed": 501,
+      "recovered": 71,
       "tested": 5855,
       "vaccinated": 3911
     },
     "districts": {
       "Lakshadweep": {
+        "delta": {
+          "confirmed": 53,
+          "recovered": 26
+        },
         "delta7": {
-          "confirmed": 448,
-          "recovered": 45,
+          "confirmed": 501,
+          "recovered": 71,
           "tested": 5855
         },
         "meta": {
@@ -6218,16 +6226,16 @@
           }
         },
         "total": {
-          "confirmed": 1282,
+          "confirmed": 1335,
           "deceased": 1,
           "other": 5,
-          "recovered": 786,
+          "recovered": 812,
           "tested": 58963
         }
       }
     },
     "meta": {
-      "last_updated": "2021-04-19T20:12:14+05:30",
+      "last_updated": "2021-04-20T19:26:36+05:30",
       "population": 68000,
       "tested": {
         "last_updated": "2021-04-19",
@@ -6235,10 +6243,10 @@
       }
     },
     "total": {
-      "confirmed": 1282,
+      "confirmed": 1335,
       "deceased": 1,
       "other": 5,
-      "recovered": 786,
+      "recovered": 812,
       "tested": 58963,
       "vaccinated": 18482
     }
@@ -7233,7 +7241,7 @@
       }
     },
     "meta": {
-      "last_updated": "2021-04-20T19:14:25+05:30",
+      "last_updated": "2021-04-20T19:23:45+05:30",
       "population": 3224000,
       "tested": {
         "last_updated": "2021-04-19",
@@ -7289,7 +7297,7 @@
       }
     },
     "meta": {
-      "last_updated": "2021-04-20T19:14:19+05:30",
+      "last_updated": "2021-04-20T19:23:37+05:30",
       "notes": "[Dec 14]:824 out of 980 recovered cases are backdated.",
       "population": 3103000,
       "tested": {
@@ -8586,12 +8594,13 @@
   },
   "NL": {
     "delta": {
-      "confirmed": 82
+      "confirmed": 82,
+      "other": 14
     },
     "delta7": {
       "confirmed": 223,
       "deceased": 1,
-      "other": 10,
+      "other": 24,
       "recovered": 115,
       "tested": 1633,
       "vaccinated": 27827
@@ -8599,12 +8608,13 @@
     "districts": {
       "Dimapur": {
         "delta": {
-          "confirmed": 70
+          "confirmed": 70,
+          "other": 14
         },
         "delta7": {
           "confirmed": 158,
           "deceased": 1,
-          "other": 10,
+          "other": 24,
           "recovered": 4,
           "vaccinated": 8516
         },
@@ -8617,7 +8627,7 @@
         "total": {
           "confirmed": 6690,
           "deceased": 64,
-          "other": 91,
+          "other": 105,
           "recovered": 6351,
           "tested": 47020,
           "vaccinated": 39742
@@ -8821,7 +8831,7 @@
       }
     },
     "meta": {
-      "last_updated": "2021-04-20T19:05:48+05:30",
+      "last_updated": "2021-04-20T19:26:29+05:30",
       "population": 2150000,
       "tested": {
         "last_updated": "2021-04-19",
@@ -8831,7 +8841,7 @@
     "total": {
       "confirmed": 12650,
       "deceased": 94,
-      "other": 175,
+      "other": 189,
       "recovered": 12110,
       "tested": 140601,
       "vaccinated": 148681
@@ -9584,7 +9594,7 @@
       }
     },
     "meta": {
-      "last_updated": "2021-04-20T19:14:13+05:30",
+      "last_updated": "2021-04-20T19:23:24+05:30",
       "notes": "[July 12th] :20 non-covid deaths reported in state dashboard are included in the deceased count",
       "population": 43671000,
       "tested": {
@@ -12198,7 +12208,7 @@
       }
     },
     "meta": {
-      "last_updated": "2021-04-20T19:14:09+05:30",
+      "last_updated": "2021-04-20T19:23:20+05:30",
       "notes": "[July 22]: 444 backdated deceased entries added to Chennai in TN bulletin.\n2 deaths cross notified to other states from Chennai and Coimbatore.\n1 patient died after turning negative for infection in Chengalpattu.\nThese cases have been added to TN deceased tally",
       "population": 75695000,
       "tested": {
@@ -12430,21 +12440,21 @@
   },
   "TT": {
     "delta": {
-      "confirmed": 99944,
+      "confirmed": 99997,
       "deceased": 430,
-      "other": 101,
-      "recovered": 37511
+      "other": 115,
+      "recovered": 37537
     },
     "delta7": {
-      "confirmed": 1543319,
+      "confirmed": 1543372,
       "deceased": 8865,
-      "other": 745,
-      "recovered": 808124,
+      "other": 759,
+      "recovered": 808150,
       "tested": 8795169,
       "vaccinated": 15949535
     },
     "meta": {
-      "last_updated": "2021-04-20T19:14:04+05:30",
+      "last_updated": "2021-04-20T19:26:09+05:30",
       "population": 1332900000,
       "tested": {
         "last_updated": "2021-04-19",
@@ -12455,10 +12465,10 @@
       }
     },
     "total": {
-      "confirmed": 15414833,
+      "confirmed": 15414886,
       "deceased": 180980,
-      "other": 6416,
-      "recovered": 13140854,
+      "other": 6430,
+      "recovered": 13140880,
       "tested": 269414035,
       "vaccinated": 127129113
     }
