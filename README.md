@@ -39,7 +39,9 @@ These are the files available
 | :green_heart: | raw_data22 | <https://api.covid19india.org/csv/latest/raw_data22.csv> | Jan 09th to Jan 31st   |
 | :green_heart: | raw_data23 | <https://api.covid19india.org/csv/latest/raw_data23.csv> | Feb 01st to Feb 27st   |
 | :green_heart: | raw_data24 | <https://api.covid19india.org/csv/latest/raw_data24.csv> | Feb 28th to Mar 31st   |
-| :green_heart: | raw_data25 | <https://api.covid19india.org/csv/latest/raw_data25.csv> | Apr 01st onwards       |
+| :green_heart: | raw_data25 | <https://api.covid19india.org/csv/latest/raw_data25.csv> | Apr 01st to Apr 20th   |
+| :green_heart: | raw_data26 | <https://api.covid19india.org/csv/latest/raw_data26.csv> | Apr 01st onwards       |
+
 
 #### Other Sheets
 
@@ -65,11 +67,6 @@ These are the files available
 - Use raw data files only if you need to analyze the demographics or notes related at a patient level
 - Always try to use the aggregated numbers above as they have been treated for discrepancies
 
-#### How to
-
-If you prefer working on a Google Sheet instead of downloading the files and would like the data to reflect the latest version - below is an example to live fetch this CSV to a spreadsheet.
-> :rocket: Quick example : Apply the formula `=IMPORTDATA("https://api.covid19india.org/csv/latest/state_wise.csv")` in A1 cell of a Google Sheets to get the state data for analysis :)
-
 #### Contributing
 
 - If you notice issues, have questions or want to suggest enhancements, please raise an issue in the repo.
@@ -79,7 +76,5 @@ If you prefer working on a Google Sheet instead of downloading the files and wou
 A more detailed note of the columns present in the data may be found in the json documentation
 
 - [Documentation](https://api.covid19india.org/documentation)
-
-
 
 ..................................................
