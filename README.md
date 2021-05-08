@@ -23,12 +23,12 @@
 
 | Status        | Sheet Name                    | Link to CSV                                                                 | Description                                                                                     |
 | ------------- | ----------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| :green_heart: | case_time_series              | <https://api.covid19india.org/csv/latest/case_time_series.csv>              | India level delta per day for Confirmed, Recovered and Deceased cases
-| :green_heart: | state_wise                    | <https://api.covid19india.org/csv/latest/state_wise.csv>                    | Statewise cumulative numbers till date.                                                                 |                                        |
-| :green_heart: | district_wise                 | <https://api.covid19india.org/csv/latest/district_wise.csv>                 | Districtwise Cumulative numbers till date. |
-| :green_heart: | state_wise_daily              | <https://api.covid19india.org/csv/latest/state_wise_daily.csv>              | Statewise per day delta of Confirmed, Recovered and Deceased numbers.  
+| :green_heart: | case_time_series              | <https://api.covid19india.org/csv/latest/case_time_series.csv>              | India level timeseries for Confirmed, Recovered and Deceased cases
 | :green_heart: | states                        | <https://api.covid19india.org/csv/latest/states.csv>                        | Statewise timeseries of Confirmed, Recovered and Deceased numbers.   
 | :green_heart: | districts                        | <https://api.covid19india.org/csv/latest/districts.csv>                  | Districtwise timeseries of Confirmed, Recovered and Deceased numbers.                            |
+| :green_heart: | state_wise_daily              | <https://api.covid19india.org/csv/latest/state_wise_daily.csv>              | Statewise per day delta of Confirmed, Recovered and Deceased numbers.  
+| :green_heart: | state_wise                    | <https://api.covid19india.org/csv/latest/state_wise.csv>                    | Statewise cumulative numbers till date.                                                                 |                                        |
+| :green_heart: | district_wise                 | <https://api.covid19india.org/csv/latest/district_wise.csv>                 | Districtwise Cumulative numbers till date. |
 | :green_heart: | statewise_tested_numbers_data | <https://api.covid19india.org/csv/latest/statewise_tested_numbers_data.csv> | Number of tests conducted in each state, ventilators ,hospital bed occupany reported in state bulletins |
 | :green_heart: | tested_numbers_icmr_data      | <https://api.covid19india.org/csv/latest/tested_numbers_icmr_data.csv>      | Number of tests reported by ICMR                                                                |
 | :green_heart: | icmr_labs_statewise      | <https://api.covid19india.org/csv/latest/icmr_labs_statewise.csv>      | Number of Labs in each state as per ICMR                                                                |
