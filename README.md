@@ -8,8 +8,12 @@ Sometimes, having files in a spreadsheet format is more useful for analysts and 
 
 ### Files available
 
-Latest data from the google sheet (10-20 minutes delayed) is available through the `latest` end-point.
-These are the files available
+- Latest data from the google sheet (10-20 minutes delayed) is available through the `latest` end-point.
+These are the files available. 
+- Aggregated sheets provide more district/state level details. The raw sheets are not very useful as there's no additional information in raw sheets as compared to aggregated sheets.
+- V4 json endpoints. These are the json apis that are used by the website to show all the statistics on the site. These can be used by developers and analysts who have knowledge of json parsing (recommended approach). All our v4 endpoints are actively developed and in use since this serves the frontend view [Documentation for the same](https://api.covid19india.org/documentation).
+
+
 
 #### Aggregated Sheets
 
