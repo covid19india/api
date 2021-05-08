@@ -4,3 +4,4 @@
 
 - [raw_data{n}.json](rawdata.md)
 - [v4/min/data.min.json](v4_data.md)
+- [v4/min/timeseries.min.json](v4_timeseries.md)

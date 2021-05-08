@@ -1,4 +1,4 @@
-# v4/data.json
+# v4/data.min.json
 
 ## Description
 
