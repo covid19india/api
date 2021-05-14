@@ -2694,19 +2694,29 @@
     }
   },
   "DL": {
+    "delta": {
+      "confirmed": 8506,
+      "deceased": 289,
+      "recovered": 14140
+    },
     "delta7": {
-      "confirmed": 79608,
-      "deceased": 1879,
-      "recovered": 91047,
+      "confirmed": 88114,
+      "deceased": 2168,
+      "recovered": 105187,
       "tested": 424156,
       "vaccinated": 599351
     },
     "districts": {
       "Delhi": {
+        "delta": {
+          "confirmed": 8506,
+          "deceased": 289,
+          "recovered": 14140
+        },
         "delta7": {
-          "confirmed": 79608,
-          "deceased": 1879,
-          "recovered": 91047,
+          "confirmed": 88114,
+          "deceased": 2168,
+          "recovered": 105187,
           "tested": 424156
         },
         "meta": {
@@ -2717,15 +2727,15 @@
           }
         },
         "total": {
-          "confirmed": 1372475,
-          "deceased": 20618,
-          "recovered": 1274140,
+          "confirmed": 1380981,
+          "deceased": 20907,
+          "recovered": 1288280,
           "tested": 18101281
         }
       }
     },
     "meta": {
-      "last_updated": "2021-05-13T16:10:19+05:30",
+      "last_updated": "2021-05-14T21:25:23+05:30",
       "notes": "[July 14]: Value for the total tests conducted has been reduced by 97008 in the state bulletin. Reason given : \"Reconciled with ICMR figures\". We have made the same change.",
       "population": 19814000,
       "tested": {
@@ -2734,9 +2744,9 @@
       }
     },
     "total": {
-      "confirmed": 1372475,
-      "deceased": 20618,
-      "recovered": 1274140,
+      "confirmed": 1380981,
+      "deceased": 20907,
+      "recovered": 1288280,
       "tested": 18101281,
       "vaccinated": 4367398
     }
@@ -2826,7 +2836,7 @@
       }
     },
     "meta": {
-      "last_updated": "2021-05-14T21:04:51+05:30",
+      "last_updated": "2021-05-14T21:24:23+05:30",
       "population": 959000,
       "tested": {
         "last_updated": "2020-10-20",
@@ -3792,13 +3802,14 @@
     "delta": {
       "confirmed": 3044,
       "deceased": 67,
+      "other": -13,
       "recovered": 3375,
       "tested": 11388
     },
     "delta7": {
       "confirmed": 30811,
       "deceased": 405,
-      "other": 4,
+      "other": -9,
       "recovered": 20305,
       "tested": 102252,
       "vaccinated": 120931
@@ -3943,12 +3954,13 @@
         "delta": {
           "confirmed": 62,
           "deceased": 3,
+          "other": -13,
           "recovered": 94
         },
         "delta7": {
           "confirmed": 689,
           "deceased": 8,
-          "other": 5,
+          "other": -8,
           "recovered": 485,
           "vaccinated": 6573
         },
@@ -3961,7 +3973,7 @@
         "total": {
           "confirmed": 7123,
           "deceased": 108,
-          "other": 26,
+          "other": 13,
           "recovered": 6061,
           "tested": 12012,
           "vaccinated": 132617
@@ -4125,7 +4137,7 @@
       }
     },
     "meta": {
-      "last_updated": "2021-05-14T21:04:41+05:30",
+      "last_updated": "2021-05-14T21:24:26+05:30",
       "population": 7300000,
       "tested": {
         "last_updated": "2021-05-14",
@@ -4135,7 +4147,7 @@
     "total": {
       "confirmed": 153717,
       "deceased": 2185,
-      "other": 44,
+      "other": 31,
       "recovered": 111878,
       "tested": 1708083,
       "vaccinated": 2139633
@@ -7980,7 +7992,7 @@
       }
     },
     "meta": {
-      "last_updated": "2021-05-14T21:04:48+05:30",
+      "last_updated": "2021-05-14T21:24:28+05:30",
       "notes": "[Dec 16]:10,218 duplicate cases & other state cases removed from total cases.791 recovered cases also removed from total recovered cases while reconciling \n[Sep 9] :239 cases have been removed from the hospitalized figures owing to the removal of duplicates and change of addresses as per the original residence\n[Aug 15] : MH bulletin has reduced 819 confirmed cases in Mumbai and 72 confirmed cases from 'Other States' from the tally\n[Jun 16] : 1328 deceased cases have been retroactively added to MH bulletin.\n[Jun 20] : 69 deceased cases have been reduced based on state bulletin.",
       "population": 122153000,
       "tested": {
@@ -8001,13 +8013,14 @@
     "delta": {
       "confirmed": 627,
       "deceased": 12,
-      "recovered": 327
+      "recovered": 327,
+      "tested": 2739
     },
     "delta7": {
       "confirmed": 3276,
       "deceased": 81,
       "recovered": 1647,
-      "tested": 17949,
+      "tested": 20688,
       "vaccinated": 47097
     },
     "districts": {
@@ -8237,38 +8250,44 @@
       "last_updated": "2021-05-14T16:37:50+05:30",
       "population": 3224000,
       "tested": {
-        "last_updated": "2021-05-13",
-        "source": "https://t.me/Covid19india_Auxiliary_Test_Data/8416"
+        "last_updated": "2021-05-14",
+        "source": "https://t.me/Covid19india_Auxiliary_Test_Data/8433"
       }
     },
     "total": {
       "confirmed": 22203,
       "deceased": 280,
       "recovered": 17909,
-      "tested": 498727,
+      "tested": 501466,
       "vaccinated": 384839
     }
   },
   "MN": {
     "delta": {
+      "confirmed": 726,
+      "deceased": 16,
+      "recovered": 381,
       "tested": 3229
     },
     "delta7": {
-      "confirmed": 3263,
-      "deceased": 87,
-      "recovered": 1113,
+      "confirmed": 3989,
+      "deceased": 103,
+      "recovered": 1494,
       "tested": 22459,
       "vaccinated": 41369
     },
     "districts": {
       "Unknown": {
         "delta": {
+          "confirmed": 726,
+          "deceased": 16,
+          "recovered": 381,
           "tested": 3229
         },
         "delta7": {
-          "confirmed": 3263,
-          "deceased": 87,
-          "recovered": 1113,
+          "confirmed": 3989,
+          "deceased": 103,
+          "recovered": 1494,
           "tested": 22459
         },
         "meta": {
@@ -8278,15 +8297,15 @@
           }
         },
         "total": {
-          "confirmed": 37596,
-          "deceased": 536,
-          "recovered": 31491,
+          "confirmed": 38322,
+          "deceased": 552,
+          "recovered": 31872,
           "tested": 653736
         }
       }
     },
     "meta": {
-      "last_updated": "2021-05-13T19:50:24+05:30",
+      "last_updated": "2021-05-14T21:25:26+05:30",
       "notes": "[Dec 14]:824 out of 980 recovered cases are backdated.",
       "population": 3103000,
       "tested": {
@@ -8295,9 +8314,9 @@
       }
     },
     "total": {
-      "confirmed": 37596,
-      "deceased": 536,
-      "recovered": 31491,
+      "confirmed": 38322,
+      "deceased": 552,
+      "recovered": 31872,
       "tested": 653736,
       "vaccinated": 363556
     }
@@ -12405,7 +12424,7 @@
       }
     },
     "meta": {
-      "last_updated": "2021-05-14T21:04:58+05:30",
+      "last_updated": "2021-05-14T21:24:32+05:30",
       "population": 77264000,
       "tested": {
         "last_updated": "2021-05-14",
@@ -13791,21 +13810,21 @@
   },
   "TT": {
     "delta": {
-      "confirmed": 274439,
-      "deceased": 2688,
-      "other": 55,
-      "recovered": 278051
+      "confirmed": 283671,
+      "deceased": 2993,
+      "other": 42,
+      "recovered": 292572
     },
     "delta7": {
-      "confirmed": 2428385,
-      "deceased": 26734,
-      "other": 639,
-      "recovered": 2426232,
+      "confirmed": 2437617,
+      "deceased": 27039,
+      "other": 626,
+      "recovered": 2440753,
       "tested": 10914057,
       "vaccinated": 11952040
     },
     "meta": {
-      "last_updated": "2021-05-14T21:04:39+05:30",
+      "last_updated": "2021-05-14T21:25:21+05:30",
       "population": 1332900000,
       "tested": {
         "last_updated": "2021-05-13",
@@ -13816,10 +13835,10 @@
       }
     },
     "total": {
-      "confirmed": 24320668,
-      "deceased": 265041,
-      "other": 10131,
-      "recovered": 20351524,
+      "confirmed": 24329900,
+      "deceased": 265346,
+      "other": 10118,
+      "recovered": 20366045,
       "tested": 311324100,
       "vaccinated": 179298584
     }
