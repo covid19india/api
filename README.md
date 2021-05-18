@@ -70,7 +70,9 @@ These endpoints should be avoided unless none of the above endpoints work for yo
 | :green_heart: | raw_data23 | <https://api.covid19india.org/csv/latest/raw_data23.csv> | Feb 01st to Feb 27st   |
 | :green_heart: | raw_data24 | <https://api.covid19india.org/csv/latest/raw_data24.csv> | Feb 28th to Mar 31st   |
 | :green_heart: | raw_data25 | <https://api.covid19india.org/csv/latest/raw_data25.csv> | Apr 01st to Apr 20th   |
-| :green_heart: | raw_data26 | <https://api.covid19india.org/csv/latest/raw_data26.csv> | Apr 01st onwards       |
+| :green_heart: | raw_data26 | <https://api.covid19india.org/csv/latest/raw_data26.csv> | Apr 21st to May 04th   |
+| :green_heart: | raw_data27 | <https://api.covid19india.org/csv/latest/raw_data27.csv> | May 05th to May 17th   |
+| :green_heart: | raw_data28 | <https://api.covid19india.org/csv/latest/raw_data28.csv> | May 18th onwards       |
 
 
 #### Note
