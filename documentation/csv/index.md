@@ -42,7 +42,8 @@ These are the files available
 | :green_heart: | raw_data25 | <https://api.covid19india.org/csv/latest/raw_data25.csv> | Apr 01st to Apr 20th   |
 | :green_heart: | raw_data26 | <https://api.covid19india.org/csv/latest/raw_data26.csv> | Apr 21st to May 04th   |
 | :green_heart: | raw_data27 | <https://api.covid19india.org/csv/latest/raw_data27.csv> | May 05th to May 17th   |
-| :green_heart: | raw_data28 | <https://api.covid19india.org/csv/latest/raw_data28.csv> | May 18th onwards       |
+| :green_heart: | raw_data28 | <https://api.covid19india.org/csv/latest/raw_data28.csv> | May 18th to Jun 02nd   |
+| :green_heart: | raw_data29 | <https://api.covid19india.org/csv/latest/raw_data29.csv> | Jun 03rd onwards       |
 
 #### Other Sheets
 
