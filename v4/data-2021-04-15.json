@@ -19,13 +19,61 @@
       "vaccinated2": 676
     },
     "districts": {
+      "Nicobars": {
+        "delta": {
+          "vaccinated1": 172,
+          "vaccinated2": 4
+        },
+        "delta7": {
+          "vaccinated1": 2570,
+          "vaccinated2": 116
+        },
+        "meta": {
+          "population": 36842
+        },
+        "total": {
+          "vaccinated1": 5812,
+          "vaccinated2": 535
+        }
+      },
+      "North and Middle Andaman": {
+        "delta": {
+          "vaccinated1": 1886,
+          "vaccinated2": 67
+        },
+        "delta7": {
+          "vaccinated1": 11279,
+          "vaccinated2": 289
+        },
+        "meta": {
+          "population": 105597
+        },
+        "total": {
+          "vaccinated1": 17107,
+          "vaccinated2": 1554
+        }
+      },
+      "South Andaman": {
+        "delta": {
+          "vaccinated1": 3066,
+          "vaccinated2": 67
+        },
+        "delta7": {
+          "vaccinated1": 15566,
+          "vaccinated2": 271
+        },
+        "meta": {
+          "population": 238142
+        },
+        "total": {
+          "vaccinated1": 31859,
+          "vaccinated2": 3990
+        }
+      },
       "Unknown": {
         "delta": {
           "confirmed": 15,
-          "recovered": 4,
-          "tested": 2054,
-          "vaccinated1": 5162,
-          "vaccinated2": 138
+          "recovered": 4
         },
         "delta21_14": {
           "confirmed": 42
@@ -33,27 +81,12 @@
         "delta7": {
           "confirmed": 113,
           "deceased": 1,
-          "recovered": 55,
-          "tested": 13366,
-          "vaccinated1": 29423,
-          "vaccinated2": 676
-        },
-        "meta": {
-          "tested": {
-            "date": "2021-04-15",
-            "source": "https://dhs.andaman.gov.in/NewEvents/635.pdf"
-          },
-          "vaccinated": {
-            "date": "2021-04-15"
-          }
+          "recovered": 55
         },
         "total": {
           "confirmed": 5262,
           "deceased": 63,
-          "recovered": 5082,
-          "tested": 345485,
-          "vaccinated1": 54819,
-          "vaccinated2": 6079
+          "recovered": 5082
         }
       }
     },
@@ -1215,14 +1248,526 @@
       "vaccinated2": 54152
     },
     "districts": {
+      "Baksa": {
+        "delta7": {
+          "vaccinated1": 3710,
+          "vaccinated2": 1109
+        },
+        "meta": {
+          "population": 953773
+        },
+        "total": {
+          "vaccinated1": 27361,
+          "vaccinated2": 4927
+        }
+      },
+      "Barpeta": {
+        "delta": {
+          "vaccinated1": 80,
+          "vaccinated2": 47
+        },
+        "delta7": {
+          "vaccinated1": 11453,
+          "vaccinated2": 3687
+        },
+        "meta": {
+          "population": 1693190
+        },
+        "total": {
+          "vaccinated1": 69314,
+          "vaccinated2": 11188
+        }
+      },
+      "Biswanath": {
+        "delta": {
+          "vaccinated1": -1
+        },
+        "delta7": {
+          "vaccinated1": 221,
+          "vaccinated2": 746
+        },
+        "meta": {
+          "population": 612491
+        },
+        "total": {
+          "vaccinated1": 21650,
+          "vaccinated2": 4767
+        }
+      },
+      "Bongaigaon": {
+        "delta": {
+          "vaccinated1": 22,
+          "vaccinated2": 39
+        },
+        "delta7": {
+          "vaccinated1": 975,
+          "vaccinated2": 1845
+        },
+        "meta": {
+          "population": 732639
+        },
+        "total": {
+          "vaccinated1": 35924,
+          "vaccinated2": 8538
+        }
+      },
+      "Cachar": {
+        "delta": {
+          "vaccinated1": 61,
+          "vaccinated2": 12
+        },
+        "delta7": {
+          "vaccinated1": 5380,
+          "vaccinated2": 3333
+        },
+        "meta": {
+          "population": 1736319
+        },
+        "total": {
+          "vaccinated1": 50363,
+          "vaccinated2": 14364
+        }
+      },
+      "Charaideo": {
+        "delta": {
+          "vaccinated1": -10
+        },
+        "delta7": {
+          "vaccinated1": 2080,
+          "vaccinated2": 550
+        },
+        "total": {
+          "vaccinated1": 16247,
+          "vaccinated2": 3338
+        }
+      },
+      "Chirang": {
+        "delta": {
+          "vaccinated1": -4
+        },
+        "delta7": {
+          "vaccinated1": 678,
+          "vaccinated2": 1265
+        },
+        "meta": {
+          "population": 481818
+        },
+        "total": {
+          "vaccinated1": 14505,
+          "vaccinated2": 5939
+        }
+      },
+      "Darrang": {
+        "delta": {
+          "vaccinated1": 34
+        },
+        "delta7": {
+          "vaccinated1": 921,
+          "vaccinated2": 1261
+        },
+        "meta": {
+          "population": 908090
+        },
+        "total": {
+          "vaccinated1": 34278,
+          "vaccinated2": 8099
+        }
+      },
+      "Dhemaji": {
+        "delta7": {
+          "vaccinated1": 764,
+          "vaccinated2": 438
+        },
+        "meta": {
+          "population": 688077
+        },
+        "total": {
+          "vaccinated1": 32106,
+          "vaccinated2": 5621
+        }
+      },
+      "Dhubri": {
+        "delta": {
+          "vaccinated1": -7
+        },
+        "delta7": {
+          "vaccinated1": 2299,
+          "vaccinated2": 1786
+        },
+        "meta": {
+          "population": 1948632
+        },
+        "total": {
+          "vaccinated1": 53511,
+          "vaccinated2": 9938
+        }
+      },
+      "Dibrugarh": {
+        "delta": {
+          "vaccinated1": 88,
+          "vaccinated2": 33
+        },
+        "delta7": {
+          "vaccinated1": 4575,
+          "vaccinated2": 3268
+        },
+        "meta": {
+          "population": 1327748,
+          "tested": {
+            "date": "2021-02-01"
+          }
+        },
+        "total": {
+          "tested": 301657,
+          "vaccinated1": 67814,
+          "vaccinated2": 18298
+        }
+      },
+      "Dima Hasao": {
+        "delta": {
+          "vaccinated1": -25,
+          "vaccinated2": 8
+        },
+        "delta7": {
+          "vaccinated1": 1009,
+          "vaccinated2": 780
+        },
+        "meta": {
+          "population": 213529
+        },
+        "total": {
+          "vaccinated1": 12595,
+          "vaccinated2": 3450
+        }
+      },
+      "Goalpara": {
+        "delta": {
+          "vaccinated1": -2
+        },
+        "delta7": {
+          "vaccinated1": 1858,
+          "vaccinated2": 1665
+        },
+        "meta": {
+          "population": 1008959
+        },
+        "total": {
+          "vaccinated1": 34229,
+          "vaccinated2": 7866
+        }
+      },
+      "Golaghat": {
+        "delta": {
+          "vaccinated1": -10
+        },
+        "delta7": {
+          "vaccinated1": 953,
+          "vaccinated2": 1536
+        },
+        "meta": {
+          "population": 1058674
+        },
+        "total": {
+          "vaccinated1": 41577,
+          "vaccinated2": 9237
+        }
+      },
+      "Hailakandi": {
+        "delta": {
+          "vaccinated1": 35,
+          "vaccinated2": 9
+        },
+        "delta7": {
+          "vaccinated1": 2359,
+          "vaccinated2": 771
+        },
+        "meta": {
+          "population": 659260
+        },
+        "total": {
+          "vaccinated1": 25185,
+          "vaccinated2": 5410
+        }
+      },
+      "Hojai": {
+        "delta": {
+          "vaccinated1": -6
+        },
+        "delta7": {
+          "vaccinated1": 2663,
+          "vaccinated2": 1331
+        },
+        "meta": {
+          "population": 931218
+        },
+        "total": {
+          "vaccinated1": 42327,
+          "vaccinated2": 5077
+        }
+      },
+      "Jorhat": {
+        "delta": {
+          "vaccinated1": -4
+        },
+        "delta7": {
+          "vaccinated1": 1351,
+          "vaccinated2": 1426
+        },
+        "meta": {
+          "population": 1091295
+        },
+        "total": {
+          "vaccinated1": 50742,
+          "vaccinated2": 10085
+        }
+      },
+      "Kamrup": {
+        "delta": {
+          "vaccinated1": 192,
+          "vaccinated2": 143
+        },
+        "delta7": {
+          "vaccinated1": 2663,
+          "vaccinated2": 2359
+        },
+        "meta": {
+          "population": 1517202
+        },
+        "total": {
+          "vaccinated1": 75857,
+          "vaccinated2": 12280
+        }
+      },
+      "Kamrup Metropolitan": {
+        "delta": {
+          "vaccinated1": 233,
+          "vaccinated2": 233
+        },
+        "delta7": {
+          "vaccinated1": 12571,
+          "vaccinated2": 6041
+        },
+        "meta": {
+          "population": 1260419
+        },
+        "total": {
+          "vaccinated1": 115838,
+          "vaccinated2": 27308
+        }
+      },
+      "Karbi Anglong": {
+        "delta": {
+          "vaccinated1": 56,
+          "vaccinated2": 23
+        },
+        "delta7": {
+          "vaccinated1": 3066,
+          "vaccinated2": 1567
+        },
+        "meta": {
+          "population": 965280
+        },
+        "total": {
+          "vaccinated1": 25735,
+          "vaccinated2": 5588
+        }
+      },
+      "Karimganj": {
+        "delta": {
+          "vaccinated1": -3
+        },
+        "delta7": {
+          "vaccinated1": 2312,
+          "vaccinated2": 343
+        },
+        "meta": {
+          "population": 1217002
+        },
+        "total": {
+          "vaccinated1": 37162,
+          "vaccinated2": 5098
+        }
+      },
+      "Kokrajhar": {
+        "delta": {
+          "vaccinated1": 44,
+          "vaccinated2": 60
+        },
+        "delta7": {
+          "vaccinated1": 3870,
+          "vaccinated2": 3232
+        },
+        "meta": {
+          "population": 886999
+        },
+        "total": {
+          "vaccinated1": 27683,
+          "vaccinated2": 10723
+        }
+      },
+      "Lakhimpur": {
+        "delta7": {
+          "vaccinated1": 752,
+          "vaccinated2": 424
+        },
+        "meta": {
+          "population": 1040644
+        },
+        "total": {
+          "vaccinated1": 37499,
+          "vaccinated2": 8346
+        }
+      },
+      "Majuli": {
+        "delta7": {
+          "vaccinated1": 1414,
+          "vaccinated2": 363
+        },
+        "meta": {
+          "population": 167304
+        },
+        "total": {
+          "vaccinated1": 14535,
+          "vaccinated2": 2449
+        }
+      },
+      "Morigaon": {
+        "delta": {
+          "vaccinated1": 12,
+          "vaccinated2": 16
+        },
+        "delta7": {
+          "vaccinated1": 1645,
+          "vaccinated2": 1152
+        },
+        "meta": {
+          "population": 957853
+        },
+        "total": {
+          "vaccinated1": 36536,
+          "vaccinated2": 5638
+        }
+      },
+      "Nagaon": {
+        "delta": {
+          "vaccinated1": 117,
+          "vaccinated2": 5
+        },
+        "delta7": {
+          "vaccinated1": 6854,
+          "vaccinated2": 3305
+        },
+        "meta": {
+          "population": 2826006
+        },
+        "total": {
+          "vaccinated1": 76440,
+          "vaccinated2": 17137
+        }
+      },
+      "Nalbari": {
+        "delta": {
+          "vaccinated1": -2
+        },
+        "delta7": {
+          "vaccinated1": 4038,
+          "vaccinated2": 1258
+        },
+        "meta": {
+          "population": 769919
+        },
+        "total": {
+          "vaccinated1": 25478,
+          "vaccinated2": 6665
+        }
+      },
+      "Sivasagar": {
+        "delta": {
+          "vaccinated1": -2
+        },
+        "delta7": {
+          "vaccinated1": 3314,
+          "vaccinated2": 1554
+        },
+        "meta": {
+          "population": 1150253
+        },
+        "total": {
+          "vaccinated1": 35214,
+          "vaccinated2": 8432
+        }
+      },
+      "Sonitpur": {
+        "delta": {
+          "vaccinated1": 2,
+          "vaccinated2": 13
+        },
+        "delta7": {
+          "vaccinated1": 3430,
+          "vaccinated2": 2711
+        },
+        "meta": {
+          "population": 1925975
+        },
+        "total": {
+          "vaccinated1": 49048,
+          "vaccinated2": 13757
+        }
+      },
+      "South Salmara Mankachar": {
+        "delta7": {
+          "vaccinated1": 284,
+          "vaccinated2": 379
+        },
+        "meta": {
+          "population": 555114
+        },
+        "total": {
+          "vaccinated1": 5293,
+          "vaccinated2": 1042
+        }
+      },
+      "Tinsukia": {
+        "delta": {
+          "vaccinated1": -2
+        },
+        "delta7": {
+          "vaccinated1": 2353,
+          "vaccinated2": 1088
+        },
+        "meta": {
+          "population": 1316948
+        },
+        "total": {
+          "vaccinated1": 50378,
+          "vaccinated2": 8278
+        }
+      },
+      "Udalguri": {
+        "delta": {
+          "vaccinated1": -4
+        },
+        "delta7": {
+          "vaccinated1": 3864,
+          "vaccinated2": 1340
+        },
+        "meta": {
+          "population": 832769,
+          "tested": {
+            "date": "2020-09-16"
+          }
+        },
+        "total": {
+          "tested": 24661,
+          "vaccinated1": 25642,
+          "vaccinated2": 6599
+        }
+      },
       "Unknown": {
         "delta": {
           "confirmed": 499,
           "deceased": 1,
-          "recovered": 85,
-          "tested": 18323,
-          "vaccinated1": 900,
-          "vaccinated2": 658
+          "recovered": 85
         },
         "delta21_14": {
           "confirmed": 331
@@ -1230,28 +1775,30 @@
         "delta7": {
           "confirmed": 3095,
           "deceased": 11,
-          "recovered": 494,
-          "tested": 376403,
-          "vaccinated1": 95629,
-          "vaccinated2": 54152
-        },
-        "meta": {
-          "tested": {
-            "date": "2021-04-15",
-            "source": "https://twitter.com/nhm_assam/status/1382723581096779778"
-          },
-          "vaccinated": {
-            "date": "2021-04-15"
-          }
+          "recovered": 494
         },
         "total": {
           "confirmed": 222367,
           "deceased": 1123,
           "other": 1347,
-          "recovered": 216284,
-          "tested": 7731871,
-          "vaccinated1": 1277867,
-          "vaccinated2": 277594
+          "recovered": 216284
+        }
+      },
+      "West Karbi Anglong": {
+        "delta": {
+          "vaccinated1": 30,
+          "vaccinated2": 7
+        },
+        "delta7": {
+          "vaccinated1": 481,
+          "vaccinated2": 301
+        },
+        "meta": {
+          "population": 300320
+        },
+        "total": {
+          "vaccinated1": 9798,
+          "vaccinated2": 2102
         }
       }
     },
@@ -3801,14 +4348,45 @@
       "vaccinated2": 12265
     },
     "districts": {
+      "North Goa": {
+        "delta": {
+          "vaccinated1": 3312,
+          "vaccinated2": 1414
+        },
+        "delta7": {
+          "vaccinated1": 23368,
+          "vaccinated2": 5598
+        },
+        "meta": {
+          "population": 817761
+        },
+        "total": {
+          "vaccinated1": 84266,
+          "vaccinated2": 20515
+        }
+      },
+      "South Goa": {
+        "delta": {
+          "vaccinated1": 3154,
+          "vaccinated2": 2117
+        },
+        "delta7": {
+          "vaccinated1": 22113,
+          "vaccinated2": 6667
+        },
+        "meta": {
+          "population": 639962
+        },
+        "total": {
+          "vaccinated1": 89643,
+          "vaccinated2": 18698
+        }
+      },
       "Unknown": {
         "delta": {
           "confirmed": 757,
           "deceased": 5,
-          "recovered": 182,
-          "tested": 2711,
-          "vaccinated1": 6404,
-          "vaccinated2": 3515
+          "recovered": 182
         },
         "delta21_14": {
           "confirmed": 1134
@@ -3816,27 +4394,12 @@
         "delta7": {
           "confirmed": 3761,
           "deceased": 20,
-          "recovered": 1390,
-          "tested": 17957,
-          "vaccinated1": 45501,
-          "vaccinated2": 12265
-        },
-        "meta": {
-          "tested": {
-            "date": "2021-04-15",
-            "source": "https://www.goa.gov.in/wp-content/uploads/2021/04/Media-Bulletin-15th-April-2021.pdf"
-          },
-          "vaccinated": {
-            "date": "2021-04-15"
-          }
+          "recovered": 1390
         },
         "total": {
           "confirmed": 64572,
           "deceased": 862,
-          "recovered": 58028,
-          "tested": 582068,
-          "vaccinated1": 173929,
-          "vaccinated2": 39213
+          "recovered": 58028
         }
       }
     },
@@ -10704,13 +11267,276 @@
       "vaccinated2": 6508
     },
     "districts": {
+      "Bishnupur": {
+        "delta": {
+          "vaccinated1": 38,
+          "vaccinated2": 30
+        },
+        "delta7": {
+          "vaccinated1": 322,
+          "vaccinated2": 356
+        },
+        "meta": {
+          "population": 240363
+        },
+        "total": {
+          "vaccinated1": 5534,
+          "vaccinated2": 2674
+        }
+      },
+      "Chandel": {
+        "delta": {
+          "vaccinated1": 62,
+          "vaccinated2": 51
+        },
+        "delta7": {
+          "vaccinated1": 614,
+          "vaccinated2": 472
+        },
+        "meta": {
+          "population": 144028
+        },
+        "total": {
+          "vaccinated1": 5440,
+          "vaccinated2": 3094
+        }
+      },
+      "Churachandpur": {
+        "delta": {
+          "vaccinated1": 126,
+          "vaccinated2": 137
+        },
+        "delta7": {
+          "vaccinated1": 996,
+          "vaccinated2": 706
+        },
+        "meta": {
+          "population": 271274,
+          "tested": {
+            "date": "2020-09-23"
+          }
+        },
+        "total": {
+          "tested": 13542,
+          "vaccinated1": 9950,
+          "vaccinated2": 4956
+        }
+      },
+      "Imphal East": {
+        "delta": {
+          "vaccinated1": 212,
+          "vaccinated2": 257
+        },
+        "delta7": {
+          "vaccinated1": 2223,
+          "vaccinated2": 987
+        },
+        "meta": {
+          "population": 452661
+        },
+        "total": {
+          "vaccinated1": 17716,
+          "vaccinated2": 8512
+        }
+      },
+      "Imphal West": {
+        "delta": {
+          "vaccinated1": 291,
+          "vaccinated2": 246
+        },
+        "delta7": {
+          "vaccinated1": 3171,
+          "vaccinated2": 1612
+        },
+        "meta": {
+          "population": 514683
+        },
+        "total": {
+          "vaccinated1": 22725,
+          "vaccinated2": 11129
+        }
+      },
+      "Jiribam": {
+        "delta": {
+          "vaccinated1": 5,
+          "vaccinated2": 9
+        },
+        "delta7": {
+          "vaccinated1": 66,
+          "vaccinated2": 100
+        },
+        "meta": {
+          "population": 43818
+        },
+        "total": {
+          "vaccinated1": 2342,
+          "vaccinated2": 1232
+        }
+      },
+      "Kakching": {
+        "delta": {
+          "vaccinated1": 115,
+          "vaccinated2": 83
+        },
+        "delta7": {
+          "vaccinated1": 398,
+          "vaccinated2": 339
+        },
+        "meta": {
+          "population": 135481
+        },
+        "total": {
+          "vaccinated1": 3582,
+          "vaccinated2": 2038
+        }
+      },
+      "Kamjong": {
+        "delta": {
+          "vaccinated1": 1
+        },
+        "delta7": {
+          "vaccinated1": 61,
+          "vaccinated2": 15
+        },
+        "meta": {
+          "population": 45616
+        },
+        "total": {
+          "vaccinated1": 1150,
+          "vaccinated2": 274
+        }
+      },
+      "Kangpokpi": {
+        "delta": {
+          "vaccinated1": 171,
+          "vaccinated2": 57
+        },
+        "delta7": {
+          "vaccinated1": 541,
+          "vaccinated2": 206
+        },
+        "total": {
+          "vaccinated1": 3436,
+          "vaccinated2": 1271
+        }
+      },
+      "Noney": {
+        "delta": {
+          "vaccinated1": 49,
+          "vaccinated2": 30
+        },
+        "delta7": {
+          "vaccinated1": 548,
+          "vaccinated2": 245
+        },
+        "total": {
+          "vaccinated1": 3180,
+          "vaccinated2": 927
+        }
+      },
+      "Pherzawl": {
+        "delta": {
+          "vaccinated1": 90,
+          "vaccinated2": 44
+        },
+        "delta7": {
+          "vaccinated1": 407,
+          "vaccinated2": 105
+        },
+        "meta": {
+          "population": 47250
+        },
+        "total": {
+          "vaccinated1": 1386,
+          "vaccinated2": 454
+        }
+      },
+      "Senapati": {
+        "delta": {
+          "vaccinated1": 45,
+          "vaccinated2": 63
+        },
+        "delta7": {
+          "vaccinated1": 225,
+          "vaccinated2": 245
+        },
+        "meta": {
+          "population": 354772
+        },
+        "total": {
+          "vaccinated1": 3336,
+          "vaccinated2": 1890
+        }
+      },
+      "Tamenglong": {
+        "delta": {
+          "vaccinated1": 22,
+          "vaccinated2": 50
+        },
+        "delta7": {
+          "vaccinated1": 158,
+          "vaccinated2": 294
+        },
+        "meta": {
+          "population": 140143
+        },
+        "total": {
+          "vaccinated1": 2475,
+          "vaccinated2": 1170
+        }
+      },
+      "Tengnoupal": {
+        "delta": {
+          "vaccinated1": 17,
+          "vaccinated2": 29
+        },
+        "delta7": {
+          "vaccinated1": 262,
+          "vaccinated2": 396
+        },
+        "total": {
+          "vaccinated1": 3755,
+          "vaccinated2": 1948
+        }
+      },
+      "Thoubal": {
+        "delta": {
+          "vaccinated1": 108,
+          "vaccinated2": 49
+        },
+        "delta7": {
+          "vaccinated1": 712,
+          "vaccinated2": 253
+        },
+        "meta": {
+          "population": 420517
+        },
+        "total": {
+          "vaccinated1": 8242,
+          "vaccinated2": 4892
+        }
+      },
+      "Ukhrul": {
+        "delta": {
+          "vaccinated1": 30,
+          "vaccinated2": 60
+        },
+        "delta7": {
+          "vaccinated1": 144,
+          "vaccinated2": 174
+        },
+        "meta": {
+          "population": 183115
+        },
+        "total": {
+          "vaccinated1": 3506,
+          "vaccinated2": 1233
+        }
+      },
       "Unknown": {
         "delta": {
           "confirmed": 18,
-          "recovered": 10,
-          "tested": 849,
-          "vaccinated1": 1397,
-          "vaccinated2": 1162
+          "recovered": 10
         },
         "delta21_14": {
           "confirmed": 34
@@ -10718,27 +11544,12 @@
         "delta7": {
           "confirmed": 116,
           "deceased": 1,
-          "recovered": 61,
-          "tested": 5847,
-          "vaccinated1": 10886,
-          "vaccinated2": 6508
-        },
-        "meta": {
-          "tested": {
-            "date": "2021-04-15",
-            "source": "https://t.me/Covid19india_Auxiliary_Test_Data/7859"
-          },
-          "vaccinated": {
-            "date": "2021-04-15"
-          }
+          "recovered": 61
         },
         "total": {
           "confirmed": 29579,
           "deceased": 376,
-          "recovered": 29062,
-          "tested": 590238,
-          "vaccinated1": 97793,
-          "vaccinated2": 47697
+          "recovered": 29062
         }
       }
     },
@@ -16055,12 +16866,61 @@
       "vaccinated2": 4045
     },
     "districts": {
+      "East Sikkim": {
+        "delta": {
+          "vaccinated1": 3001,
+          "vaccinated2": 385
+        },
+        "delta7": {
+          "vaccinated1": 20111,
+          "vaccinated2": 1819
+        },
+        "meta": {
+          "population": 281293
+        },
+        "total": {
+          "vaccinated1": 60693,
+          "vaccinated2": 9411
+        }
+      },
+      "North Sikkim": {
+        "delta": {
+          "vaccinated1": 451,
+          "vaccinated2": 127
+        },
+        "delta7": {
+          "vaccinated1": 2814,
+          "vaccinated2": 421
+        },
+        "meta": {
+          "population": 43354
+        },
+        "total": {
+          "vaccinated1": 9180,
+          "vaccinated2": 2109
+        }
+      },
+      "South Sikkim": {
+        "delta": {
+          "vaccinated1": 571,
+          "vaccinated2": 644
+        },
+        "delta7": {
+          "vaccinated1": 8162,
+          "vaccinated2": 1147
+        },
+        "meta": {
+          "population": 146742
+        },
+        "total": {
+          "vaccinated1": 34877,
+          "vaccinated2": 3348
+        }
+      },
       "Unknown": {
         "delta": {
           "confirmed": 41,
-          "recovered": 5,
-          "vaccinated1": 5586,
-          "vaccinated2": 1192
+          "recovered": 5
         },
         "delta21_14": {
           "confirmed": 29
@@ -16068,27 +16928,30 @@
         "delta7": {
           "confirmed": 174,
           "other": 27,
-          "recovered": 15,
-          "vaccinated1": 40037,
-          "vaccinated2": 4045
-        },
-        "meta": {
-          "tested": {
-            "date": "2021-04-03",
-            "source": "https://t.me/Covid19india_Auxiliary_Test_Data/7609"
-          },
-          "vaccinated": {
-            "date": "2021-04-15"
-          }
+          "recovered": 15
         },
         "total": {
           "confirmed": 6497,
           "deceased": 136,
           "other": 137,
-          "recovered": 5995,
-          "tested": 83701,
-          "vaccinated1": 130118,
-          "vaccinated2": 18437
+          "recovered": 5995
+        }
+      },
+      "West Sikkim": {
+        "delta": {
+          "vaccinated1": 1563,
+          "vaccinated2": 36
+        },
+        "delta7": {
+          "vaccinated1": 8950,
+          "vaccinated2": 658
+        },
+        "meta": {
+          "population": 136299
+        },
+        "total": {
+          "vaccinated1": 25368,
+          "vaccinated2": 3569
         }
       }
     },
@@ -16133,14 +16996,484 @@
       "vaccinated2": 59992
     },
     "districts": {
+      "Adilabad": {
+        "delta": {
+          "vaccinated1": 1918,
+          "vaccinated2": 233
+        },
+        "delta7": {
+          "vaccinated1": 10921,
+          "vaccinated2": 972
+        },
+        "meta": {
+          "population": 708952
+        },
+        "total": {
+          "vaccinated1": 29602,
+          "vaccinated2": 4999
+        }
+      },
+      "Bhadradri Kothagudem": {
+        "delta": {
+          "vaccinated1": 2690,
+          "vaccinated2": 258
+        },
+        "delta7": {
+          "vaccinated1": 17534,
+          "vaccinated2": 1518
+        },
+        "meta": {
+          "population": 1304811
+        },
+        "total": {
+          "vaccinated1": 54729,
+          "vaccinated2": 15606
+        }
+      },
+      "Hyderabad": {
+        "delta": {
+          "vaccinated1": 14282,
+          "vaccinated2": 4940
+        },
+        "delta7": {
+          "vaccinated1": 87395,
+          "vaccinated2": 20993
+        },
+        "meta": {
+          "population": 3441992
+        },
+        "total": {
+          "vaccinated1": 434841,
+          "vaccinated2": 81442
+        }
+      },
+      "Jagtial": {
+        "delta": {
+          "vaccinated1": 4302,
+          "vaccinated2": 242
+        },
+        "delta7": {
+          "vaccinated1": 24706,
+          "vaccinated2": 1023
+        },
+        "meta": {
+          "population": 983414
+        },
+        "total": {
+          "vaccinated1": 50824,
+          "vaccinated2": 7891
+        }
+      },
+      "Jangaon": {
+        "delta": {
+          "vaccinated1": 2034,
+          "vaccinated2": 205
+        },
+        "delta7": {
+          "vaccinated1": 8339,
+          "vaccinated2": 781
+        },
+        "meta": {
+          "population": 582457
+        },
+        "total": {
+          "vaccinated1": 23788,
+          "vaccinated2": 4048
+        }
+      },
+      "Jayashankar Bhupalapally": {
+        "delta": {
+          "vaccinated1": 4837,
+          "vaccinated2": 33
+        },
+        "delta7": {
+          "vaccinated1": 15425,
+          "vaccinated2": 90
+        },
+        "meta": {
+          "population": 712257
+        },
+        "total": {
+          "vaccinated1": 21102,
+          "vaccinated2": 2287
+        }
+      },
+      "Jogulamba Gadwal": {
+        "delta": {
+          "vaccinated1": 2109,
+          "vaccinated2": 164
+        },
+        "delta7": {
+          "vaccinated1": 11271,
+          "vaccinated2": 319
+        },
+        "meta": {
+          "population": 664971
+        },
+        "total": {
+          "vaccinated1": 26218,
+          "vaccinated2": 2748
+        }
+      },
+      "Kamareddy": {
+        "delta": {
+          "vaccinated1": 5121,
+          "vaccinated2": 590
+        },
+        "delta7": {
+          "vaccinated1": 31483,
+          "vaccinated2": 1717
+        },
+        "meta": {
+          "population": 972625
+        },
+        "total": {
+          "vaccinated1": 90341,
+          "vaccinated2": 8770
+        }
+      },
+      "Karimnagar": {
+        "delta": {
+          "vaccinated1": 5381,
+          "vaccinated2": 452
+        },
+        "delta7": {
+          "vaccinated1": 25207,
+          "vaccinated2": 1385
+        },
+        "meta": {
+          "population": 1016063
+        },
+        "total": {
+          "vaccinated1": 66202,
+          "vaccinated2": 10410
+        }
+      },
+      "Khammam": {
+        "delta": {
+          "vaccinated1": 2684,
+          "vaccinated2": 673
+        },
+        "delta7": {
+          "vaccinated1": 17591,
+          "vaccinated2": 2980
+        },
+        "meta": {
+          "population": 1401639
+        },
+        "total": {
+          "vaccinated1": 62414,
+          "vaccinated2": 13833
+        }
+      },
+      "Komaram Bheem": {
+        "delta": {
+          "vaccinated1": 1530,
+          "vaccinated2": 52
+        },
+        "delta7": {
+          "vaccinated1": 10597,
+          "vaccinated2": 180
+        },
+        "meta": {
+          "population": 515835
+        },
+        "total": {
+          "vaccinated1": 20437,
+          "vaccinated2": 3111
+        }
+      },
+      "Mahabubabad": {
+        "delta": {
+          "vaccinated1": 6077,
+          "vaccinated2": 156
+        },
+        "delta7": {
+          "vaccinated1": 23990,
+          "vaccinated2": 737
+        },
+        "meta": {
+          "population": 1318110
+        },
+        "total": {
+          "vaccinated1": 42811,
+          "vaccinated2": 7900
+        }
+      },
+      "Mahabubnagar": {
+        "delta": {
+          "vaccinated1": 3806,
+          "vaccinated2": 290
+        },
+        "delta7": {
+          "vaccinated1": 19123,
+          "vaccinated2": 893
+        },
+        "total": {
+          "vaccinated1": 51071,
+          "vaccinated2": 7976
+        }
+      },
+      "Mancherial": {
+        "delta": {
+          "vaccinated1": 3045,
+          "vaccinated2": 221
+        },
+        "delta7": {
+          "vaccinated1": 16507,
+          "vaccinated2": 862
+        },
+        "meta": {
+          "population": 807037
+        },
+        "total": {
+          "vaccinated1": 33909,
+          "vaccinated2": 6742
+        }
+      },
+      "Medak": {
+        "delta": {
+          "vaccinated1": 4599,
+          "vaccinated2": 142
+        },
+        "delta7": {
+          "vaccinated1": 20351,
+          "vaccinated2": 521
+        },
+        "meta": {
+          "population": 767428
+        },
+        "total": {
+          "vaccinated1": 44117,
+          "vaccinated2": 4136
+        }
+      },
+      "Medchal Malkajgiri": {
+        "delta": {
+          "vaccinated1": 7416,
+          "vaccinated2": 1606
+        },
+        "delta7": {
+          "vaccinated1": 48202,
+          "vaccinated2": 5165
+        },
+        "meta": {
+          "population": 2542203
+        },
+        "total": {
+          "vaccinated1": 243748,
+          "vaccinated2": 22141
+        }
+      },
+      "Mulugu": {
+        "delta": {
+          "vaccinated1": 2513,
+          "vaccinated2": 14
+        },
+        "delta7": {
+          "vaccinated1": 9098,
+          "vaccinated2": 119
+        },
+        "meta": {
+          "population": 294671
+        },
+        "total": {
+          "vaccinated1": 14549,
+          "vaccinated2": 2400
+        }
+      },
+      "Nagarkurnool": {
+        "delta": {
+          "vaccinated1": 3737,
+          "vaccinated2": 157
+        },
+        "delta7": {
+          "vaccinated1": 17390,
+          "vaccinated2": 572
+        },
+        "meta": {
+          "population": 893308
+        },
+        "total": {
+          "vaccinated1": 40184,
+          "vaccinated2": 4551
+        }
+      },
+      "Nalgonda": {
+        "delta": {
+          "vaccinated1": 3829,
+          "vaccinated2": 220
+        },
+        "delta7": {
+          "vaccinated1": 18883,
+          "vaccinated2": 834
+        },
+        "meta": {
+          "population": 1631399
+        },
+        "total": {
+          "vaccinated1": 50843,
+          "vaccinated2": 9343
+        }
+      },
+      "Narayanpet": {
+        "delta": {
+          "vaccinated1": 954,
+          "vaccinated2": 56
+        },
+        "delta7": {
+          "vaccinated1": 5675,
+          "vaccinated2": 159
+        },
+        "meta": {
+          "population": 566874
+        },
+        "total": {
+          "vaccinated1": 14816,
+          "vaccinated2": 2048
+        }
+      },
+      "Nirmal": {
+        "delta": {
+          "vaccinated1": 5599,
+          "vaccinated2": 101
+        },
+        "delta7": {
+          "vaccinated1": 35622,
+          "vaccinated2": 508
+        },
+        "meta": {
+          "population": 709415
+        },
+        "total": {
+          "vaccinated1": 57272,
+          "vaccinated2": 4922
+        }
+      },
+      "Nizamabad": {
+        "delta": {
+          "vaccinated1": 6135,
+          "vaccinated2": 233
+        },
+        "delta7": {
+          "vaccinated1": 32501,
+          "vaccinated2": 905
+        },
+        "meta": {
+          "population": 1534428
+        },
+        "total": {
+          "vaccinated1": 80707,
+          "vaccinated2": 10734
+        }
+      },
+      "Peddapalli": {
+        "delta": {
+          "vaccinated1": 3164,
+          "vaccinated2": 187
+        },
+        "delta7": {
+          "vaccinated1": 13750,
+          "vaccinated2": 853
+        },
+        "meta": {
+          "population": 795332
+        },
+        "total": {
+          "vaccinated1": 31112,
+          "vaccinated2": 5391
+        }
+      },
+      "Rajanna Sircilla": {
+        "delta": {
+          "vaccinated1": 2208,
+          "vaccinated2": 17
+        },
+        "delta7": {
+          "vaccinated1": 11437,
+          "vaccinated2": 112
+        },
+        "meta": {
+          "population": 546121
+        },
+        "total": {
+          "vaccinated1": 22167,
+          "vaccinated2": 2098
+        }
+      },
+      "Ranga Reddy": {
+        "delta": {
+          "vaccinated1": 7792,
+          "vaccinated2": 1440
+        },
+        "delta7": {
+          "vaccinated1": 54562,
+          "vaccinated2": 7037
+        },
+        "meta": {
+          "population": 2551731
+        },
+        "total": {
+          "vaccinated1": 246955,
+          "vaccinated2": 36688
+        }
+      },
+      "Sangareddy": {
+        "delta": {
+          "vaccinated1": 4155,
+          "vaccinated2": 212
+        },
+        "delta7": {
+          "vaccinated1": 29281,
+          "vaccinated2": 822
+        },
+        "meta": {
+          "population": 1527628
+        },
+        "total": {
+          "vaccinated1": 70377,
+          "vaccinated2": 8771
+        }
+      },
+      "Siddipet": {
+        "delta": {
+          "vaccinated1": 9657,
+          "vaccinated2": 454
+        },
+        "delta7": {
+          "vaccinated1": 36303,
+          "vaccinated2": 1079
+        },
+        "meta": {
+          "population": 993376
+        },
+        "total": {
+          "vaccinated1": 73474,
+          "vaccinated2": 8965
+        }
+      },
+      "Suryapet": {
+        "delta": {
+          "vaccinated1": 3987,
+          "vaccinated2": 559
+        },
+        "delta7": {
+          "vaccinated1": 18649,
+          "vaccinated2": 1864
+        },
+        "meta": {
+          "population": 1099560
+        },
+        "total": {
+          "vaccinated1": 56257,
+          "vaccinated2": 6280
+        }
+      },
       "Unknown": {
         "delta": {
           "confirmed": 3307,
           "deceased": 8,
-          "recovered": 897,
-          "tested": 106627,
-          "vaccinated1": 154147,
-          "vaccinated2": 15413
+          "recovered": 897
         },
         "delta21_14": {
           "confirmed": 3985
@@ -16148,27 +17481,97 @@
         "delta7": {
           "confirmed": 19341,
           "deceased": 47,
-          "recovered": 4795,
-          "tested": 700048,
-          "vaccinated1": 779167,
-          "vaccinated2": 59992
-        },
-        "meta": {
-          "tested": {
-            "date": "2021-04-15",
-            "source": "https://twitter.com/IPRTelangana/status/1382548304651644928"
-          },
-          "vaccinated": {
-            "date": "2021-04-15"
-          }
+          "recovered": 4795
         },
         "total": {
           "confirmed": 338045,
           "deceased": 1788,
-          "recovered": 308396,
-          "tested": 11360001,
-          "vaccinated1": 2283977,
-          "vaccinated2": 338539
+          "recovered": 308396
+        }
+      },
+      "Vikarabad": {
+        "delta": {
+          "vaccinated1": 2991,
+          "vaccinated2": 215
+        },
+        "delta7": {
+          "vaccinated1": 13805,
+          "vaccinated2": 761
+        },
+        "meta": {
+          "population": 881250
+        },
+        "total": {
+          "vaccinated1": 30282,
+          "vaccinated2": 5619
+        }
+      },
+      "Wanaparthy": {
+        "delta": {
+          "vaccinated1": 2398,
+          "vaccinated2": 177
+        },
+        "delta7": {
+          "vaccinated1": 8798,
+          "vaccinated2": 380
+        },
+        "meta": {
+          "population": 751553
+        },
+        "total": {
+          "vaccinated1": 21750,
+          "vaccinated2": 3425
+        }
+      },
+      "Warangal Rural": {
+        "delta": {
+          "vaccinated1": 1981,
+          "vaccinated2": 28
+        },
+        "delta7": {
+          "vaccinated1": 7082,
+          "vaccinated2": 198
+        },
+        "meta": {
+          "population": 716457
+        },
+        "total": {
+          "vaccinated1": 16012,
+          "vaccinated2": 3715
+        }
+      },
+      "Warangal Urban": {
+        "delta": {
+          "vaccinated1": 5384,
+          "vaccinated2": 931
+        },
+        "delta7": {
+          "vaccinated1": 23351,
+          "vaccinated2": 3071
+        },
+        "meta": {
+          "population": 1135707
+        },
+        "total": {
+          "vaccinated1": 82837,
+          "vaccinated2": 15608
+        }
+      },
+      "Yadadri Bhuvanagiri": {
+        "delta": {
+          "vaccinated1": 15538,
+          "vaccinated2": 113
+        },
+        "delta7": {
+          "vaccinated1": 53944,
+          "vaccinated2": 535
+        },
+        "meta": {
+          "population": 726465
+        },
+        "total": {
+          "vaccinated1": 77595,
+          "vaccinated2": 3894
         }
       }
     },
