@@ -1,6 +1,9 @@
 # COVID19-India API
 
 ## Announcement
+
+We are replacing <http://api.covid19india.org/csv/latest/vaccine_doses_statewise.csv> with <http://api.covid19india.org/csv/latest/vaccine_doses_statewise_v2.csv> to accomdate breakup of doses adminstered of the data provided by MOFHW. We will end the support of the earlier one by July 10.
+
 We have stopped capturing testing data at a district level. Please check the status of the API endpoints below.
 ## CSV
 
@@ -60,7 +63,8 @@ These are the files available
 | :green_heart: | icmr_labs_statewise      | <https://api.covid19india.org/csv/latest/icmr_labs_statewise.csv>      | Number of Labs in each state as per ICMR                                                                |
 | :green_heart: | sources_list                  | <https://api.covid19india.org/csv/latest/sources_list.csv>                  | List of sources that we are using.                                                              |
 | :green_heart: | rtpcr_samples_collected       | <http://api.covid19india.org/csv/latest/icmr_rtpcr_tests_daily.csv>          | Number of RTPCR samples collected statewise in ICMR Application                             |
-| :green_heart: | vaccine_doses_administered_statewise      | <http://api.covid19india.org/csv/latest/vaccine_doses_statewise.csv>  | Number of vaccine doses administered statewise                                 |
+| :green_heart: | vaccine_doses_administered_statewise      | <http://api.covid19india.org/csv/latest/vaccine_doses_statewise.csv>  | Number of vaccine doses administered statewise (support will end by July 10 use v2 one below for more features)          |
+| :green_heart: | vaccine_doses_administered_statewise      | <http://api.covid19india.org/csv/latest/vaccine_doses_statewise_v2.csv>  | Number of vaccine doses administered statewise by MOFHW (for replacement of the above sheet i.e format in order to accomdate division of Doses             |
 | :green_heart: | cowin_vaccine_data_statewise      | <http://api.covid19india.org/csv/latest/cowin_vaccine_data_statewise.csv>  | Key data points from CoWin database at a state level                              |
 | :green_heart: | cowin_vaccine_data_districtwise      | <http://api.covid19india.org/csv/latest/cowin_vaccine_data_districtwise.csv>  | Key data points from CoWin database at a district level                           |
 
