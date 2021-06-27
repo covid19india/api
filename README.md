@@ -2,7 +2,7 @@
 
 ## Announcement
 
-We are replacing <http://api.covid19india.org/csv/latest/vaccine_doses_statewise.csv> with <http://api.covid19india.org/csv/latest/vaccine_doses_statewise_v2.csv> to accomdate breakup of doses adminstered of the data provided by MOFHW. We will end the support of the earlier one by July 10.
+We are replacing [Vaccine_doses_administered](http://api.covid19india.org/csv/latest/vaccine_doses_statewise.csv) with [Vaccine_doses_administered_V2](http://api.covid19india.org/csv/latest/vaccine_doses_statewise_v2.csv) to accommodate date breakup of doses adminstered of the data provided by MOFHW. We will end the support of the earlier one by July 10.
 
 We have stopped capturing testing data at a district level. Please check the status of the API endpoints below.
 ## CSV
