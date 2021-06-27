@@ -3690,7 +3690,7 @@
     },
     "meta": {
       "date": "2021-06-27",
-      "last_updated": "2021-06-27T20:03:10+05:30",
+      "last_updated": "2021-06-27T20:04:12+05:30",
       "population": 959000,
       "tested": {
         "date": "2020-10-20",
@@ -9441,7 +9441,7 @@
     },
     "meta": {
       "date": "2021-06-27",
-      "last_updated": "2021-06-27T20:03:14+05:30",
+      "last_updated": "2021-06-27T20:11:10+05:30",
       "notes": "[Dec 16]:10,218 duplicate cases & other state cases removed from total cases.791 recovered cases also removed from total recovered cases while reconciling \n[Sep 9] :239 cases have been removed from the hospitalized figures owing to the removal of duplicates and change of addresses as per the original residence\n[Aug 15] : MH bulletin has reduced 819 confirmed cases in Mumbai and 72 confirmed cases from 'Other States' from the tally\n[Jun 16] : 1328 deceased cases have been retroactively added to MH bulletin.\n[Jun 20] : 69 deceased cases have been reduced based on state bulletin.",
       "population": 122153000,
       "tested": {
@@ -10045,36 +10045,39 @@
   },
   "MP": {
     "delta": {
-      "confirmed": 37,
-      "deceased": 20,
-      "recovered": 124
+      "confirmed": 39,
+      "deceased": 21,
+      "recovered": 129
     },
     "delta21_14": {
       "confirmed": 2987
     },
     "delta7": {
-      "confirmed": 433,
-      "deceased": 149,
-      "recovered": 1678,
+      "confirmed": 435,
+      "deceased": 150,
+      "recovered": 1683,
       "tested": 401648,
       "vaccinated1": 4488188,
       "vaccinated2": 303251
     },
     "districts": {
       "Agar Malwa": {
+        "delta": {
+          "deceased": 1
+        },
         "delta21_14": {
           "confirmed": 14
         },
         "delta7": {
           "confirmed": 6,
-          "deceased": 1,
+          "deceased": 2,
           "recovered": 8,
           "vaccinated1": 19980,
           "vaccinated2": 1352
         },
         "total": {
           "confirmed": 3303,
-          "deceased": 62,
+          "deceased": 63,
           "recovered": 3234,
           "vaccinated1": 95943,
           "vaccinated2": 11977
@@ -10548,12 +10551,16 @@
         }
       },
       "Harda": {
+        "delta": {
+          "confirmed": 1,
+          "recovered": 2
+        },
         "delta21_14": {
           "confirmed": 17
         },
         "delta7": {
-          "confirmed": 8,
-          "recovered": 10,
+          "confirmed": 9,
+          "recovered": 12,
           "vaccinated1": 35302,
           "vaccinated2": 2208
         },
@@ -10564,9 +10571,9 @@
           }
         },
         "total": {
-          "confirmed": 5050,
+          "confirmed": 5051,
           "deceased": 95,
-          "recovered": 4948,
+          "recovered": 4950,
           "tested": 36708,
           "vaccinated1": 117376,
           "vaccinated2": 13653
@@ -10902,12 +10909,16 @@
         }
       },
       "Niwari": {
+        "delta": {
+          "confirmed": 1,
+          "recovered": 3
+        },
         "delta21_14": {
           "confirmed": 26
         },
         "delta7": {
-          "confirmed": 1,
-          "recovered": 13
+          "confirmed": 2,
+          "recovered": 16
         },
         "meta": {
           "tested": {
@@ -10915,9 +10926,9 @@
           }
         },
         "total": {
-          "confirmed": 3701,
+          "confirmed": 3702,
           "deceased": 48,
-          "recovered": 3647,
+          "recovered": 3650,
           "tested": 22574
         }
       },
@@ -11445,7 +11456,7 @@
     },
     "meta": {
       "date": "2021-06-27",
-      "last_updated": "2021-06-27T20:03:12+05:30",
+      "last_updated": "2021-06-27T20:11:08+05:30",
       "notes": "[Oct 14]: 4469 confirmed cases and 4469 recoveries added in MP bulletin as reconciliation with private labs and hospitals",
       "population": 82232000,
       "tested": {
@@ -11454,9 +11465,9 @@
       }
     },
     "total": {
-      "confirmed": 789694,
-      "deceased": 8916,
-      "recovered": 779958,
+      "confirmed": 789696,
+      "deceased": 8917,
+      "recovered": 779963,
       "tested": 11804713,
       "vaccinated1": 17446567,
       "vaccinated2": 2356827
@@ -12085,7 +12096,7 @@
     },
     "meta": {
       "date": "2021-06-27",
-      "last_updated": "2021-06-27T20:03:16+05:30",
+      "last_updated": "2021-06-27T20:11:11+05:30",
       "population": 2150000,
       "tested": {
         "date": "2021-06-27",
@@ -14904,13 +14915,18 @@
     }
   },
   "TG": {
+    "delta": {
+      "confirmed": 748,
+      "deceased": 8,
+      "recovered": 1492
+    },
     "delta21_14": {
       "confirmed": 12199
     },
     "delta7": {
-      "confirmed": 6663,
-      "deceased": 60,
-      "recovered": 9314,
+      "confirmed": 7411,
+      "deceased": 68,
+      "recovered": 10806,
       "tested": 720843,
       "vaccinated1": 1082642,
       "vaccinated2": 91765
@@ -15278,18 +15294,23 @@
         }
       },
       "Unknown": {
+        "delta": {
+          "confirmed": 748,
+          "deceased": 8,
+          "recovered": 1492
+        },
         "delta21_14": {
           "confirmed": 12199
         },
         "delta7": {
-          "confirmed": 6663,
-          "deceased": 60,
-          "recovered": 9314
+          "confirmed": 7411,
+          "deceased": 68,
+          "recovered": 10806
         },
         "total": {
-          "confirmed": 619865,
-          "deceased": 3627,
-          "recovered": 601184
+          "confirmed": 620613,
+          "deceased": 3635,
+          "recovered": 602676
         }
       },
       "Vikarabad": {
@@ -15360,7 +15381,7 @@
     },
     "meta": {
       "date": "2021-06-27",
-      "last_updated": "2021-06-26T19:49:23+05:30",
+      "last_updated": "2021-06-27T20:11:13+05:30",
       "notes": "[July 27] : Telangana bulletin for the previous day is released on the next day. We will add the cases for Telangana against the date of release, as that is the convention that we are following for other states.",
       "population": 37220000,
       "tested": {
@@ -15369,9 +15390,9 @@
       }
     },
     "total": {
-      "confirmed": 619865,
-      "deceased": 3627,
-      "recovered": 601184,
+      "confirmed": 620613,
+      "deceased": 3635,
+      "recovered": 602676,
       "tested": 18246482,
       "vaccinated1": 8850242,
       "vaccinated2": 1476773
@@ -16863,26 +16884,26 @@
   },
   "TT": {
     "delta": {
-      "confirmed": 31879,
-      "deceased": 757,
+      "confirmed": 32629,
+      "deceased": 766,
       "other": 14,
-      "recovered": 35405
+      "recovered": 36902
     },
     "delta21_14": {
       "confirmed": 600423
     },
     "delta7": {
-      "confirmed": 329959,
-      "deceased": 8375,
+      "confirmed": 330709,
+      "deceased": 8384,
       "other": 99,
-      "recovered": 442374,
+      "recovered": 443871,
       "tested": 11857319,
       "vaccinated1": 36642785,
       "vaccinated2": 5080394
     },
     "meta": {
       "date": "2021-06-27",
-      "last_updated": "2021-06-27T20:03:08+05:30",
+      "last_updated": "2021-06-27T20:11:06+05:30",
       "population": 1332900000,
       "tested": {
         "date": "2021-06-26",
@@ -16890,10 +16911,10 @@
       }
     },
     "total": {
-      "confirmed": 30264344,
-      "deceased": 396540,
+      "confirmed": 30265094,
+      "deceased": 396549,
       "other": 11882,
-      "recovered": 29279125,
+      "recovered": 29280622,
       "tested": 404265101,
       "vaccinated1": 265384559,
       "vaccinated2": 56375518
