@@ -1,18 +1,47 @@
 # COVID19-India API
 
 ## Announcement
+**We are replacing <http://api.covid19india.org/csv/latest/vaccine_doses_statewise.csv> with <http://api.covid19india.org/csv/latest/vaccine_doses_statewise_v2.csv> to accomdate breakup of doses adminstered of the data provided by MOFHW. We will end the support of the earlier one by July 10.**
 
-We are replacing <http://api.covid19india.org/csv/latest/vaccine_doses_statewise.csv> with <http://api.covid19india.org/csv/latest/vaccine_doses_statewise_v2.csv> to accomdate breakup of doses adminstered of the data provided by MOFHW. We will end the support of the earlier one by July 10.
-
-We have stopped capturing testing data at a district level. Please check the status of the API endpoints below.
-## CSV
-
-Sometimes, having files in a spreadsheet format is more useful for analysts and scientists. We have provided the files as downloadable csv files as below.
-
+**We have stopped capturing testing data at a district level. Please check the status of the API endpoints below.**
+ 
 ### Files available
 
+- Aggregated sheets provide aggregated data at the district/state levels in csv format. 
+- V4 json endpoints. These are the json apis that are used by the website to show all the statistics on the site. These can be used by developers and analysts who have knowledge of json parsing (recommended approach). All our v4 endpoints are actively developed and in use since this serves the frontend view [Documentation for the same](https://api.covid19india.org/documentation).
+- Latest data from the google sheet (10-20 minutes delayed) is available through the `latest` end-point. These are present under the `raw files` section below. (Not recommended since the number of files is huge and there is no additional information present in these as compared to the above mentioned endpoints.)
+
+### V4 JSON endpoints 
+
+| Status        |  Link to API                                              | Description            |
+| ------------- | -------------------------------------------------------- | ---------------------- |
+| :green_heart: | <https://api.covid19india.org/v4/min/timeseries.min.json>  | Daily numbers across C,R,D and Tested per state (historical data).         |
+| :green_heart: | <https://api.covid19india.org/v4/min/data.min.json>  | Current day numbers across districts and states.   |
+| :green_heart: | <https://api.covid19india.org/v4/min/data-all.min.json>  | Per day numbers across districts and states - consider using timeseries in place of this. This is a huge file and is a mix of timeseries and data.min.json |
+
+**Note**: Please consider using the above endpoints for all your data needs. All the data we show on the website is fuelled by the above endpoints.
+
+#### Aggregated Sheets (CSV)
+
+| Status        | Sheet Name                    | Link to CSV                                                                 | Description                                                                                     |
+| ------------- | ----------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| :green_heart: | case_time_series              | <https://api.covid19india.org/csv/latest/case_time_series.csv>              | India level timeseries for Confirmed, Recovered and Deceased cases
+| :green_heart: | states                        | <https://api.covid19india.org/csv/latest/states.csv>                        | Statewise timeseries of Confirmed, Recovered and Deceased numbers.   
+| :green_heart: | districts                        | <https://api.covid19india.org/csv/latest/districts.csv>                  | Districtwise timeseries of Confirmed, Recovered and Deceased numbers.                            |
+| :green_heart: | state_wise_daily              | <https://api.covid19india.org/csv/latest/state_wise_daily.csv>              | Statewise per day delta of Confirmed, Recovered and Deceased numbers.  
+| :green_heart: | state_wise                    | <https://api.covid19india.org/csv/latest/state_wise.csv>                    | Statewise cumulative numbers till date.                                                                 |                                        
+| :green_heart: | district_wise                 | <https://api.covid19india.org/csv/latest/district_wise.csv>                 | Districtwise Cumulative numbers till date. |
+| :green_heart: | statewise_tested_numbers_data | <https://api.covid19india.org/csv/latest/statewise_tested_numbers_data.csv> | Number of tests conducted in each state, ventilators ,hospital bed occupany reported in state bulletins |
+| :green_heart: | tested_numbers_icmr_data      | <https://api.covid19india.org/csv/latest/tested_numbers_icmr_data.csv>      | Number of tests reported by ICMR                                                                |
+| :green_heart: | icmr_labs_statewise      | <https://api.covid19india.org/csv/latest/icmr_labs_statewise.csv>      | Number of Labs in each state as per ICMR                                                                |
+| :green_heart: | sources_list                  | <https://api.covid19india.org/csv/latest/sources_list.csv>                  | List of sources that we are using.                                                              |
+| :green_heart: | rtpcr_samples_collected       | <http://api.covid19india.org/csv/latest/icmr_rtpcr_tests_daily.csv>          | Number of RTPCR samples collected statewise in ICMR Application                             |
+| :green_heart: | vaccine_doses_administered_statewise      | <http://api.covid19india.org/csv/latest/vaccine_doses_statewise.csv>  | Number of vaccine doses administered statewise - Collected from MOHFW daily bulletin                              |
+| :green_heart: | cowin_vaccine_data_statewise      | <http://api.covid19india.org/csv/latest/cowin_vaccine_data_statewise.csv>  | Key data points from CoWin database at a state level                              |
+| :green_heart: | cowin_vaccine_data_districtwise      | <http://api.covid19india.org/csv/latest/cowin_vaccine_data_districtwise.csv>  | Key data points from CoWin database at a district level                           |
+
 Latest data from the google sheet (10-20 minutes delayed) is available through the `latest` end-point.
-These are the files available
+These endpoints should be avoided unless none of the above endpoints work for you.
 
 #### Raw Data
 
@@ -49,29 +78,9 @@ These are the files available
 | :green_heart: | raw_data29 | <https://api.covid19india.org/csv/latest/raw_data29.csv> | Jun 03rd to Jun 19th   |
 | :green_heart: | raw_data30 | <https://api.covid19india.org/csv/latest/raw_data30.csv> | Jun 20th onwards       |
 
-#### Other Sheets
-
-| Status        | Sheet Name                    | Link to CSV                                                                 | Description                                                                                     |
-| ------------- | ----------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| :green_heart: | case_time_series              | <https://api.covid19india.org/csv/latest/case_time_series.csv>              | Time series of Confirmed, Recovered and Deceased cases in India
-| :green_heart: | state_wise                    | <https://api.covid19india.org/csv/latest/state_wise.csv>                    | The latest State-wise situation                                                                 |                                        |
-| :green_heart: | district_wise                 | <https://api.covid19india.org/csv/latest/district_wise.csv>                 | The latest District-wise  situation                                                      |
-| :green_heart: | state_wise_daily              | <https://api.covid19india.org/csv/latest/state_wise_daily.csv>              | Statewise timeseries of Confirmed, Recovered and Deceased numbers.  
-| :green_heart: | states                        | <https://api.covid19india.org/csv/latest/states.csv>                        | Statewise timeseries of Confirmed, Recovered and Deceased numbers in long format  
-| :green_heart: | districts                        | <https://api.covid19india.org/csv/latest/districts.csv>                  | Districtwise timeseries of Confirmed, Recovered and Deceased numbers in long format                           |
-| :green_heart: | statewise_tested_numbers_data | <https://api.covid19india.org/csv/latest/statewise_tested_numbers_data.csv> | Number of tests conducted in each state, ventilators ,hospital bed occupany reported in state bulletins |
-| :green_heart: | tested_numbers_icmr_data      | <https://api.covid19india.org/csv/latest/tested_numbers_icmr_data.csv>      | Number of tests reported by ICMR                                                                |
-| :green_heart: | icmr_labs_statewise      | <https://api.covid19india.org/csv/latest/icmr_labs_statewise.csv>      | Number of Labs in each state as per ICMR                                                                |
-| :green_heart: | sources_list                  | <https://api.covid19india.org/csv/latest/sources_list.csv>                  | List of sources that we are using.                                                              |
-| :green_heart: | rtpcr_samples_collected       | <http://api.covid19india.org/csv/latest/icmr_rtpcr_tests_daily.csv>          | Number of RTPCR samples collected statewise in ICMR Application                             |
-| :green_heart: | vaccine_doses_administered_statewise      | <http://api.covid19india.org/csv/latest/vaccine_doses_statewise.csv>  | Number of vaccine doses administered statewise (support will end by July 10 use v2 one below for more features)          |
-| :green_heart: | vaccine_doses_administered_statewise      | <http://api.covid19india.org/csv/latest/vaccine_doses_statewise_v2.csv>  | Number of vaccine doses administered statewise by MOFHW (for replacement of the above sheet i.e format in order to accomdate division of Doses             |
-| :green_heart: | cowin_vaccine_data_statewise      | <http://api.covid19india.org/csv/latest/cowin_vaccine_data_statewise.csv>  | Key data points from CoWin database at a state level                              |
-| :green_heart: | cowin_vaccine_data_districtwise      | <http://api.covid19india.org/csv/latest/cowin_vaccine_data_districtwise.csv>  | Key data points from CoWin database at a district level                           |
-
 #### Note
 
-- Use raw data files only if you need to analyze the demographics or notes related at a patient level
+- Avoid using raw sheets. The only reason to use raw sheets would be to refer to demographics (rarely available) or to sources of numbers
 - Always try to use the aggregated numbers above as they have been treated for discrepancies
 
 #### Contributing
