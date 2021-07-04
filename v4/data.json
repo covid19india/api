@@ -89,7 +89,8 @@
     "delta": {
       "confirmed": 3175,
       "deceased": 29,
-      "recovered": 3692
+      "recovered": 3692,
+      "tested": 94595
     },
     "delta21_14": {
       "confirmed": 40719
@@ -98,7 +99,7 @@
       "confirmed": 23051,
       "deceased": 245,
       "recovered": 32254,
-      "tested": 535550,
+      "tested": 630145,
       "vaccinated1": 1214331,
       "vaccinated2": 358313
     },
@@ -523,15 +524,15 @@
       "last_updated": "2021-07-04T18:40:10+05:30",
       "population": 52221000,
       "tested": {
-        "date": "2021-07-03",
-        "source": "https://twitter.com/ArogyaAndhra/status/1411284751588073472"
+        "date": "2021-07-04",
+        "source": "https://twitter.com/ArogyaAndhra/status/1411656739506638851"
       }
     },
     "total": {
       "confirmed": 1902923,
       "deceased": 12844,
       "recovered": 1854754,
-      "tested": 22268483,
+      "tested": 22363078,
       "vaccinated1": 13172967,
       "vaccinated2": 3268484
     }
@@ -2691,26 +2692,34 @@
     }
   },
   "CH": {
+    "delta": {
+      "confirmed": 10,
+      "recovered": 16
+    },
     "delta21_14": {
       "confirmed": 320
     },
     "delta7": {
-      "confirmed": 94,
+      "confirmed": 104,
       "deceased": 1,
-      "recovered": 147,
+      "recovered": 163,
       "tested": 9760,
       "vaccinated1": 34889,
       "vaccinated2": 12571
     },
     "districts": {
       "Chandigarh": {
+        "delta": {
+          "confirmed": 10,
+          "recovered": 16
+        },
         "delta21_14": {
           "confirmed": 320
         },
         "delta7": {
-          "confirmed": 94,
+          "confirmed": 104,
           "deceased": 1,
-          "recovered": 147,
+          "recovered": 163,
           "tested": 9760,
           "vaccinated1": 34889,
           "vaccinated2": 12571
@@ -2723,9 +2732,9 @@
           }
         },
         "total": {
-          "confirmed": 61718,
+          "confirmed": 61728,
           "deceased": 808,
-          "recovered": 60761,
+          "recovered": 60777,
           "tested": 572187,
           "vaccinated1": 456634,
           "vaccinated2": 94952
@@ -2734,7 +2743,7 @@
     },
     "meta": {
       "date": "2021-07-04",
-      "last_updated": "2021-07-03T20:09:10+05:30",
+      "last_updated": "2021-07-04T20:31:18+05:30",
       "population": 1179000,
       "tested": {
         "date": "2021-07-03",
@@ -2742,9 +2751,9 @@
       }
     },
     "total": {
-      "confirmed": 61718,
+      "confirmed": 61728,
       "deceased": 808,
-      "recovered": 60761,
+      "recovered": 60777,
       "tested": 572187,
       "vaccinated1": 456634,
       "vaccinated2": 94952
@@ -3580,14 +3589,14 @@
   },
   "DN": {
     "delta": {
-      "confirmed": 1,
+      "confirmed": 2,
       "recovered": 4
     },
     "delta21_14": {
       "confirmed": 52
     },
     "delta7": {
-      "confirmed": 29,
+      "confirmed": 30,
       "other": -2,
       "recovered": 39,
       "vaccinated1": 72000,
@@ -3595,11 +3604,14 @@
     },
     "districts": {
       "Dadra and Nagar Haveli": {
+        "delta": {
+          "confirmed": 1
+        },
         "delta21_14": {
           "confirmed": 12
         },
         "delta7": {
-          "confirmed": 22,
+          "confirmed": 23,
           "recovered": 6,
           "vaccinated1": 44833,
           "vaccinated2": 7091
@@ -3611,7 +3623,7 @@
           }
         },
         "total": {
-          "confirmed": 5851,
+          "confirmed": 5852,
           "deceased": 3,
           "other": 5,
           "recovered": 5819,
@@ -3677,7 +3689,7 @@
     },
     "meta": {
       "date": "2021-07-04",
-      "last_updated": "2021-07-04T18:40:11+05:30",
+      "last_updated": "2021-07-04T20:30:13+05:30",
       "population": 959000,
       "tested": {
         "date": "2020-10-20",
@@ -3685,7 +3697,7 @@
       }
     },
     "total": {
-      "confirmed": 10571,
+      "confirmed": 10572,
       "deceased": 4,
       "other": 31,
       "recovered": 10497,
@@ -4725,7 +4737,7 @@
     },
     "meta": {
       "date": "2021-07-04",
-      "last_updated": "2021-07-04T20:21:13+05:30",
+      "last_updated": "2021-07-04T20:30:14+05:30",
       "population": 67936000,
       "tested": {
         "date": "2021-07-03",
@@ -11682,7 +11694,7 @@
     },
     "meta": {
       "date": "2021-07-04",
-      "last_updated": "2021-07-04T20:21:17+05:30",
+      "last_updated": "2021-07-04T20:30:16+05:30",
       "population": 2150000,
       "tested": {
         "date": "2021-07-03",
@@ -14951,7 +14963,7 @@
     },
     "meta": {
       "date": "2021-07-04",
-      "last_updated": "2021-07-04T20:21:20+05:30",
+      "last_updated": "2021-07-04T20:22:18+05:30",
       "notes": "[July 27] : Telangana bulletin for the previous day is released on the next day. We will add the cases for Telangana against the date of release, as that is the convention that we are following for other states.",
       "population": 37220000,
       "tested": {
@@ -16158,7 +16170,7 @@
     },
     "meta": {
       "date": "2021-07-04",
-      "last_updated": "2021-07-04T20:21:19+05:30",
+      "last_updated": "2021-07-04T20:30:18+05:30",
       "notes": "[June 29 2021]: TN has introduced a new district \"Mayiladuthurai\" in the bulletin and has assigned cases from Nagapattinam to the new district.\n[July 22]: 444 backdated deceased entries added to Chennai in TN bulletin.\n2 deaths cross notified to other states from Chennai and Coimbatore.\n1 patient died after turning negative for infection in Chengalpattu.\nThese cases have been added to TN deceased tally",
       "population": 75695000,
       "tested": {
@@ -16461,26 +16473,26 @@
   },
   "TT": {
     "delta": {
-      "confirmed": 26550,
+      "confirmed": 26561,
       "deceased": 324,
       "other": 1,
-      "recovered": 31797
+      "recovered": 31813
     },
     "delta21_14": {
       "confirmed": 424308
     },
     "delta7": {
-      "confirmed": 292323,
+      "confirmed": 292334,
       "deceased": 5596,
       "other": 205,
-      "recovered": 380238,
+      "recovered": 380254,
       "tested": 11883674,
       "vaccinated1": 20203283,
       "vaccinated2": 7354726
     },
     "meta": {
       "date": "2021-07-04",
-      "last_updated": "2021-07-04T20:21:10+05:30",
+      "last_updated": "2021-07-04T20:31:16+05:30",
       "population": 1332900000,
       "tested": {
         "date": "2021-07-03",
@@ -16488,10 +16500,10 @@
       }
     },
     "total": {
-      "confirmed": 30571311,
+      "confirmed": 30571322,
       "deceased": 402357,
       "other": 12102,
-      "recovered": 29682461,
+      "recovered": 29682477,
       "tested": 418254953,
       "vaccinated1": 287137161,
       "vaccinated2": 64084145
