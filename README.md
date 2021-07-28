@@ -1,8 +1,6 @@
 # COVID19-India API
 
 ## Announcement
-**We are replacing <http://api.covid19india.org/csv/latest/vaccine_doses_statewise.csv> with <http://api.covid19india.org/csv/latest/vaccine_doses_statewise_v2.csv> to accomdate breakup of doses adminstered of the data provided by MOFHW. We will end the support of the earlier one by July 10.**
-
 **We have stopped capturing testing data at a district level. Please check the status of the API endpoints below.**
  
 ### Files available
@@ -27,16 +25,16 @@
 | ------------- | ----------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
 | :green_heart: | case_time_series              | <https://api.covid19india.org/csv/latest/case_time_series.csv>              | India level timeseries for Confirmed, Recovered and Deceased cases
 | :green_heart: | states                        | <https://api.covid19india.org/csv/latest/states.csv>                        | Statewise timeseries of Confirmed, Recovered and Deceased numbers.   
-| :green_heart: | districts                        | <https://api.covid19india.org/csv/latest/districts.csv>                  | Districtwise timeseries of Confirmed, Recovered and Deceased numbers.                            |
+| :green_heart: | districts                        | <https://api.covid19india.org/csv/latest/districts.csv>                  | Districtwise timeseries of Confirmed, Recovered and Deceased numbers.                           |
 | :green_heart: | state_wise_daily              | <https://api.covid19india.org/csv/latest/state_wise_daily.csv>              | Statewise per day delta of Confirmed, Recovered and Deceased numbers.  
-| :green_heart: | state_wise                    | <https://api.covid19india.org/csv/latest/state_wise.csv>                    | Statewise cumulative numbers till date.                                                                 |                                        
+| :green_heart: | state_wise                    | <https://api.covid19india.org/csv/latest/state_wise.csv>                    | Statewise cumulative numbers till date.                                                 |                                        
 | :green_heart: | district_wise                 | <https://api.covid19india.org/csv/latest/district_wise.csv>                 | Districtwise Cumulative numbers till date. |
 | :green_heart: | statewise_tested_numbers_data | <https://api.covid19india.org/csv/latest/statewise_tested_numbers_data.csv> | Number of tests conducted in each state, ventilators ,hospital bed occupany reported in state bulletins |
 | :green_heart: | tested_numbers_icmr_data      | <https://api.covid19india.org/csv/latest/tested_numbers_icmr_data.csv>      | Number of tests reported by ICMR                                                                |
-| :green_heart: | icmr_labs_statewise      | <https://api.covid19india.org/csv/latest/icmr_labs_statewise.csv>      | Number of Labs in each state as per ICMR                                                                |
+| :green_heart: | icmr_labs_statewise           | <https://api.covid19india.org/csv/latest/icmr_labs_statewise.csv>      | Number of Labs in each state as per ICMR                                                                |
 | :green_heart: | sources_list                  | <https://api.covid19india.org/csv/latest/sources_list.csv>                  | List of sources that we are using.                                                              |
 | :green_heart: | rtpcr_samples_collected       | <http://api.covid19india.org/csv/latest/icmr_rtpcr_tests_daily.csv>          | Number of RTPCR samples collected statewise in ICMR Application                             |
-| :green_heart: | vaccine_doses_administered_statewise      | <http://api.covid19india.org/csv/latest/vaccine_doses_statewise.csv>  | Number of vaccine doses administered statewise - Collected from MOHFW daily bulletin                              |
+| :green_heart: | vaccine_doses_administered_statewise      | <http://api.covid19india.org/csv/latest/vaccine_doses_statewise_v2.csv>  | Number of vaccine doses administered statewise - Collected from MOHFW daily bulletin                              |
 | :green_heart: | cowin_vaccine_data_statewise      | <http://api.covid19india.org/csv/latest/cowin_vaccine_data_statewise.csv>  | Key data points from CoWin database at a state level                              |
 | :green_heart: | cowin_vaccine_data_districtwise      | <http://api.covid19india.org/csv/latest/cowin_vaccine_data_districtwise.csv>  | Key data points from CoWin database at a district level                           |
 
@@ -77,7 +75,8 @@ These endpoints should be avoided unless none of the above endpoints work for yo
 | :green_heart: | raw_data28 | <https://api.covid19india.org/csv/latest/raw_data28.csv> | May 18th to Jun 02nd   |
 | :green_heart: | raw_data29 | <https://api.covid19india.org/csv/latest/raw_data29.csv> | Jun 03rd to Jun 19th   |
 | :green_heart: | raw_data30 | <https://api.covid19india.org/csv/latest/raw_data30.csv> | Jun 20th to Jul 06th   |
-| :green_heart: | raw_data31 | <https://api.covid19india.org/csv/latest/raw_data31.csv> | Jul 07th onwards       |
+| :green_heart: | raw_data31 | <https://api.covid19india.org/csv/latest/raw_data31.csv> | Jul 07th to Jul 27th   |
+| :green_heart: | raw_data32 | <https://api.covid19india.org/csv/latest/raw_data32.csv> | Jul 28th onwards       |
 
 #### Note
 
@@ -95,4 +94,4 @@ A more detailed note of the columns present in the data may be found in the json
 - [Documentation](https://api.covid19india.org/documentation)
 
 
-...................................................
+....................................................
